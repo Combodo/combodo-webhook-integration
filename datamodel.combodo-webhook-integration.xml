@@ -1,0 +1,1633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.7">
+	<classes>
+		<class id="RemoteApplicationType" _delta="define">
+			<parent>Typology</parent>
+			<properties>
+				<category>grant_by_profile,bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>remoteapplicationtype</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-remote-application-type-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="remoteapplicationconnections_list" xsi:type="AttributeLinkedSet">
+					<linked_class>RemoteApplicationConnection</linked_class>
+					<ext_key_to_me>remoteapplicationtype_id</ext_key_to_me>
+				</field>
+			</fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="remoteapplicationconnections_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="RemoteApplicationConnection" _delta="define">
+			<parent>Typology</parent>
+			<properties>
+				<category>grant_by_profile,bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>remoteapplicationconnection</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-remote-application-connection-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="application"/>
+						<attribute id="environment"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="remoteapplicationtype_id" xsi:type="AttributeExternalKey">
+					<sql>remoteapplicationtype_id</sql>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<target_class>RemoteApplicationType</target_class>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
+				<field id="environment" xsi:type="AttributeEnum">
+					<values>
+						<value id="development">1-development</value>
+						<value id="test">2-test</value>
+						<value id="production">3-production</value>
+					</values>config
+					<sql>environment</sql>
+					<default_value>2-test</default_value>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
+                <field id="url" xsi:type="AttributeString">
+					<sql>url</sql>
+					<default_value/>
+					<is_null_allowed>false</is_null_allowed>
+		        </field>
+				<field id="actions_list" xsi:type="AttributeLinkedSet">
+					<linked_class>ActionWebhook</linked_class>
+					<ext_key_to_me>remoteapplicationconnection_id</ext_key_to_me>
+				</field>
+			</fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:RemoteApplicationConnection:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="remoteapplicationtype_id">
+											<rank>20</rank>
+										</item>
+										<item id="environment">
+											<rank>30</rank>
+										</item>
+										<item id="url">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="actions_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+				<search>
+					<items>
+						<item id="name">
+							<rank>10</rank>
+						</item>
+						<item id="remoteapplicationtype_id">
+							<rank>20</rank>
+						</item>
+						<item id="environment">
+							<rank>30</rank>
+						</item>
+						<item id="url">
+							<rank>40</rank>
+						</item>
+					</items>
+				</search>
+				<list>
+					<items>
+						<item id="remoteapplicationtype_id">
+							<rank>20</rank>
+						</item>
+						<item id="environment">
+							<rank>30</rank>
+						</item>
+						<item id="url">
+							<rank>40</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<class id="RemoteiTopConnection" _delta="define">
+			<parent>RemoteApplicationConnection</parent>
+			<properties>
+				<category>grant_by_profile,bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>remoteitopconnection</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="application"/>
+						<attribute id="environment"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+		        <field id="auth_user" xsi:type="AttributeString">
+					<sql>auth_user</sql>
+					<default_value/>
+					<is_null_allowed>false</is_null_allowed>
+		        </field>
+		        <field id="auth_pwd" xsi:type="AttributePassword">
+					<sql>auth_pwd</sql>
+					<default_value/>
+					<is_null_allowed>false</is_null_allowed>
+		        </field>
+		        <field id="version" xsi:type="AttributeString">
+					<sql>version</sql>
+					<default_value>1.3</default_value>
+					<is_null_allowed>false</is_null_allowed>
+		        </field>
+			</fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:RemoteApplicationConnection:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="remoteapplicationtype_id">
+											<rank>20</rank>
+										</item>
+										<item id="environment">
+											<rank>30</rank>
+										</item>
+										<item id="url">
+											<rank>40</rank>
+										</item>
+										<item id="version">
+											<rank>50</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:RemoteApplicationConnection:authinfo">
+									<rank>20</rank>
+									<items>
+										<item id="auth_user">
+											<rank>10</rank>
+										</item>
+										<item id="auth_pwd">
+											<rank>20</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="actions_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="ActionWebhook" _delta="define">
+			<parent>cmdbAbstractObject</parent>
+			<php_parent>
+				<name><![CDATA[Combodo\iTop\Core\Notification\Action\_ActionWebhook]]></name>
+			</php_parent>
+			<properties>
+				<category>grant_by_profile,core/cmdb,application</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_action_webhook</db_table>
+				<db_key_field>id</db_key_field>
+				<naming>
+				  <attributes>
+				    <attribute id="name"/>
+				  </attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-webhook-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="language" xsi:type="AttributeApplicationLanguage">
+					<sql>language</sql>
+					<is_null_allowed>false</is_null_allowed>
+					<default_value>EN US</default_value>
+				</field>
+				<field id="remoteapplicationconnection_id" xsi:type="AttributeExternalKey">
+					<sql>remoteapplicationconnection_id</sql>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<target_class>RemoteApplicationConnection</target_class>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
+				<field id="test_remoteapplicationconnection_id" xsi:type="AttributeExternalKey">
+					<sql>test_remoteapplicationconnection_id</sql>
+					<on_target_delete>DEL_AUTO</on_target_delete>
+					<target_class>RemoteApplicationConnection</target_class>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="method" xsi:type="AttributeEnum">
+					<values>
+						<value id="get">get</value>
+						<value id="post">post</value>
+						<value id="put">put</value>
+						<value id="patch">patch</value>
+						<value id="delete">delete</value>
+					</values>
+					<sql>method</sql>
+					<default_value>post</default_value>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
+				<field id="headers" xsi:type="AttributeText">
+					<sql>headers</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="payload" xsi:type="AttributeText">
+					<sql>payload</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+        <field id="prepare_payload_callback" xsi:type="AttributeString">
+          <sql>prepare_payload_callback</sql>
+          <default_value/>
+          <is_null_allowed>true</is_null_allowed>
+        </field>
+        <field id="process_response_callback" xsi:type="AttributeString">
+		          <sql>process_response_callback</sql>
+		          <default_value/>
+		          <is_null_allowed>true</is_null_allowed>
+		        </field>
+			</fields>
+			<methods>
+				<method id="PrefillCreationForm">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<code><![CDATA[	public function PrefillCreationForm(&$aContextParam)
+	{
+		// Set default content-type
+		$this->Set('headers', 'Content-type: application/json');
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareWebRequest">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 *
+	 * @return \Combodo\iTop\Core\WebRequest
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareWebRequest($aContextArgs, &$oLog)
+	{
+		// Switch to action language in order to have dictionary entries in the right language
+		// Note: We save current user language so we can switch back to it afterwards
+		$sUserLang = Dict::GetUserLanguage();
+		Dict::SetUserLanguage($this->Get('language'));
+
+		// Get web request parameters
+		// - URL
+		$sURL = $this->PrepareURL($aContextArgs, $oLog);
+		if (!is_null($oLog))
+		{
+			$oLog->Set('webhook_url', ($sURL !== null) ? $sURL : 'No test URL provided');
+		}
+		// - Method
+		$sMethod = $this->PrepareMethod($aContextArgs, $oLog);
+		// - Headers
+		$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
+		if (!is_null($oLog))
+		{
+			$this->LogHeaders($this->Get('headers'), $aHeaders, $oLog);
+		}
+		// - Payload
+		$payload = $this->PreparePayload($aContextArgs, $oLog);
+		if (!is_null($oLog))
+		{
+			$this->LogPayload($this->Get('payload'), $payload, $oLog);
+		}
+
+		// Switch back to current user language
+		Dict::SetUserLanguage($sUserLang);
+
+		// Get module parameters
+		$sConnectionTimeoutInSeconds = MetaModel::GetModuleSetting('combodo-webhook-integration', 'timeout', \Combodo\iTop\Service\WebRequestSender::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS);
+
+		// Prepare cURL options
+		$aCURLOptions = array(
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_POST => ($sMethod === 'post'),
+			CURLOPT_HTTPHEADER => $aHeaders,
+			CURLOPT_CONNECTTIMEOUT => $sConnectionTimeoutInSeconds,
+			CURLOPT_POSTFIELDS => $payload,
+		);
+
+		// Certificate options
+		// - Should we check its validity?
+		if (MetaModel::GetModuleSetting('combodo-webhook-integration', 'certificate_check', true))
+		{
+			$aCURLOptions[CURLOPT_SSL_VERIFYPEER] = true;
+			$aCURLOptions[CURLOPT_SSL_VERIFYHOST] = 2;
+		}
+		else
+		{
+			$aCURLOptions[CURLOPT_SSL_VERIFYPEER] = false;
+			$aCURLOptions[CURLOPT_SSL_VERIFYHOST] = 0;
+		}
+		// - Location of CA certificate file
+		$sCACertFile = MetaModel::GetModuleSetting('combodo-webhook-integration', 'ca_certificate_file', '');
+		if (!empty($sCACertFile))
+		{
+			// The name of a file containing a PEM formatted certificate.
+			$aCurlOptions[CURLOPT_SSLCERT] = $sCACertFile;
+		}
+
+		$oWebRequest = new \Combodo\iTop\Core\WebRequest($sURL);
+		$oWebRequest->SetOptions($aCURLOptions);
+
+		return $oWebRequest;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareURL">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return the URL for the web request
+	 *
+	 * @param array              $aContextArgs
+	 * @param \EventNotification $oLog
+	 *
+	 * @return string
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 * @throws \Exception
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareURL($aContextArgs, &$oLog)
+	{
+		$oRemoteApplicationConnection = $this->GetRemoteApplicationConnection();
+
+		// Get URL
+		if($oRemoteApplicationConnection !== null)
+		{
+			$sURL = $oRemoteApplicationConnection->Get('url');
+		}
+		elseif($this->IsBeingTested())
+		{
+			$sURL = null;
+		}
+		else
+		{
+
+			throw new Exception('Action should have at least one webhook URL set!');
+		}
+
+		return $sURL;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareMethod">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return the web request method (get or post)
+	 *
+	 * @param array              $aContextArgs
+	 * @param \EventNotification $oLog
+	 *
+	 * @return string
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareMethod($aContextArgs, &$oLog)
+	{
+		return $this->Get('method');
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareHeaders">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return HTTP headers of the action as an array (eg. ['Key 1: Value 1', 'Key 2: Value 2']).
+	 * If no headers specified, 'Content-type: application/json' will be returned as it is the standard for most webhook apps.
+	 *
+	 * IMPORTANT: The array must be NON associative, otherwise the cURL lib. won't use it.
+	 *
+	 * @param array              $aContextArgs
+	 * @param \EventNotification $oLog
+	 *
+	 * @return array
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareHeaders($aContextArgs, &$oLog)
+	{
+		$aHeaders = array();
+
+		$sHeadersAsText = (empty($this->Get('headers'))) ? 'Content-type: application/json' : MetaModel::ApplyParams($this->Get('headers'), $aContextArgs);
+		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
+		foreach ($aLines as $sLine)
+		{
+			$aHeaders[] = trim($sLine);
+		}
+
+		return $aHeaders;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PreparePayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Prepare the payload by formatting it, applying parameters and return it either as:
+	 * - a string (eg. JSON encoded)
+	 * - an array of parameters
+	 *
+	 * @param array              $aContextArgs
+	 * @param \EventNotification $oLog
+	 *
+	 * @return string|array
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 * @throws \Exception
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+	{
+		$sCallbackFQCN = $this->Get('prepare_payload_callback');
+		if (empty($sCallbackFQCN))
+		{
+			$payload = MetaModel::ApplyParams($this->Get('payload'), $aContextArgs);
+		}
+		else
+		{
+			// Check if callback is in the action class itself
+			if(stripos($sCallbackFQCN, '$this->') !== false)
+			{
+				$sMethodName = str_ireplace('$this->', '', $sCallbackFQCN);
+				$payload = $this->$sMethodName($aContextArgs, $oLog);
+			}
+			// Otherwise check if callback is callable as a static method
+			elseif(is_callable($sCallbackFQCN))
+			{
+				$payload = call_user_func($sCallbackFQCN, $aContextArgs, $oLog);
+			}
+			// Otherwise there is a problem
+			else
+			{
+				throw new Exception('Prepare payload callback is not callable ('.$sCallbackFQCN.')');
+			}
+		}
+
+		return $payload;
+	}
+]]>
+					</code>
+				</method>
+				<method id="LogHeaders">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Log raw and prepared headers in the event notification
+	 *
+	 * @param string                $sRawHeaders
+	 * @param array                 $aPreparedHeaders
+	 * @param \EventNotification    $oLog
+	 *
+	 * @return void
+	 */]]></comment>
+					<code><![CDATA[	protected function LogHeaders($sRawHeaders, $aPreparedHeaders, &$oLog)
+	{
+		$oLog->Set('headers', "Raw:\n".$sRawHeaders."\n\nAfter preparation:\n".print_r($aPreparedHeaders, true));
+	}
+]]>
+					</code>
+				</method>
+				<method id="LogPayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Log raw and prepared payload in the event notification
+	 *
+	 * @param string                $sRawPayload
+	 * @param string                $sPreparedPayload
+	 * @param \EventNotification    $oLog
+	 *
+	 * @return void
+	 */]]></comment>
+					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, &$oLog)
+	{
+		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sPreparedPayload);
+	}
+]]>
+					</code>
+				</method>
+				<method id="GetRemoteApplicationConnection">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return the RemoteApplicationConnection to use depending on the current object status
+	 *
+	 * @return \RemoteApplicationConnection
+	 */]]></comment>
+					<code><![CDATA[	protected function GetRemoteApplicationConnection()
+	{
+		// Get RemoteApplicationConnection object
+		$sAttCode = $this->IsBeingTested() ? 'test_remoteapplicationconnection_id' : 'remoteapplicationconnection_id';
+		$sID = $this->Get($sAttCode);
+
+		/** @var \AttributeExternalKey $oAttDef */
+		$oAttDef = MetaModel::GetAttributeDef(get_class($this), $sAttCode);
+		$sClass = $oAttDef->GetTargetClass();
+
+		return MetaModel::GetObject($sClass, $sID, false, true);
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="description">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="language">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:webhookconnection">
+									<rank>20</rank>
+									<items>
+										<item id="remoteapplicationconnection_id">
+											<rank>10</rank>
+										</item>
+										<item id="test_remoteapplicationconnection_id">
+											<rank>20</rank>
+										</item>
+										<item id="method">
+											<rank>30</rank>
+										</item>
+										<item id="headers">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col1">
+							<rank>20</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:requestsimple">
+									<rank>10</rank>
+									<items>
+										<item id="payload">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:requestadvanced">
+									<rank>20</rank>
+									<items>
+										<item id="prepare_payload_callback">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:response">
+									<rank>30</rank>
+									<items>
+										<item id="process_response_callback">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="trigger_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="status">
+							<rank>10</rank>
+						</item>
+						<item id="language">
+							<rank>20</rank>
+						</item>
+						<item id="remoteapplicationconnection_id">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+		</class>
+		<class id="ActioniTopWebhook" _delta="define">
+			<parent>ActionWebhook</parent>
+			<properties>
+				<category>grant_by_profile,core/cmdb,application</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_action_itop_webhook</db_table>
+				<db_key_field>id</db_key_field>
+				<naming>
+				  <attributes>
+				    <attribute id="name"/>
+				  </attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-webhook-itop-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields/>
+			<methods>
+				<method id="PreparePayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 * @return string
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+	{
+		// Retrieve connection
+		$oRemoteApplicationconnection = $this->GetRemoteApplicationConnection();
+
+		// Retrieve basis parameters
+		$aParameters = array(
+			'auth_user' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_user'), $aContextArgs),
+			'auth_pwd' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_pwd'), $aContextArgs),
+			'version' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('version'), $aContextArgs),
+			'json_data' => MetaModel::ApplyParams($this->Get('payload'), $aContextArgs),
+		);
+
+		foreach($aParameters as $sParamName => $sParamValue)
+		{
+			if(empty($sParamValue))
+			{
+				throw new Exception('Missing at least of the following mandatory parameters: '.implode(', ', array_keys($aParameters)));
+			}
+		}
+
+		// Transform array to HTTP query parameters
+		return http_build_query($aParameters);
+	}
+]]>
+					</code>
+				</method>
+				<method id="LogPayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, &$oLog)
+	{
+		$sPwdQueryParamObfuscated = 'auth_pwd=******';
+		$sObfuscatedPayload = preg_replace('/(auth_pwd=[^&]*)/', $sPwdQueryParamObfuscated, $sPreparedPayload);
+		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sObfuscatedPayload);
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="description">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="language">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:webhookconnection">
+									<rank>20</rank>
+									<items>
+										<item id="remoteapplicationconnection_id">
+											<rank>10</rank>
+										</item>
+										<item id="test_remoteapplicationconnection_id">
+											<rank>20</rank>
+										</item>
+										<item id="headers">
+											<rank>30</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col1">
+							<rank>20</rank>
+							<items>
+								<item id="fieldset:ActioniTopWebhook:requestparameters">
+									<rank>10</rank>
+									<items>
+										<item id="payload">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:response">
+									<rank>20</rank>
+									<items>
+										<item id="process_response_callback">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="trigger_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="ActionSlackNotification" _delta="define">
+			<parent>ActionWebhook</parent>
+			<properties>
+				<category>grant_by_profile,core/cmdb,application</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_action_slack_notif</db_table>
+				<db_key_field>id</db_key_field>
+				<naming>
+				  <attributes>
+				    <attribute id="name"/>
+				  </attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-webhook-slack-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="message" xsi:type="AttributeHTML">
+					<sql>message</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="include_list_attributes" xsi:type="AttributeEnum">
+					<values>
+						<value id="list">list</value>
+						<value id="slack">slack</value>
+					</values>
+					<sql>include_list_attributes</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+					<display_style>list</display_style>
+				</field>
+				<field id="include_user_info" xsi:type="AttributeEnum">
+					<values>
+						<value id="yes">yes</value>
+						<value id="no">no</value>
+					</values>
+					<sql>include_user_info</sql>
+					<default_value>no</default_value>
+					<is_null_allowed>false</is_null_allowed>
+					<display_style>radio_horizontal</display_style>
+				</field>
+				<field id="include_modify_button" xsi:type="AttributeEnum">
+					<values>
+						<value id="yes">yes</value>
+						<value id="no">no</value>
+					</values>
+					<sql>include_modify_button</sql>
+					<default_value>no</default_value>
+					<is_null_allowed>false</is_null_allowed>
+					<display_style>radio_horizontal</display_style>
+				</field>
+				<field id="include_delete_button" xsi:type="AttributeEnum">
+					<values>
+						<value id="yes">yes</value>
+						<value id="no">no</value>
+					</values>
+					<sql>include_delete_button</sql>
+					<default_value>no</default_value>
+					<is_null_allowed>false</is_null_allowed>
+					<display_style>radio_horizontal</display_style>
+				</field>
+				<field id="include_other_actions_button" xsi:type="AttributeEnum">
+					<values>
+						<value id="yes">yes</value>
+						<value id="no">no</value>
+                        <value id="specify">specify</value>
+					</values>
+					<sql>include_other_actions_button</sql>
+					<default_value>no</default_value>
+					<is_null_allowed>false</is_null_allowed>
+					<display_style>radio_horizontal</display_style>
+				</field>
+        <field id="specified_other_actions" xsi:type="AttributeString">
+					<sql>specified_other_actions</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+			</fields>
+			<methods>
+				<method id="PreparePayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+	{
+		$aSlackBlocks = array(
+			'blocks' => array(),
+		);
+
+		// Prepare basis message
+		$sMessage = static::TransformHTMLToSlackMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs));
+		if(!empty($sMessage))
+		{
+			$aSlackBlocks['blocks'][] = array(
+				'type' => 'section',
+				'text' => array(
+					'type' => 'mrkdwn',
+					'text' => $sMessage,
+				),
+			);
+		}
+
+		// Prepare extra attributes
+		$aBlock = $this->PrepareExtraAttributesForBlockKit($aContextArgs);
+		if(!empty($aBlock))
+		{
+			$aSlackBlocks['blocks'][] = $aBlock;
+		}
+
+		// Prepare user information
+		if($this->Get('include_user_info') === 'yes')
+		{
+			$aSlackBlocks['blocks'][] = $this->PrepareUserInfoForBlockKit($aContextArgs);
+		}
+
+		// Prepare action buttons
+		$aBlock = $this->PrepareActionsForBlockKit($aContextArgs);
+		if(!empty($aBlock))
+		{
+			$aSlackBlocks['blocks'][] = $aBlock;
+		}
+
+		return json_encode($aSlackBlocks);
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareExtraAttributesForBlockKit">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return a "block" array of attributes formatted for Slack "block kit" system, or null if the chosen list has no attributes
+	 *
+	 * @param array $aContextArgs
+	 *
+	 * @return null|array
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareExtraAttributesForBlockKit($aContextArgs)
+	{
+		/** @var \DBObject $oObject */
+		$oObject = $aContextArgs['this->object()'];
+		$sObjClass = get_class($oObject);
+
+		// Retrieve attributes
+		$aListItems = MetaModel::GetZListItems($sObjClass, $this->Get('include_list_attributes'));
+
+		// No attributes in the list
+		if(empty($aListItems))
+		{
+			return null;
+		}
+
+		// Prepare block structure
+		$aBlock = array(
+			'type' => 'section',
+			'fields' => array(),
+		);
+
+		foreach($aListItems as $sAttCode)
+		{
+			$oAttDef = MetaModel::GetAttributeDef($sObjClass, $sAttCode);
+			$aBlock['fields'][] = array(
+				'type' => 'mrkdwn',
+				'text' => sprintf("*%s*\n%s", $oAttDef->GetLabel(), static::TransformHTMLToSlackMarkup($oObject->GetAsHtml($sAttCode))),
+			);
+		}
+
+		return $aBlock;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareUserInfoForBlockKit">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return a "block" array for the current user information formatted for Slack "block kit" system
+	 *
+	 * @param array $aContextArgs
+	 *
+	 * @return array
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareUserInfoForBlockKit($aContextArgs)
+	{
+		// Get user info as accurate as possible
+		$oUser = UserRights::GetUserObject();
+		$oContact = $oUser->GetContactObject() ?: $oUser;
+
+		$sContactClass = get_class($oContact);
+		$sContactLabel = MetaModel::GetName($sContactClass);
+		$sContactName = $oContact->GetName();
+		$sContactUrl = ApplicationContext::MakeObjectUrl($sContactClass, $oContact->GetKey(), null, false);
+
+		$aBlock = array(
+			'type' => 'context',
+			'elements' => array(
+				array(
+					'type' => 'mrkdwn',
+					'text' => sprintf('*%s*: <%s|%s>', $sContactLabel, $sContactUrl, $sContactName),
+				),
+			),
+		);
+
+		return $aBlock;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareActionsForBlockKit">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return a "block" array of actions formatted for Slack "block kit" system, or null if no actions available
+	 *
+	 * @param array $aContextArgs
+	 *
+	 * @return null|array
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareActionsForBlockKit($aContextArgs)
+	{
+		$aActionElements = array();
+
+		/** @var \DBObject $oObject */
+		$oObject = $aContextArgs['this->object()'];
+		$sObjClass = get_class($oObject);
+		$iObjID = $oObject->GetKey();
+
+		$sBaseURL = utils::GetAbsoluteUrlAppRoot();
+
+		// Modify button
+		if($this->Get('include_modify_button') === 'yes')
+		{
+			$aActionElements[] = array(
+				'type' => 'button',
+				'text' => array(
+					'type' => 'plain_text',
+					'text' => Dict::S('UI:Menu:Modify'),
+				),
+				'action_id' => 'modify',
+				'url' => sprintf('%spages/UI.php?operation=modify&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
+				'style' => 'primary',
+			);
+		}
+
+		// Other actions buttons (transitions)
+		$sIncludeOtherActionsButton = $this->Get('include_other_actions_button');
+		if($sIncludeOtherActionsButton !== 'no')
+		{
+			$aTransitions = $oObject->EnumTransitions();
+			$aStimuli = MetaModel::EnumStimuli($sObjClass);
+			if ($sIncludeOtherActionsButton == 'yes')
+			{
+				$aAllowedStimuli = array_keys($aTransitions);
+			}
+			else
+			{
+				$aAllowedStimuli = preg_split('/\s*,\s*/', $this->Get('specified_other_actions'));
+			}
+
+			// Note: We don't filter stimuli on user rights, it's up to the notification creator
+			// to tailored it regarding the recipients.
+			foreach ($aAllowedStimuli as $sStimulusCode)
+			{
+				if (isset($aTransitions[$sStimulusCode]) && is_a($aStimuli[$sStimulusCode], StimulusUserAction::class))
+				{
+					$aActionElements[] = array(
+						'type' => 'button',
+						'text' => array(
+							'type' => 'plain_text',
+							'text' => $aStimuli[$sStimulusCode]->GetLabel(),
+						),
+						'action_id' => $sStimulusCode,
+						'url' => sprintf('%spages/UI.php?operation=stimulus&stimulus=%s&class=%s&id=%d', $sBaseURL, $sStimulusCode, $sObjClass, $iObjID),
+					);
+				}
+			}
+		}
+
+		// Delete button
+		if($this->Get('include_delete_button') === 'yes')
+		{
+			$aActionElements[] = array(
+				'type' => 'button',
+				'text' => array(
+					'type' => 'plain_text',
+					'text' => Dict::S('UI:Menu:Delete'),
+				),
+				'action_id' => 'delete',
+				'url' => sprintf('%spages/UI.php?operation=delete&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
+				'style' => 'danger',
+			);
+		}
+
+		// Prepare block
+		$aBlock = (empty($aActionElements)) ? null : array(
+			'type' => 'actions',
+			'elements' => $aActionElements,
+		);
+
+		return $aBlock;
+	}
+]]>
+					</code>
+				</method>
+				<method id="TransformHTMLToSlackMarkup">
+					<static>true</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return $sContent HTML transformed into Slack proper markup
+	 *
+	 * @param string $sContent
+	 *
+	 * @return string
+	 */]]></comment>
+					<code><![CDATA[	public static function TransformHTMLToSlackMarkup($sContent)
+	{
+		if(empty($sContent))
+		{
+			return $sContent;
+		}
+
+		$aReplacementsMatrix = array(
+			array( array('<br />', '<br/>', '<br>'), "\n" ),
+			array( array('<h1>', '</h1>'), array('*', '*') ),
+			array( array('<h2>', '</h2>'), array('*', '*') ),
+			array( array('<h3>', '</h3>'), array('*', '*') ),
+			array( array('<strong>', '</strong>'), array('*', '*') ),
+			array( array('<b>', '</b>'), array('*', '*') ),
+			array( array('<em>', '</em>'), array('_', '_') ),
+			array( array('<i>', '</i>'), array('_', '_') ),
+			array( array('<del>', '</del>'), array('~', '~') ),
+			array( array('<s>', '</s>'), array('~', '~') ),
+			array( array('<li>', '</li>'), array('• ', '') ),
+			array( array('<code>', '</code>'), array('`', '`') ),
+			array( array('<pre>', '</pre>'), array('```', '```') ),
+		);
+
+		// Replace HTML tags
+		$sContent = strip_tags($sContent, '<h1><h2><h3><br><strong><b><em><i><del><s><li><code><pre><a>');
+		foreach($aReplacementsMatrix as $aReplacements)
+		{
+			$sContent = str_replace($aReplacements[0], $aReplacements[1], $sContent);
+		}
+
+		// Replace hyperlinks
+		preg_match_all('/<\s*a.*?href\s*=\s*(?:\"|\')(.*?)(?:\"|\')[^>]*>(.*?)<\s*?\/\s*?a\s*?>/i', $sContent, $aResult);
+		for($iIdx = 0; $iIdx < count($aResult[0]); $iIdx++) {
+			$sContent = str_replace($aResult[0][$iIdx], '<'.$aResult[1][$iIdx].'|'.$aResult[2][$iIdx].'>', $sContent);
+		}
+
+		return $sContent;
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="description">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="language">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:webhookconnection">
+									<rank>20</rank>
+									<items>
+										<item id="remoteapplicationconnection_id">
+											<rank>10</rank>
+										</item>
+										<item id="test_remoteapplicationconnection_id">
+											<rank>20</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionSlackNotification:message">
+									<rank>30</rank>
+									<items>
+										<item id="message">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col1">
+							<rank>20</rank>
+							<items>
+								<item id="fieldset:ActionSlackNotification:additionalelements">
+									<rank>10</rank>
+									<items>
+										<item id="include_list_attributes">
+											<rank>10</rank>
+										</item>
+										<item id="include_user_info">
+											<rank>20</rank>
+										</item>
+										<item id="include_modify_button">
+											<rank>30</rank>
+										</item>
+										<item id="include_delete_button">
+											<rank>40</rank>
+										</item>
+										<item id="include_other_actions_button">
+											<rank>50</rank>
+										</item>
+										<item id="specified_other_actions">
+											<rank>60</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="trigger_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="ActionRocketChatNotification" _delta="define">
+			<parent>ActionWebhook</parent>
+			<properties>
+				<category>grant_by_profile,core/cmdb,application</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_action_rocketchat_notif</db_table>
+				<db_key_field>id</db_key_field>
+				<naming>
+				  <attributes>
+				    <attribute id="name"/>
+				  </attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-webhook-rocketchat-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="message" xsi:type="AttributeHTML">
+					<sql>message</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="bot_alias" xsi:type="AttributeString">
+					<sql>bot_alias</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="bot_url_avatar" xsi:type="AttributeString">
+					<sql>bot_url_avatar</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="bot_emoji_avatar" xsi:type="AttributeString">
+					<sql>bot_emoji_avatar</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+			</fields>
+			<methods>
+				<method id="PreparePayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+	{
+		$aData = array(
+			'text' => static::TransformHTMLToRocketChatMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs)),
+			'attachments' => array(),
+		);
+
+		// Bot information
+		$aBotAttCodes = array('bot_alias' => 'alias', 'bot_url_avatar' => 'avatar', 'bot_emoji_avatar' => 'emoji');
+		foreach($aBotAttCodes as $sBotAttCode => $sPropCode)
+		{
+			$sPropValue = MetaModel::ApplyParams($this->Get($sBotAttCode), $aContextArgs);
+			if(empty($sPropValue) === false)
+			{
+				$aData[$sPropCode] = $sPropValue;
+			}
+		}
+
+		return json_encode($aData);
+	}
+]]>
+					</code>
+				</method>
+				<method id="TransformHTMLToRocketChatMarkup">
+					<static>true</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return $sContent HTML transformed into Rocket.Chat proper markup
+	 *
+	 * @param string $sContent
+	 *
+	 * @return string
+	 */]]></comment>
+					<code><![CDATA[	public static function TransformHTMLToRocketChatMarkup($sContent)
+	{
+		if(empty($sContent))
+		{
+			return $sContent;
+		}
+
+		$aReplacementsMatrix = array(
+			array( array('<br />', '<br/>', '<br>'), "\n" ),
+			array( array('<h1>', '</h1>'), array('*', '*') ),
+			array( array('<h2>', '</h2>'), array('*', '*') ),
+			array( array('<h3>', '</h3>'), array('*', '*') ),
+			array( array('<strong>', '</strong>'), array('*', '*') ),
+			array( array('<b>', '</b>'), array('*', '*') ),
+			array( array('<em>', '</em>'), array('_', '_') ),
+			array( array('<i>', '</i>'), array('_', '_') ),
+			array( array('<del>', '</del>'), array('~', '~') ),
+			array( array('<s>', '</s>'), array('~', '~') ),
+			array( array('<li>', '</li>'), array('• ', '') ),
+			array( array('<code>', '</code>'), array('`', '`') ),
+			array( array('<pre>', '</pre>'), array('```', '```') ),
+		);
+
+		// Replace HTML tags
+		$sContent = strip_tags($sContent, '<h1><h2><h3><br><strong><b><em><i><del><s><li><code><pre><a>');
+		foreach($aReplacementsMatrix as $aReplacements)
+		{
+			$sContent = str_replace($aReplacements[0], $aReplacements[1], $sContent);
+		}
+
+		// Replace hyperlinks
+		preg_match_all('/<\s*a.*?href\s*=\s*(?:\"|\')(.*?)(?:\"|\')[^>]*>(.*?)<\s*?\/\s*?a\s*?>/i', $sContent, $aResult);
+		for($iIdx = 0; $iIdx < count($aResult[0]); $iIdx++) {
+			$sContent = str_replace($aResult[0][$iIdx], '<'.$aResult[1][$iIdx].'|'.$aResult[2][$iIdx].'>', $sContent);
+		}
+
+		return $sContent;
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="description">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="language">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:webhookconnection">
+									<rank>20</rank>
+									<items>
+										<item id="remoteapplicationconnection_id">
+											<rank>10</rank>
+										</item>
+										<item id="test_remoteapplicationconnection_id">
+											<rank>20</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionRocketChatNotification:message">
+									<rank>30</rank>
+									<items>
+										<item id="message">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col1">
+							<rank>20</rank>
+							<items>
+								<item id="fieldset:ActionRocketChatNotification:additionalelements">
+									<rank>10</rank>
+									<items>
+										<item id="bot_alias">
+											<rank>10</rank>
+										</item>
+										<item id="bot_url_avatar">
+											<rank>20</rank>
+										</item>
+										<item id="bot_emoji_avatar">
+											<rank>30</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="trigger_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="EventWebhook" _delta="define">
+			<parent>DBObject</parent>
+			<php_parent>
+				<name>EventNotification</name>
+			</php_parent>
+			<properties>
+				<category>core/cmdb,view_in_gui</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_event_webhook</db_table>
+				<db_key_field>id</db_key_field>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes/>
+				</reconciliation>
+				<order>
+					<columns>
+						<column id="date" ascending="false"/>
+					</columns>
+				</order>
+			</properties>
+			<fields>
+				<field id="action_finalclass" xsi:type="AttributeString">
+		          <sql>action_finalclass</sql>
+		          <default_value/>
+		          <is_null_allowed>true</is_null_allowed>
+		        </field>
+				<field id="webhook_url" xsi:type="AttributeString">
+		          <sql>webhook_url</sql>
+		          <default_value/>
+		          <is_null_allowed>true</is_null_allowed>
+		        </field>
+				<field id="headers" xsi:type="AttributeText">
+					<sql>headers</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="payload" xsi:type="AttributeText">
+					<sql>payload</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+				<field id="response" xsi:type="AttributeLongText">
+					<sql>response</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
+			</fields>
+			<presentation>
+				<details>
+					<items>
+						<item id="date">
+							<rank>10</rank>
+						</item>
+						<item id="message">
+							<rank>20</rank>
+						</item>
+						<item id="action_finalclass">
+							<rank>30</rank>
+						</item>
+						<item id="webhook_url">
+							<rank>30</rank>
+						</item>
+						<item id="headers">
+							<rank>30</rank>
+						</item>
+						<item id="payload">
+							<rank>30</rank>
+						</item>
+						<item id="response">
+							<rank>30</rank>
+						</item>
+					</items>
+				</details>
+				<list>
+					<items>
+						<item id="date">
+							<rank>10</rank>
+						</item>
+						<item id="message">
+							<rank>20</rank>
+						</item>
+						<item id="webhook_url">
+							<rank>30</rank>
+						</item>
+					</items>
+				</list>
+			</presentation>
+			<methods/>
+		</class>
+	</classes>
+	<menus>
+		<menu id="Integrations" xsi:type="DashboardMenuNode" _delta="define">
+			<rank>120</rank>
+			<parent>ConfigurationTools</parent>
+			<definition>
+				<layout>DashboardLayoutOneCol</layout>
+				<title>Dashboard:Integrations:Title</title>
+				<cells>
+					<cell id="0">
+						<rank>0</rank>
+						<dashlets>
+							<dashlet id="1" xsi:type="DashletHeaderStatic">
+								<rank>0</rank>
+								<title>Dashboard:Integrations:Outgoing:Title</title>
+								<icon>combodo-webhook-integration/asset/img/icon-webhook-48px.png</icon>
+							</dashlet>
+							<dashlet id="2" xsi:type="DashletBadge">
+								<rank>1</rank>
+								<class>RemoteApplicationConnection</class>
+							</dashlet>
+							<dashlet id="3" xsi:type="DashletBadge">
+								<rank>1</rank>
+								<class>RemoteApplicationType</class>
+							</dashlet>
+						</dashlets>
+					</cell>
+				</cells>
+			</definition>
+		</menu>
+	</menus>
+	<module_parameters>
+		<parameters id="combodo-webhook-integration" _delta="define">
+			<prefer_asynchronous type="bool">false</prefer_asynchronous>
+			<timeout type="int">5</timeout>
+			<certificate_check type="bool">true</certificate_check>
+			<ca_certificate_file/>
+		</parameters>
+	</module_parameters>
+</itop_design>
