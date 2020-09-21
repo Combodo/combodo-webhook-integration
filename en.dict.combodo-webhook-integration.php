@@ -65,6 +65,9 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionWebhook/Attribute:method+' => 'Method of the HTTP request',
 	'Class:ActionWebhook/Attribute:method/Value:get' => 'GET',
 	'Class:ActionWebhook/Attribute:method/Value:post' => 'POST',
+	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
+	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
+	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
 	'Class:ActionWebhook/Attribute:headers' => 'Headers',
 	'Class:ActionWebhook/Attribute:headers+' => 'Headers of the HTTP request, must be one per line (eg. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Payload',
@@ -92,6 +95,8 @@ IMPORTANT:
 	'ActionWebhook:webhookconnection' => 'Webhook connection',
 	'ActionWebhook:requestsimple' => 'Request, either use a static payload (simple) ...',
 	'ActionWebhook:requestadvanced' => '... or build it dynamically (advanced)',
+	// Note: This one is used by derivated classes
+	'ActionWebhook:requestparameters' => 'Request parameters',
 	'ActionWebhook:response' => 'Response',
 ));
 
@@ -111,8 +116,30 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActioniTopWebhook+' => 'Webhook call to a remote iTop application',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'JSON data',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailled information',
-	// - Fieldsets
-	'ActioniTopWebhook:requestparameters' => 'Request parameters',
+));
+
+// Tuleap
+Dict::Add('EN US', 'English', 'English', array(
+	// RemoteTuleapConnection
+	'Class:RemoteTuleapConnection' => 'Remote Tuleap connection',
+	'Class:RemoteTuleapConnection/Attribute:url' => 'API endpoint',
+	'Class:RemoteTuleapConnection/Attribute:url+' => 'Base URL of the Tuleap API endpoint, for example https://tuleap.company.com/api/',
+	'Class:RemoteTuleapConnection/Attribute:auth_access_key' => 'Auth. access key',
+	'Class:RemoteTuleapConnection/Attribute:auth_access_key+' => 'Personal access key used for the authentication. (Generated on the remote Tuleap)',
+
+	// ActionTuleapWebhook
+	'Class:ActionTuleapWebhook' => 'Tuleap webhook call',
+	'Class:ActionTuleapWebhook+' => 'Webhook call to a remote Tuleap application',
+	'Class:ActionTuleapWebhook/Attribute:remote_operation' => 'Operation',
+	'Class:ActionTuleapWebhook/Attribute:remote_operation+' => 'Operation to call on the remote Tuleap',
+	'Class:ActionTuleapWebhook/Attribute:remote_operation/Value:30-create-artifact' => 'Create an artifact',
+	'Class:ActionTuleapWebhook/Attribute:remote_operation/Value:31-update-artifact' => 'Update an artifact',
+	'Class:ActionTuleapWebhook/Attribute:remote_object_id' => 'Remote object ID',
+	'Class:ActionTuleapWebhook/Attribute:remote_object_id+' => 'The identifier of the remote object the operation is for:
+	 - When creating an artifact, should be the tracker ID in which the artifact will be created
+	 - When updating an artifact, should be the ID of the artifact itself',
+	'Class:ActionTuleapWebhook/Attribute:payload' => 'Data mapping',
+	'Class:ActionTuleapWebhook/Attribute:payload+' => 'Mapping between '.ITOP_APPLICATION_SHORT.' attributes and Tuleap attributes. Must be 1 field per line, following the syntax <TULEAP_ATT_CODE>: <ATT_VALUE>. <ATT_VALUE> can either be an hardcoded value (eg. 123, \'abc\') or a placeholder (eg. $this->friendlyname$)',
 ));
 
 // Slack

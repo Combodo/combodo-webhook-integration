@@ -244,6 +244,78 @@
 				</details>
 			</presentation>
 		</class>
+		<class id="RemoteTuleapConnection" _delta="define">
+			<parent>RemoteApplicationConnection</parent>
+			<properties>
+				<category>grant_by_profile,bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>remotetuleapconnection</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="application"/>
+						<attribute id="environment"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+		        <field id="auth_access_key" xsi:type="AttributeString">
+					<sql>auth_access_key</sql>
+					<default_value/>
+					<is_null_allowed>false</is_null_allowed>
+		        </field>
+			</fields>
+			<methods/>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:RemoteApplicationConnection:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="remoteapplicationtype_id">
+											<rank>20</rank>
+										</item>
+										<item id="environment">
+											<rank>30</rank>
+										</item>
+										<item id="url">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:RemoteApplicationConnection:authinfo">
+									<rank>20</rank>
+									<items>
+										<item id="auth_access_key">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="actions_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
 		<class id="ActionWebhook" _delta="define">
 			<parent>cmdbAbstractObject</parent>
 			<php_parent>
@@ -308,12 +380,12 @@
 					<default_value/>
 					<is_null_allowed>true</is_null_allowed>
 				</field>
-        <field id="prepare_payload_callback" xsi:type="AttributeString">
-          <sql>prepare_payload_callback</sql>
-          <default_value/>
-          <is_null_allowed>true</is_null_allowed>
-        </field>
-        <field id="process_response_callback" xsi:type="AttributeString">
+		        <field id="prepare_payload_callback" xsi:type="AttributeString">
+		          <sql>prepare_payload_callback</sql>
+		          <default_value/>
+		          <is_null_allowed>true</is_null_allowed>
+		        </field>
+		        <field id="process_response_callback" xsi:type="AttributeString">
 		          <sql>process_response_callback</sql>
 		          <default_value/>
 		          <is_null_allowed>true</is_null_allowed>
@@ -833,6 +905,303 @@
 								<item id="fieldset:ActioniTopWebhook:requestparameters">
 									<rank>10</rank>
 									<items>
+										<item id="payload">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:response">
+									<rank>20</rank>
+									<items>
+										<item id="process_response_callback">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="trigger_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+		<class id="ActionTuleapWebhook" _delta="define">
+			<parent>ActionWebhook</parent>
+			<properties>
+				<category>grant_by_profile,core/cmdb,application</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>priv_action_tuleap_webhook</db_table>
+				<db_key_field>id</db_key_field>
+				<naming>
+				  <attributes>
+				    <attribute id="name"/>
+				  </attributes>
+				</naming>
+				<display_template/>
+				<icon>asset/img/icon-webhook-48px.png</icon>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="remote_operation" xsi:type="AttributeEnum">
+					<values>
+						<value id="30-create-artifact">30-create-artifact</value>
+						<value id="31-update-artifact">31-update-artifact</value>
+					</values>
+					<sql>remote_operation</sql>
+					<default_value/>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
+				<field id="remote_object_id" xsi:type="AttributeString">
+		          <sql>remote_object_id</sql>
+		          <default_value/>
+		          <is_null_allowed>true</is_null_allowed>
+		        </field>
+			</fields>
+			<methods>
+				<method id="PrepareURL">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareURL($aContextArgs, &$oLog)
+	{
+		$sURL = rtrim(parent::PrepareURL($aContextArgs, $oLog), '/');
+
+		switch($this->Get('remote_operation'))
+		{
+			case '30-create-artifact':
+				$sURL .= '/artifacts';
+				break;
+
+			case '31-update-artifact':
+				// Retrieve artifact ID
+				$sArtifactId = $this->Get('remote_object_id');
+				if(empty($sArtifactId))
+				{
+					throw new Exception('Remote object (artifact) ID must be specified');
+				}
+
+				$sURL .= '/artifacts/'.$sArtifactId;
+				break;
+		}
+
+		return $sURL;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareMethod">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Return the web request method depending on the remote_operation
+	 *
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareMethod($aContextArgs, &$oLog)
+	{
+		switch($this->Get('remote_operation'))
+		{
+			case '30-create-artifact':
+				$sMethod = 'post';
+				break;
+
+			case '31-update-artifact':
+				$sMethod = 'put';
+				break;
+
+			default:
+				$sMethod = parent::PrepareMethod($aContextArgs, $oLog);
+				break;
+		}
+
+		return $sMethod;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareHeaders">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareHeaders($aContextArgs, &$oLog)
+	{
+		// Retrieve access key
+		$oRemoteApplicationConnection = $this->GetRemoteApplicationConnection();
+		$sAuthAccessKey = $oRemoteApplicationConnection->Get('auth_access_key');
+
+		// Build headers
+		$aHeaders = array(
+			'Content-type: application/json',
+			'X-Auth-AccessKey: '.$sAuthAccessKey,
+		);
+
+		return $aHeaders;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PreparePayload">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @inheritDoc
+	 * @return string
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+	{
+		// Retrieve payload
+		$sOriginalPayload = $this->Get('payload');
+
+		// Explode mapping
+		$aMappingLines = preg_split('/\r\n|\r|\n/', $sOriginalPayload);
+
+		// Apply parameters (not before exploding mapping as a value could be on several lines)
+		foreach ($aMappingLines as $iIdx => $sMappingLine)
+		{
+			$aMappingLines[$iIdx] = MetaModel::ApplyParams($sMappingLine, $aContextArgs);
+		}
+
+		// Build payload
+		$aPreparedPayload = '';
+		switch($this->Get('remote_operation'))
+		{
+			case '30-create-artifact':
+				// Retrieve tracker ID
+				$sTrackerId = $this->Get('remote_object_id');
+				if(empty($sTrackerId))
+				{
+					throw new Exception('Remote object (tracker) ID must be specified');
+				}
+
+				// Prepare values
+				$aValues = array();
+				foreach($aMappingLines as $sMappingLine)
+				{
+					$aLineParts = explode(':', $sMappingLine, 2);
+
+					// Consistency checks
+					if(count($aLineParts) !== 2)
+					{
+						throw new Exception('Wrong mapping format, should be "<TULEAP_FIELD_CODE>: <VALUE>", "'.$sMappingLine.'" given');
+					}
+
+					$sTuleapFieldCode = trim($aLineParts[0]);
+					$sFieldValue = trim($aLineParts[1]);
+
+					$aValues[$sTuleapFieldCode] = array('value' => $sFieldValue);
+				}
+
+				$aPreparedPayload = array(
+					'tracker' => array(
+						'id' => (int) $sTrackerId,
+					),
+					'values_by_field' => $aValues,
+				);
+				break;
+
+			case '31-update-artifact':
+				// TODO
+				break;
+		}
+
+		return json_encode($aPreparedPayload);
+	}
+]]>
+					</code>
+				</method>
+				<method id="LogHeaders">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Obfuscate auth. access key
+	 *
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function LogHeaders($sRawHeaders, $aPreparedHeaders, &$oLog)
+	{
+		$sAuthAccessKeyHeaderNeedle = 'X-Auth-AccessKey:';
+		foreach($aPreparedHeaders as $iIdx => $sPreparedHeader)
+		{
+			if(stripos($sPreparedHeader, $sAuthAccessKeyHeaderNeedle) !== false)
+			{
+				// Retrieve only first characters of the key, obfuscate the rest
+				$sClearPart = substr($sPreparedHeader, 0, strlen($sAuthAccessKeyHeaderNeedle) + 16);
+				$sHiddenPart = '***************************';
+
+				$aPreparedHeaders[$iIdx] = $sClearPart.$sHiddenPart;
+			}
+		}
+
+		parent::LogHeaders($sRawHeaders, $aPreparedHeaders, $oLog);
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="description">
+											<rank>20</rank>
+										</item>
+										<item id="status">
+											<rank>30</rank>
+										</item>
+										<item id="language">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:webhookconnection">
+									<rank>20</rank>
+									<items>
+										<item id="remoteapplicationconnection_id">
+											<rank>10</rank>
+										</item>
+										<item id="test_remoteapplicationconnection_id">
+											<rank>20</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="col:col1">
+							<rank>20</rank>
+							<items>
+								<item id="fieldset:ActionWebhook:requestparameters">
+									<rank>10</rank>
+									<items>
+										<item id="remote_operation">
+											<rank>40</rank>
+										</item>
+										<item id="remote_object_id">
+											<rank>40</rank>
+										</item>
 										<item id="payload">
 											<rank>40</rank>
 										</item>
