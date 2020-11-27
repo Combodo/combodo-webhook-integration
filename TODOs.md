@@ -41,6 +41,8 @@ Done
 - [X] Hide API key in log
 - [X] Remote app. connection
 - [X] API Key: tlp-k1-7.b96952c2b1a52aa0582070dc3877d30a2556defcfd4cf3470170034888b4cef4
+- [ ] Specific integration (other extension)
+    - [ ] Way to define which attrbiutes in Tuleap carry the linked iTop object class/ID so it can be send back to iTop for Tuleap => iTop calls
 
 ## Other integration candidates
 - Jira webhook

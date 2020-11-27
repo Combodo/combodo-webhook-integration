@@ -269,7 +269,7 @@
 				</reconciliation>
 			</properties>
 			<fields>
-		        <field id="auth_access_key" xsi:type="AttributeString">
+		        <field id="auth_access_key" xsi:type="AttributePassword">
 					<sql>auth_access_key</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
