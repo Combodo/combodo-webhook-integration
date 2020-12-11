@@ -1102,7 +1102,9 @@
 					}
 
 					$sTuleapFieldCode = trim($aLineParts[0]);
-					$sFieldValue = trim($aLineParts[1]);
+
+					// TODO: Dehardcode this, should be able to send HTML value
+					$sFieldValue = utils::HtmlToText(trim($aLineParts[1]));
 
 					$aValues[$sTuleapFieldCode] = array('value' => $sFieldValue);
 				}

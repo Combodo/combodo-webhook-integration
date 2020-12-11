@@ -6,6 +6,7 @@
 
 ## TODOs
 - [ ] Struct data to load RemoteApplicationType objects
+- [ ] Add $oObject-> as a possibility for response callback
 
 ## Webhook call (generic)
 - [ ] Attribute to choose the GUI (backoffice, itop-portal, ...) the hyperlinks should point to? \
@@ -19,7 +20,7 @@
 - [ ] Add option to log event in a log file in addition to the eventnotification
 
 ## iTop webhook
-Done
+- [ ] Transform authentication params to Basic Auth to avoid necessity to add "url" as a login mode
 
 ## Slack notification
 - [ ] Attachment
