@@ -1,8 +1,5 @@
 ## Questions
-- [X] Why not put the credentials / token in the WebhookURL instead of the Action? \
-=> We are doing it, derivated classes.
-- [X] Should we handle XMLRPC webhooks as well? \
-=> Not until we have a really use case / need for it.
+- [ ]
 
 ## TODOs
 - [ ] Struct data to load RemoteApplicationType objects
@@ -39,9 +36,9 @@
 - [ ] Preset response methods to do stuff (Go back to previous state for example)
 - [X] Preset operation Create artifact
 - [ ] Preset operation Update artifact
-- [X] Hide API key in log
 - [X] Remote app. connection
-- [X] API Key: tlp-k1-7.b96952c2b1a52aa0582070dc3877d30a2556defcfd4cf3470170034888b4cef4
+- [X] API Key support
+- [X] Hide API key in log
 - [ ] Specific integration (other extension)
     - [ ] Way to define which attrbiutes in Tuleap carry the linked iTop object class/ID so it can be send back to iTop for Tuleap => iTop calls
 
