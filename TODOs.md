@@ -20,11 +20,9 @@
 - [ ] Transform authentication params to Basic Auth to avoid necessity to add "url" as a login mode
 
 ## Slack notification
-- [ ] Attachment
 - [ ] Review "other action" codes and names
 
 ## Rocket chat notification
-- [ ] Field for an attachment (several?)
 
 ## Google Chat notification
 - [X] Test on Euromaster server
@@ -45,7 +43,6 @@
 ## Other integration candidates
 - Jira webhook
 - Jenkins webhook
-- Google Chat notification
 - Telegram notification
 - Mattermott notification
 - GitHub
