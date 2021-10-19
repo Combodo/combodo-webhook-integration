@@ -29,17 +29,6 @@
 - [ ] Action class
 - [ ] Action class icon
 
-## Tuleap webhook
-- [ ] Action class icon
-- [ ] Preset response methods to do stuff (Go back to previous state for example)
-- [X] Preset operation Create artifact
-- [ ] Preset operation Update artifact
-- [X] Remote app. connection
-- [X] API Key support
-- [X] Hide API key in log
-- [ ] Specific integration (other extension)
-    - [ ] Way to define which attrbiutes in Tuleap carry the linked iTop object class/ID so it can be send back to iTop for Tuleap => iTop calls
-
 ## Other integration candidates
 - Jira webhook
 - Jenkins webhook
