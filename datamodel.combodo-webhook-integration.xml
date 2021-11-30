@@ -338,10 +338,6 @@
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * @inheritDoc
-	 *
-	 * @return \Combodo\iTop\Core\WebRequest
-	 * @throws \ArchivedObjectException
-	 * @throws \CoreException
 	 */]]></comment>
 					<code><![CDATA[	protected function PrepareWebRequest($aContextArgs, &$oLog)
 	{
@@ -350,30 +346,35 @@
 		$sUserLang = Dict::GetUserLanguage();
 		Dict::SetUserLanguage($this->Get('language'));
 
-		// Get web request parameters
-		// - URL
-		$sURL = $this->PrepareURL($aContextArgs, $oLog);
-		if (!is_null($oLog))
-		{
-			$oLog->Set('webhook_url', ($sURL !== null) ? $sURL : 'No test URL provided');
+		// Surround with try/catch to make sure to restore user language in case of crash and don't contaminate the rest of the app.
+		try {
+			// Get web request parameters
+			// - URL
+			$sURL = $this->PrepareURL($aContextArgs, $oLog);
+			if (!is_null($oLog))
+			{
+				$oLog->Set('webhook_url', ($sURL !== null) ? $sURL : 'No test URL provided');
+			}
+			// - Method
+			$sMethod = $this->PrepareMethod($aContextArgs, $oLog);
+			// - Headers
+			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
+			if (!is_null($oLog))
+			{
+				$this->LogHeaders($this->GetRawHeadersAsString(), $aHeaders, $oLog);
+			}
+			// - Payload
+			$payload = $this->PreparePayload($aContextArgs, $oLog);
+			if (!is_null($oLog))
+			{
+				$this->LogPayload($this->Get('payload'), $payload, $oLog);
+			}
+		} catch (Exception $oException) {
+			throw $oException;
+		} finally {
+			// Switch back to current user language
+			Dict::SetUserLanguage($sUserLang);
 		}
-		// - Method
-		$sMethod = $this->PrepareMethod($aContextArgs, $oLog);
-		// - Headers
-		$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
-		if (!is_null($oLog))
-		{
-			$this->LogHeaders($this->Get('headers'), $aHeaders, $oLog);
-		}
-		// - Payload
-		$payload = $this->PreparePayload($aContextArgs, $oLog);
-		if (!is_null($oLog))
-		{
-			$this->LogPayload($this->Get('payload'), $payload, $oLog);
-		}
-
-		// Switch back to current user language
-		Dict::SetUserLanguage($sUserLang);
 
 		// Get module parameters
 		$sConnectionTimeoutInSeconds = MetaModel::GetModuleSetting('combodo-webhook-integration', 'timeout', \Combodo\iTop\Service\WebRequestSender::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS);
