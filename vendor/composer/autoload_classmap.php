@@ -7,8 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Combodo\\iTop\\Core\\AsyncTask\\SendWebRequest' => $baseDir . '/src/Core/AsyncTask/SendWebRequest.php',
-    'Combodo\\iTop\\Core\\Notification\\Action\\_ActionWebhook' => $baseDir . '/src/Core/Notification/Action/ActionWebhook.php',
+    'Combodo\\iTop\\Core\\Notification\\Action\\_ActionWebhook' => $baseDir . '/src/Core/Notification/Action/_ActionWebhook.php',
     'Combodo\\iTop\\Core\\WebRequest' => $baseDir . '/src/Core/WebRequest.php',
     'Combodo\\iTop\\Core\\WebResponse' => $baseDir . '/src/Core/WebResponse.php',
     'Combodo\\iTop\\Service\\WebRequestSender' => $baseDir . '/src/Service/WebRequestSender.php',
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );

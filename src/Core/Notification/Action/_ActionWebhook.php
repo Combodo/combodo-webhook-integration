@@ -146,12 +146,10 @@ abstract class _ActionWebhook extends ActionNotification
 	}
 
 	/**
-	 * Prepare and return the WebRequest to be sent
-	 *
 	 * @param array              $aContextArgs
 	 * @param \EventNotification $oLog
 	 *
-	 * @return \Combodo\iTop\Core\WebRequest
+	 * @return \Combodo\iTop\Core\WebRequest Prepare and return the WebRequest to be sent
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */
