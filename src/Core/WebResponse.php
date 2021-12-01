@@ -46,7 +46,7 @@ class WebResponse
 	 *
 	 * @return $this;
 	 */
-	public function SetHeaders($aHeaders)
+	public function SetHeaders(array $aHeaders)
 	{
 		$this->aHeaders = $aHeaders;
 		return $this;
@@ -69,7 +69,7 @@ class WebResponse
 	 *
 	 * @return $this
 	 */
-	public function SetBody($sBody)
+	public function SetBody(string $sBody)
 	{
 		$this->sBody = $sBody;
 		return $this;

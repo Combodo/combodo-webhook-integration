@@ -339,7 +339,7 @@
 					<comment><![CDATA[/**
 	 * @inheritDoc
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareWebRequest($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PrepareWebRequest(array $aContextArgs, \EventNotification &$oLog)
 	{
 		// Switch to action language in order to have dictionary entries in the right language
 		// Note: We save current user language so we can switch back to it afterwards
@@ -382,6 +382,7 @@
 		// Prepare cURL options
 		$aCURLOptions = array(
 			CURLOPT_RETURNTRANSFER => true,
+			// Note: Even though we might have something else than "get" and "post" in the $sMethod, for now we only set it to these 2 values in the cURL options. It should be reworked / fixed.
 			CURLOPT_POST => ($sMethod === 'post'),
 			CURLOPT_HTTPHEADER => $aHeaders,
 			CURLOPT_CONNECTTIMEOUT => $sConnectionTimeoutInSeconds,
@@ -431,7 +432,7 @@
 	 * @throws \CoreException
 	 * @throws \Exception
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareURL($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PrepareURL(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$oRemoteApplicationConnection = $this->GetRemoteApplicationConnection();
 
@@ -469,7 +470,7 @@
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareMethod($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PrepareMethod(array $aContextArgs, \EventNotification &$oLog)
 	{
 		return $this->Get('method');
 	}
@@ -493,7 +494,7 @@
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareHeaders($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$aHeaders = [];
 
@@ -534,7 +535,7 @@
 	 * @throws \CoreException
 	 * @throws \Exception
 	 */]]></comment>
-					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$sCallbackFQCN = $this->Get('prepare_payload_callback');
 		if (empty($sCallbackFQCN))
@@ -549,12 +550,12 @@
 				$sMethodName = str_ireplace('$this->', '', $sCallbackFQCN);
 				$payload = $this->$sMethodName($aContextArgs, $oLog);
 			}
-			// Otherwise check if callback is callable as a static method
+			// Otherwise, check if callback is callable as a static method
 			elseif(is_callable($sCallbackFQCN))
 			{
 				$payload = call_user_func($sCallbackFQCN, $aContextArgs, $oLog);
 			}
-			// Otherwise there is a problem
+			// Otherwise, there is a problem
 			else
 			{
 				throw new Exception('Prepare payload callback is not callable ('.$sCallbackFQCN.')');
@@ -582,7 +583,7 @@
 	 *
 	 * @return void
 	 */]]></comment>
-					<code><![CDATA[	protected function LogHeaders($sRawHeaders, $aPreparedHeaders, &$oLog)
+					<code><![CDATA[	protected function LogHeaders(string $sRawHeaders, array $aPreparedHeaders, \EventNotification &$oLog)
 	{
 		// Obfuscate authorization header
 		$sRegExp = '/^Authorization:(.+)$/m';
@@ -600,7 +601,8 @@
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
-	 * Log raw and prepared payload in the event notification
+	 * Log raw and prepared payload in the event notification.
+	 * This method can be overloaded if you want to obfuscate parts of what is logged (eg. credentials).
 	 *
 	 * @param string                $sRawPayload
 	 * @param string                $sPreparedPayload
@@ -608,7 +610,7 @@
 	 *
 	 * @return void
 	 */]]></comment>
-					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, &$oLog)
+					<code><![CDATA[	protected function LogPayload(string $sRawPayload, string $sPreparedPayload, \EventNotification &$oLog)
 	{
 		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sPreparedPayload);
 	}
@@ -760,9 +762,8 @@
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * @inheritDoc
-	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		// Retrieve connection
 		$oRemoteApplicationconnection = $this->GetRemoteApplicationConnection();
@@ -783,7 +784,7 @@
 			}
 		}
 
-		// Transform array to HTTP query parameters
+		// Transform array to HTTP query parameters (eg. https://target-url?version=XXX&json_data=XXX)
 		return http_build_query($aParameters);
 	}
 ]]>
@@ -796,7 +797,7 @@
 					<comment><![CDATA[/**
 	 * @inheritDoc
 	 */]]></comment>
-					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, &$oLog)
+					<code><![CDATA[	protected function LogPayload(string $sRawPayload, string $sPreparedPayload, \EventNotification &$oLog)
 	{
 		$sPwdQueryParamObfuscated = 'auth_pwd=******';
 		$sObfuscatedPayload = preg_replace('/(auth_pwd=[^&]*)/', $sPwdQueryParamObfuscated, $sPreparedPayload);
@@ -965,7 +966,7 @@
 					<comment><![CDATA[/**
 	 * @inheritDoc
 	 */]]></comment>
-					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$aSlackBlocks = array(
 			'blocks' => array(),
@@ -1020,7 +1021,7 @@
 	 *
 	 * @return null|array
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareExtraAttributesForBlockKit($aContextArgs)
+					<code><![CDATA[	protected function PrepareExtraAttributesForBlockKit(array $aContextArgs)
 	{
 		/** @var \DBObject $oObject */
 		$oObject = $aContextArgs['this->object()'];
@@ -1066,7 +1067,7 @@
 	 *
 	 * @return array
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareUserInfoForBlockKit($aContextArgs)
+					<code><![CDATA[	protected function PrepareUserInfoForBlockKit(array $aContextArgs)
 	{
 		// Get user info as accurate as possible
 		$oUser = UserRights::GetUserObject();
@@ -1103,7 +1104,7 @@
 	 *
 	 * @return null|array
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareActionsForBlockKit($aContextArgs)
+					<code><![CDATA[	protected function PrepareActionsForBlockKit(array $aContextArgs)
 	{
 		$aActionElements = array();
 
@@ -1200,7 +1201,7 @@
 	 *
 	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	public static function TransformHTMLToSlackMarkup($sContent)
+					<code><![CDATA[	public static function TransformHTMLToSlackMarkup(string $sContent)
 	{
 		if(empty($sContent))
 		{
@@ -1372,7 +1373,7 @@
 					<comment><![CDATA[/**
 	 * @inheritDoc
 	 */]]></comment>
-					<code><![CDATA[	protected function PreparePayload($aContextArgs, &$oLog)
+					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$aData = array(
 			'text' => static::TransformHTMLToRocketChatMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs)),
@@ -1406,7 +1407,7 @@
 	 *
 	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	public static function TransformHTMLToRocketChatMarkup($sContent)
+					<code><![CDATA[	public static function TransformHTMLToRocketChatMarkup(string $sContent)
 	{
 		if(empty($sContent))
 		{
