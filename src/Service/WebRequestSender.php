@@ -35,15 +35,16 @@ use utils;
  */
 class WebRequestSender
 {
-	/** @var int */
+	/** @var int Request sent successfully */
 	const ENUM_SEND_STATE_OK = 0;
-	/** @var int */
+	/** @var int Request still pending */
 	const ENUM_SEND_STATE_PENDING = 1;
-	/** @var int */
+	/** @var int Request could not be sent due to an error */
 	const ENUM_SEND_STATE_ERROR = 2;
-	/** @var string */
+
+	/** @var string Request to be sent synchronously = immediately, blocking the current script execution while sending (eg. network wait) */
 	const ENUM_SEND_MODE_SYNC = 'sync';
-	/** @var string */
+	/** @var string Request to be sent asynchronously = by the CRON job to avoid blocking script execution */
 	const ENUM_SEND_MODE_ASYNC = 'async';
 
 	/** @var string */
