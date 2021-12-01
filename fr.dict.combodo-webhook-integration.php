@@ -80,18 +80,15 @@ IMPORTANT: Will be ignored if \'Prepare payload callback\' is set~~',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback' => 'Prepare payload callback~~',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must dynamically built.
 
-IMPORTANT:
-- If set, the \'Payload\' attribute will be ignored
-- $this->XXX or \SomeClass::XXX is allowed
-- When using a static method, you must use the fully qualified class name
-- Parameters $aContextArgs (containing the object triggering the action and values for placeholders) and $oLog will be passed as arguments~~',
+IMPORTANT: If set, the \'Payload\' attribute will be ignored. You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)~~',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Process response callback~~',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP method to process the webhook call response.
 
-IMPORTANT:
-- $this->XXX or \SomeClass::XXX is allowed
-- When using a static method, you must use the fully qualified class name
-- Parameters $oObject (the one triggering the action) and $oWebResponse will be passed as arguments~~',
+IMPORTANT: You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($oResponse, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $oResponse, $oAction)~~',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',

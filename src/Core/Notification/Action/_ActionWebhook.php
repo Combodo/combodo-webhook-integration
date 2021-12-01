@@ -110,18 +110,21 @@ abstract class _ActionWebhook extends ActionNotification
 				case WebRequestSender::ENUM_SEND_STATE_OK:
 					// TODO: Refactor this
 					$sResponseCallback = $this->Get('process_response_callback');
-					// Check if callback is in the action class itself
+					/** @var \DBObject $oTriggeringObject */
+					$oTriggeringObject = $aContextArgs['this->object()'];
+
+					// Check if callback is on the object itself
 					if(stripos($sResponseCallback, '$this->') !== false)
 					{
 						$sMethodName = str_ireplace('$this->', '', $sResponseCallback);
-						$this->$sMethodName($aContextArgs['this->object()'], $aResult['response']);
+						$oTriggeringObject->$sMethodName($aResult['response'], $this);
 					}
-					// Otherwise check if callback is callable as a static method
+					// Otherwise, check if callback is callable as a static method
 					elseif(is_callable($sResponseCallback))
 					{
-						call_user_func($sResponseCallback, $aContextArgs['this->object()'], $aResult['response']);
+						call_user_func($sResponseCallback, $oTriggeringObject, $aResult['response'], $this);
 					}
-					// Otherwise there is a problem, we cannot call the callback
+					// Otherwise, there is a problem, we cannot call the callback
 					elseif(empty($sResponseCallback) === false)
 					{
 						throw new Exception('Process response callback is not callable ('.$sResponseCallback.')');
