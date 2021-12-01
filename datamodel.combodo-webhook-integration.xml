@@ -320,6 +320,25 @@
 		        </field>
 			</fields>
 			<methods>
+				<method id="GetRemoteApplicationConnectionFromActionWebhook">
+					<static>true</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Helper to retrieve the \RemoteApplicationConnection used by $oAction.
+	 * Can be used in response processing methods to know where the response comes from.
+	 *
+	 * @param \ActionWebhook $oAction
+	 *
+	 * @return \RemoteApplicationConnection {@see static::GetRemoteApplicationConnection}
+	 */]]></comment>
+					<code><![CDATA[	static public function GetRemoteApplicationConnectionFromActionWebhok($oAction)
+	{
+		return $oAction->GetRemoteApplicationConnection();
+	}
+]]>
+					</code>
+				</method>
 				<method id="PrefillCreationForm">
 					<static>false</static>
 					<access>public</access>
@@ -619,14 +638,14 @@
 				</method>
 				<method id="GetRemoteApplicationConnection">
 					<static>false</static>
-					<access>protected</access>
+					<access>public</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * Return the RemoteApplicationConnection to use depending on the current object status
 	 *
 	 * @return \RemoteApplicationConnection
 	 */]]></comment>
-					<code><![CDATA[	protected function GetRemoteApplicationConnection()
+					<code><![CDATA[	public function GetRemoteApplicationConnection()
 	{
 		// Get RemoteApplicationConnection object
 		$sAttCode = $this->IsBeingTested() ? 'test_remoteapplicationconnection_id' : 'remoteapplicationconnection_id';
