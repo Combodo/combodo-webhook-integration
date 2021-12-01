@@ -439,7 +439,7 @@
 		// Get URL
 		if($oRemoteApplicationConnection !== null)
 		{
-			$sURL = $oRemoteApplicationConnection->Get('url');
+			$sURL = MetaModel::ApplyParams($oRemoteApplicationConnection->Get('url'), $aContextArgs);
 		}
 		elseif($this->IsBeingTested())
 		{
