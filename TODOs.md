@@ -2,6 +2,7 @@
 - [ ]
 
 ## TODOs
+- [ ] Multiple line attributes (eg. UserRequest:description) don't work for now
 - [ ] Struct data to load RemoteApplicationType objects
 - [ ] Add $oObject-> as a possibility for response callback
 

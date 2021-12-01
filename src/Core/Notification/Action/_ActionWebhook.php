@@ -153,5 +153,5 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */
-	abstract protected function PrepareWebRequest($aContextArgs, &$oLog);
+	abstract protected function PrepareWebRequest(array $aContextArgs, \EventNotification &$oLog);
 }

@@ -361,7 +361,7 @@
 			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
 			if (!is_null($oLog))
 			{
-				$this->LogHeaders($this->GetRawHeadersAsString(), $aHeaders, $oLog);
+				$this->LogHeaders($this->Get('headers'), $aHeaders, $oLog);
 			}
 			// - Payload
 			$payload = $this->PreparePayload($aContextArgs, $oLog);
@@ -495,13 +495,21 @@
 	 */]]></comment>
 					<code><![CDATA[	protected function PrepareHeaders($aContextArgs, &$oLog)
 	{
-		$aHeaders = array();
+		$aHeaders = [];
 
-		$sHeadersAsText = (empty($this->Get('headers'))) ? 'Content-type: application/json' : MetaModel::ApplyParams($this->Get('headers'), $aContextArgs);
+		$sHeadersAsText = MetaModel::ApplyParams($this->Get('headers'), $aContextArgs);
 		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
-		foreach ($aLines as $sLine)
-		{
-			$aHeaders[] = trim($sLine);
+		foreach ($aLines as $sLine) {
+			$sLine = trim($sLine);
+			if (empty($sLine)) {
+				continue;
+			}
+
+			$aHeaders[] = $sLine;
+		}
+
+		if (count($aHeaders) === 0) {
+			$aHeaders[] = 'Content-type: application/json';
 		}
 
 		return $aHeaders;
