@@ -571,7 +571,10 @@
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
-	 * Log raw and prepared headers in the event notification
+	 * Log raw and prepared headers in the event notification.
+	 *
+	 * "Authorization" header will obfuscated automatically.
+	 * This method can be overloaded if you want to obfuscate other parts of what is logged (eg. credentials).
 	 *
 	 * @param string                $sRawHeaders
 	 * @param array                 $aPreparedHeaders
@@ -581,7 +584,13 @@
 	 */]]></comment>
 					<code><![CDATA[	protected function LogHeaders($sRawHeaders, $aPreparedHeaders, &$oLog)
 	{
-		$oLog->Set('headers', "Raw:\n".$sRawHeaders."\n\nAfter preparation:\n".print_r($aPreparedHeaders, true));
+		// Obfuscate authorization header
+		$sRegExp = '/^Authorization:(.+)$/m';
+		$sAuthHeaderObfuscated = 'Authorization: ******';
+		$sObfuscatedRawHeaders = preg_replace($sRegExp, $sAuthHeaderObfuscated, $sRawHeaders);
+		$sObfuscatedPreparedHeaders = preg_replace($sRegExp, $sAuthHeaderObfuscated, implode("\n", $aPreparedHeaders));
+
+		$oLog->Set('headers', "Raw:\n".$sObfuscatedRawHeaders."\n\nAfter preparation:\n".$sObfuscatedPreparedHeaders);
 	}
 ]]>
 					</code>
