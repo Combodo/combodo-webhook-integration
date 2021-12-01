@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbf15810f03c40790abd921586f4c6927
+class ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556
 {
     public static $prefixLengthsPsr4 = array (
         'C' => 
@@ -21,20 +21,15 @@ class ComposerStaticInitbf15810f03c40790abd921586f4c6927
     );
 
     public static $classMap = array (
-        'Combodo\\iTop\\Core\\AsyncTask\\SendWebRequest' => __DIR__ . '/../..' . '/src/Core/AsyncTask/SendWebRequest.php',
-        'Combodo\\iTop\\Core\\Notification\\Action\\_ActionWebhook' => __DIR__ . '/../..' . '/src/Core/Notification/Action/_ActionWebhook.php',
-        'Combodo\\iTop\\Core\\WebRequest' => __DIR__ . '/../..' . '/src/Core/WebRequest.php',
-        'Combodo\\iTop\\Core\\WebResponse' => __DIR__ . '/../..' . '/src/Core/WebResponse.php',
-        'Combodo\\iTop\\Service\\WebRequestSender' => __DIR__ . '/../..' . '/src/Service/WebRequestSender.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbf15810f03c40790abd921586f4c6927::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbf15810f03c40790abd921586f4c6927::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbf15810f03c40790abd921586f4c6927::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556::$classMap;
 
         }, null, ClassLoader::class);
     }
