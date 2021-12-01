@@ -85,7 +85,8 @@ IMPORTANT: If set, the \'Payload\' attribute will be ignored. You can use 2 type
 
 IMPORTANT: You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($oResponse, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $oResponse, $oAction)',
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $oResponse, $oAction)
+- $oResponse can be null in some cases (eg. request failed to send)',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'General information',
 	'ActionWebhook:moreinfo' => 'More information',

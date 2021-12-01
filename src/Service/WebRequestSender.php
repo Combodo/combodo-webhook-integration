@@ -169,9 +169,15 @@ class WebRequestSender
 			IssueLog::Error($sErrorMessage);
 			$aIssues[] = $sErrorMessage;
 
-			return array('sender_status' => static::ENUM_SEND_STATE_ERROR);
+			return array(
+				'sender_status' => static::ENUM_SEND_STATE_ERROR,
+				'response' => null,
+			);
 		}
 
-		return array('sender_status' => static::ENUM_SEND_STATE_PENDING);
+		return array(
+			'sender_status' => static::ENUM_SEND_STATE_PENDING,
+			'response' => null,
+		);
 	}
 }
