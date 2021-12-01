@@ -756,6 +756,51 @@
 			</properties>
 			<fields/>
 			<methods>
+				<method id="PrefillCreationForm">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Change Content-Type header
+	 *
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	public function PrefillCreationForm(&$aContextParam)
+	{
+		// Set default content-type
+		$this->Set("headers", "Content-type: application/x-www-form-urlencoded");
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareHeaders">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Add Authorization Basic header
+	 *
+	 * @inheritDoc
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
+	{
+		$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
+
+		// Retrieve connection
+		$oRemoteApplicationconnection = $this->GetRemoteApplicationConnection();
+
+		// Prepare Basic Auth header
+		$sAuthUser = MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_user'), $aContextArgs);
+		$sAuthPwd = MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_pwd'), $aContextArgs);
+		$sEncryptedCredentials = base64_encode("{$sAuthUser}:{$sAuthPwd}");
+
+		$aHeaders[] = "Authorization: Basic {$sEncryptedCredentials}";
+
+		return $aHeaders;
+	}
+]]>
+					</code>
+				</method>
 				<method id="PreparePayload">
 					<static>false</static>
 					<access>protected</access>
@@ -770,8 +815,6 @@
 
 		// Retrieve basis parameters
 		$aParameters = array(
-			'auth_user' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_user'), $aContextArgs),
-			'auth_pwd' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('auth_pwd'), $aContextArgs),
 			'version' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('version'), $aContextArgs),
 			'json_data' => MetaModel::ApplyParams($this->Get('payload'), $aContextArgs),
 		);
@@ -799,9 +842,10 @@
 	 */]]></comment>
 					<code><![CDATA[	protected function LogPayload(string $sRawPayload, string $sPreparedPayload, \EventNotification &$oLog)
 	{
+		// Note: Credentials are no longer passed in the URL but we keep this in case we ever
 		$sPwdQueryParamObfuscated = 'auth_pwd=******';
 		$sObfuscatedPayload = preg_replace('/(auth_pwd=[^&]*)/', $sPwdQueryParamObfuscated, $sPreparedPayload);
-		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sObfuscatedPayload);
+		parent::LogPayload($sRawPayload, $sObfuscatedPayload, $oLog);
 	}
 ]]>
 					</code>
@@ -849,7 +893,7 @@
 						<item id="col:col1">
 							<rank>20</rank>
 							<items>
-								<item id="fieldset:ActioniTopWebhook:requestparameters">
+								<item id="fieldset:ActionWebhook:requestparameters">
 									<rank>10</rank>
 									<items>
 										<item id="payload">

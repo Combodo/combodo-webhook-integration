@@ -113,7 +113,12 @@ Dict::Add('FR FR', 'French', 'Français', array(
 
 	// ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'Appel de webhook iTop',
-	'Class:ActioniTopWebhook+' => 'Appel de webhookWebhook call to a remote iTop application~~',
+	'Class:ActioniTopWebhook+' => 'Appel de webhook d\'une application iTop distante',
+	'Class:ActioniTopWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/x-www-form-urlencoded\')
+
+IMPORTANT :
+- Le \'Content-type\' devrait être \'application/x-www-form-urlencoded\' pour iTop, quand bien même nous envoyons du JSON
+- Une entête \'Basic authorization\' sera ajoutée automatiquement à la requête durant l\'envoi, contenant les identifiants de la connexion sélectionnée',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'Données JSON',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailled information~~',
 	// - Fieldsets

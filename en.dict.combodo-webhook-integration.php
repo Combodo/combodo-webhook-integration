@@ -114,6 +114,11 @@ Dict::Add('EN US', 'English', 'English', array(
 	// ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'iTop webhook call',
 	'Class:ActioniTopWebhook+' => 'Webhook call to a remote iTop application',
+	'Class:ActioniTopWebhook/Attribute:headers+' => 'Headers of the HTTP request, must be one per line (eg. \'Content-type: application/x-www-form-urlencoded\')
+
+IMPORTANT:
+- \'Content-type\' should be set to \'application/x-www-form-urlencoded\' for iTop, even though we send JSON
+- A \'Basic authorization\' header will be append automatically to request during sending, containing the credentials from the selected connection',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'JSON data',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailled information',
 ));
