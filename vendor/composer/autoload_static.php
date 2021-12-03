@@ -21,6 +21,11 @@ class ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556
     );
 
     public static $classMap = array (
+        'Combodo\\iTop\\Core\\AsyncTask\\SendWebRequest' => __DIR__ . '/../..' . '/src/Core/AsyncTask/SendWebRequest.php',
+        'Combodo\\iTop\\Core\\Notification\\Action\\_ActionWebhook' => __DIR__ . '/../..' . '/src/Core/Notification/Action/_ActionWebhook.php',
+        'Combodo\\iTop\\Core\\WebRequest' => __DIR__ . '/../..' . '/src/Core/WebRequest.php',
+        'Combodo\\iTop\\Core\\WebResponse' => __DIR__ . '/../..' . '/src/Core/WebResponse.php',
+        'Combodo\\iTop\\Service\\WebRequestSender' => __DIR__ . '/../..' . '/src/Service/WebRequestSender.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
