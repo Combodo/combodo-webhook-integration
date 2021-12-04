@@ -11,6 +11,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Menu:Integrations' => 'Intégrations',
 	'Dashboard:Integrations:Title' => 'Intégrations avec les applications externes',
 	'Dashboard:Integrations:Outgoing:Title' => 'Webhooks d\'intégration sortants',
+	'Dashboard:Integrations:ActionWebhookList:Title' => 'Actions de type webhook',
 ));
 
 // Base classes

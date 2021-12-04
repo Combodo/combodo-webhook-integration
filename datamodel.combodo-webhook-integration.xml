@@ -1689,18 +1689,29 @@
 					<cell id="0">
 						<rank>0</rank>
 						<dashlets>
-							<dashlet id="1" xsi:type="DashletHeaderStatic">
+							<dashlet id="outgoing-title" xsi:type="DashletHeaderStatic">
 								<rank>0</rank>
 								<title>Dashboard:Integrations:Outgoing:Title</title>
 								<icon>combodo-webhook-integration/asset/img/icon-webhook-48px.png</icon>
 							</dashlet>
-							<dashlet id="2" xsi:type="DashletBadge">
+							<dashlet id="remote-application-connections" xsi:type="DashletBadge">
 								<rank>1</rank>
 								<class>RemoteApplicationConnection</class>
 							</dashlet>
-							<dashlet id="3" xsi:type="DashletBadge">
+							<dashlet id="remote-application-types" xsi:type="DashletBadge">
 								<rank>1</rank>
 								<class>RemoteApplicationType</class>
+							</dashlet>
+						</dashlets>
+					</cell>
+					<cell id="1">
+						<rank>1</rank>
+						<dashlets>
+							<dashlet id="actionwebhook-list" xsi:type="DashletObjectList">
+								<rank>0</rank>
+								<title>Dashboard:Integrations:ActionWebhookList:Title</title>
+								<query>SELECT ActionWebhook</query>
+								<menu>true</menu>
 							</dashlet>
 						</dashlets>
 					</cell>
