@@ -79,7 +79,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 
 IMPORTANT: Will be ignored if \'Prepare payload callback\' is set~~',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback' => 'Prepare payload callback~~',
-	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must dynamically built.
+	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
 IMPORTANT: If set, the \'Payload\' attribute will be ignored. You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
@@ -97,6 +97,7 @@ IMPORTANT: You can use 2 types of methods:
 	'ActionWebhook:requestsimple' => 'Request, either fill option 1 (simple) ...~~',
 	'ActionWebhook:requestadvanced' => '... or option 2 (advanced)~~',
 	'ActionWebhook:response' => 'Réponse',
+	'ActionWebhook:advancedparameters' => 'Paramètres avancés',
 ));
 
 // iTop

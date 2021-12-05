@@ -924,11 +924,14 @@
 										</item>
 									</items>
 								</item>
-								<item id="fieldset:ActionWebhook:response">
+								<item id="fieldset:ActionWebhook:advancedparameters">
 									<rank>20</rank>
 									<items>
-										<item id="process_response_callback">
+										<item id="prepare_payload_callback">
 											<rank>10</rank>
+										</item>
+										<item id="process_response_callback">
+											<rank>20</rank>
 										</item>
 									</items>
 								</item>
@@ -1380,6 +1383,17 @@
 										</item>
 									</items>
 								</item>
+								<item id="fieldset:ActionWebhook:advancedparameters">
+									<rank>20</rank>
+									<items>
+										<item id="prepare_payload_callback">
+											<rank>10</rank>
+										</item>
+										<item id="process_response_callback">
+											<rank>20</rank>
+										</item>
+									</items>
+								</item>
 							</items>
 						</item>
 						<item id="trigger_list">
@@ -1574,6 +1588,17 @@
 										</item>
 										<item id="bot_emoji_avatar">
 											<rank>30</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:ActionWebhook:advancedparameters">
+									<rank>20</rank>
+									<items>
+										<item id="prepare_payload_callback">
+											<rank>10</rank>
+										</item>
+										<item id="process_response_callback">
+											<rank>20</rank>
 										</item>
 									</items>
 								</item>

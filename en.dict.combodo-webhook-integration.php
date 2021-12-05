@@ -76,15 +76,17 @@ Dict::Add('EN US', 'English', 'English', array(
 
 IMPORTANT: Will be ignored if \'Prepare payload callback\' is set',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback' => 'Prepare payload callback',
-	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must dynamically built.
+	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
-IMPORTANT: If set, the \'Payload\' attribute will be ignored. You can use 2 types of methods:
+You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)',
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'Payload\' attribute will be ignored.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Process response callback',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP method to process the webhook call response.
 
-IMPORTANT: You can use 2 types of methods:
+You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($oResponse, $oAction)
 - From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse can be null in some cases (eg. request failed to send)',
@@ -97,6 +99,7 @@ IMPORTANT: You can use 2 types of methods:
 	// Note: This one is used by derivated classes
 	'ActionWebhook:requestparameters' => 'Request parameters',
 	'ActionWebhook:response' => 'Response',
+	'ActionWebhook:advancedparameters' => 'Advanced parameters',
 ));
 
 // iTop
@@ -120,6 +123,13 @@ IMPORTANT:
 - A \'Basic authorization\' header will be append automatically to request during sending, containing the credentials from the selected connection',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'JSON data',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailled information',
+	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
+
+You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'JSON data\' attribute will be ignored.',
 ));
 
 // Slack
@@ -151,6 +161,13 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:yes' => 'Yes',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Other actions codes',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')',
+	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+
+You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignored.',
 	// - Fieldsets
 	'ActionSlackNotification:message' => 'Basis message',
 	'ActionSlackNotification:additionalelements' => 'Additional elements to include',
@@ -169,6 +186,13 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar+' => 'Overrides the default bot avatar, must be an absolute URL to the image to use',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar' => 'Emoji avatar',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar+' => 'Overrides the default bot avatar, can be any Rocket.Chat emojis (eg. :ghost:, :white_check_mark:, ...). Note that if an URL avatar is set, the emoji won\'t be displayed.',
+	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+
+You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Basis message',
 	'ActionRocketChatNotification:additionalelements' => 'Bot information'
