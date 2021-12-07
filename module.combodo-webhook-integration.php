@@ -5,7 +5,7 @@
 //
 //
 SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'combodo-webhook-integration/0.5.0', array(
+	'combodo-webhook-integration/0.6.0', array(
 		// Identification
 		//
 		'label' => 'Webhook integration',
@@ -29,7 +29,9 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 			'model.combodo-webhook-integration.php',
 		),
 		'webservice' => array(),
-		'data.struct' => array(),
+		'data.struct' => array(
+			'data.struct.remote_application_type.xml',
+		),
 		'data.sample' => array(),
 
 		// Documentation
