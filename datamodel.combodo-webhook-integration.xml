@@ -864,12 +864,23 @@
 					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		// Retrieve connection
-		$oRemoteApplicationconnection = $this->GetRemoteApplicationConnection();
+		$oRemoteApplicationConnection = $this->GetRemoteApplicationConnection();
+
+		// Apply params to payload recursively
+		$sPayloadAsJson = $this->Get('payload');
+		$aPayloadAsArray = json_decode($sPayloadAsJson, true);
+		if (false === $aPayloadAsArray) {
+			IssueLog::Error('Wrong JSON format for payload', 'console', ['payload' => $sPayloadAsJson]);
+			throw new Exception('Wrong JSON format for payload, see error log for more information.');
+		}
+
+		$aPreparedPayloadAsArray = $this->ApplyParamsToArray($aContextArgs, $aPayloadAsArray);
+		$sPreparedPayloadAsJson = json_encode($aPreparedPayloadAsArray);
 
 		// Retrieve basis parameters
 		$aParameters = array(
-			'version' => MetaModel::ApplyParams($oRemoteApplicationconnection->Get('version'), $aContextArgs),
-			'json_data' => MetaModel::ApplyParams($this->Get('payload'), $aContextArgs),
+			'version' => MetaModel::ApplyParams($oRemoteApplicationConnection->Get('version'), $aContextArgs),
+			'json_data' => $sPreparedPayloadAsJson,
 		);
 
 		foreach($aParameters as $sParamName => $sParamValue)
@@ -899,6 +910,33 @@
 		$sPwdQueryParamObfuscated = 'auth_pwd=******';
 		$sObfuscatedPayload = preg_replace('/(auth_pwd=[^&]*)/', $sPwdQueryParamObfuscated, $sPreparedPayload);
 		parent::LogPayload($sRawPayload, $sObfuscatedPayload, $oLog);
+	}
+]]>
+					</code>
+				</method>
+				<method id="ApplyParamsToArray">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Apply $aContextParams recursively to $aInputData
+	 * @param array $aContextArgs
+	 * @param array $aInputData Data to apply params to
+	 *
+	 * @see \MetaModel::ApplyParams
+	 * @return array Same structure as $aInputData but with applied params
+	 */]]></comment>
+					<code><![CDATA[	protected function ApplyParamsToArray(array $aContextArgs, array $aInputData)
+	{
+		$aPreparedData = [];
+		foreach ($aInputData as $sKey => $value) {
+			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs);
+			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : MetaModel::ApplyParams($value, $aContextArgs);
+
+			$aPreparedData[$sPreparedKey] = $preparedValue;
+		}
+
+		return $aPreparedData;
 	}
 ]]>
 					</code>
