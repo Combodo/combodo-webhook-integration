@@ -19,12 +19,12 @@
 
 namespace Combodo\iTop\Service;
 
-use Combodo\iTop\Core\AsyncTask\SendWebRequest;
 use Combodo\iTop\Core\WebRequest;
 use Combodo\iTop\Core\WebResponse;
 use Exception;
 use IssueLog;
 use MetaModel;
+use SendWebRequest;
 use utils;
 
 /**
@@ -128,6 +128,11 @@ class WebRequestSender
 				// TODO: Truncate to DB field limitation
 				$oLog->Set('response', $sResponse);
 				$oLog->DBUpdate();
+			}
+
+			// Handle response
+			if ($oRequest->HasResponseHandler()) {
+				call_user_func($oRequest->GetResponseHandlerName(), $oResponse, $oRequest->GetResponseHandlerParams());
 			}
 
 			return array(

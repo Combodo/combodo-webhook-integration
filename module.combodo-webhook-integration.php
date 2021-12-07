@@ -25,7 +25,7 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 			// Extension autoloader
 			'vendor/autoload.php',
 			// Explicitly load DM classes
-			'src/Core/AsyncTask/SendWebRequest.php',
+			'SendWebRequest.php',
 			'model.combodo-webhook-integration.php',
 		),
 		'webservice' => array(),

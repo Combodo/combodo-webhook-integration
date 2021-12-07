@@ -17,8 +17,7 @@
  * You should have received a copy of the GNU Affero General Public License
  */
 
-namespace Combodo\iTop\Core\AsyncTask;
-
+// Important: Unfortunately, for now AsyncTask classes CANNOT have a namespace, it will crash the OQL parser.
 
 use AsyncTask;
 use AttributeString;
@@ -27,6 +26,11 @@ use Combodo\iTop\Core\WebRequest;
 use Combodo\iTop\Service\WebRequestSender;
 use MetaModel;
 
+/**
+ * Class SendWebRequest
+ *
+ * @author Guillaume Lajarige <guillaume.lajarige@combodo.com>
+ */
 class SendWebRequest extends AsyncTask
 {
 	/**
@@ -70,7 +74,7 @@ class SendWebRequest extends AsyncTask
 	 *
 	 * @return void
 	 */
-	public static function AddToQueue(WebRequest $oWebRequest, $sResponseCallback, $oLog = null)
+	public static function AddToQueue(WebRequest $oWebRequest, $oLog = null)
 	{
 		$oNew = new static();
 		if ($oLog)
@@ -92,7 +96,7 @@ class SendWebRequest extends AsyncTask
 
 		// Retrieve log event
 		/** @var \AttributeExternalKey $oAttDef */
-		$oAttDef = MetaModel::AttributeDef(get_class(), 'event_id');
+		$oAttDef = MetaModel::GetAttributeDef(get_class(), 'event_id');
 		$oLog = MetaModel::GetObject($oAttDef->GetTargetClass(), $this->Get('event_id'), false, true);
 
 		$oSenderService = WebRequestSender::GetInstance();
