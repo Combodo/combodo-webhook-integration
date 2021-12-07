@@ -613,7 +613,7 @@
 	 *
 	 * @return void
 	 */]]></comment>
-					<code><![CDATA[	protected function LogHeaders(string $sRawHeaders, array $aPreparedHeaders, \EventNotification &$oLog)
+					<code><![CDATA[	protected function LogHeaders($sRawHeaders, array $aPreparedHeaders, \EventNotification &$oLog)
 	{
 		// Obfuscate authorization header
 		$sRegExp = '/^Authorization:(.+)$/m';
@@ -640,7 +640,7 @@
 	 *
 	 * @return void
 	 */]]></comment>
-					<code><![CDATA[	protected function LogPayload(string $sRawPayload, string $sPreparedPayload, \EventNotification &$oLog)
+					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, \EventNotification &$oLog)
 	{
 		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sPreparedPayload);
 	}
@@ -893,7 +893,7 @@
 					<comment><![CDATA[/**
 	 * @inheritDoc
 	 */]]></comment>
-					<code><![CDATA[	protected function LogPayload(string $sRawPayload, string $sPreparedPayload, \EventNotification &$oLog)
+					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, \EventNotification &$oLog)
 	{
 		// Note: Credentials are no longer passed in the URL but we keep this in case we ever
 		$sPwdQueryParamObfuscated = 'auth_pwd=******';
@@ -1303,7 +1303,7 @@
 	 *
 	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	public static function TransformHTMLToSlackMarkup(string $sContent)
+					<code><![CDATA[	public static function TransformHTMLToSlackMarkup($sContent)
 	{
 		if(empty($sContent))
 		{
@@ -1520,7 +1520,7 @@
 	 *
 	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	public static function TransformHTMLToRocketChatMarkup(string $sContent)
+					<code><![CDATA[	public static function TransformHTMLToRocketChatMarkup($sContent)
 	{
 		if(empty($sContent))
 		{
