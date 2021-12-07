@@ -32,13 +32,13 @@ class WebRequest
 	/** @var array cURL options */
 	protected $aOptions;
 	/**
-	 * @var string Name of the callback to be called on request's response
+	 * @var string Name of the handler to be called on request's response
 	 *             - $this->Foo
 	 *             - \SomeClass::Foo
 	 */
-	protected $sResponseCallbackName;
-	/** @var array Structured data that will be passed to $sResponseCallbackName */
-	protected $aResponseCallbackParams;
+	protected $sResponseHandlerName;
+	/** @var array Structured data that will be passed to $sResponseHandlerName */
+	protected $aResponseHandlerParams;
 
 	/**
 	 * @param string $sURL Url which should called with this request
@@ -47,8 +47,8 @@ class WebRequest
 	{
 		$this->sURL = $sURL;
 		$this->aOptions = array();
-		$this->sResponseCallbackName = '';
-		$this->aResponseCallbackParams = [];
+		$this->sResponseHandlerName = '';
+		$this->aResponseHandlerParams = [];
 	}
 
 	/**
@@ -118,44 +118,53 @@ class WebRequest
 	}
 
 	/**
-	 * @see \Combodo\iTop\Core\WebRequest::$sURL
-	 * @return string
+	 * @return bool
+	 *@see \Combodo\iTop\Core\WebRequest::$sResponseHandlerName
 	 */
-	public function GetResponseCallbackName()
+	public function HasResponseHandler()
 	{
-		return $this->sResponseCallbackName;
+		return strlen($this->sResponseHandlerName) > 0;
 	}
 
 	/**
-	 * @param string $sCallbackName
-	 *
-	 * @see \Combodo\iTop\Core\WebRequest::$sResponseCallbackName
-	 * @return $this
+	 * @see \Combodo\iTop\Core\WebRequest::$sURL
+	 * @return string
 	 */
-	public function SetResponseCallbackName($sCallbackName)
+	public function GetResponseHandlerName()
 	{
-		$this->sResponseCallbackName = $sCallbackName;
+		return $this->sResponseHandlerName;
+	}
+
+	/**
+	 * @param string $sHandlerName
+	 *
+	 * @return $this
+	 *@see \Combodo\iTop\Core\WebRequest::$sResponseHandlerName
+	 */
+	public function SetResponseHandlerName($sHandlerName)
+	{
+		$this->sResponseHandlerName = $sHandlerName;
 		return $this;
 	}
 
 	/**
-	 * @see \Combodo\iTop\Core\WebRequest::$aResponseCallbackParams
 	 * @return array
+	 *@see \Combodo\iTop\Core\WebRequest::$aResponseHandlerParams
 	 */
-	public function GetResponseCallbackParams()
+	public function GetResponseHandlerParams()
 	{
-		return $this->aResponseCallbackParams;
+		return $this->aResponseHandlerParams;
 	}
 
 	/**
 	 * @param array $aParams
 	 *
-	 * @see \Combodo\iTop\Core\WebRequest::$aResponseCallbackParams
 	 * @return $this
+	 *@see \Combodo\iTop\Core\WebRequest::$aResponseHandlerParams
 	 */
-	public function SetResponseCallbackParams(array $aParams)
+	public function SetResponseHandlerParams(array $aParams)
 	{
-		$this->aResponseCallbackParams = $aParams;
+		$this->aResponseHandlerParams = $aParams;
 		return $this;
 	}
 }
