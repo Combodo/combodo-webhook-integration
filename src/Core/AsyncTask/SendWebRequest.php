@@ -58,7 +58,7 @@ class SendWebRequest extends AsyncTask
 	 * Add the $oWebRequest to the queue to be send later (background task for example)
 	 *
 	 * @param \Combodo\iTop\Core\WebRequest $oWebRequest
-	 * @param \EventNotification            $oLog
+	 * @param \EventNotification|null       $oLog
 	 *
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreCannotSaveObjectException
@@ -70,7 +70,7 @@ class SendWebRequest extends AsyncTask
 	 *
 	 * @return void
 	 */
-	public static function AddToQueue(WebRequest $oWebRequest, $sResponseCallback, $oLog)
+	public static function AddToQueue(WebRequest $oWebRequest, $sResponseCallback, $oLog = null)
 	{
 		$oNew = new static();
 		if ($oLog)
@@ -78,7 +78,6 @@ class SendWebRequest extends AsyncTask
 			$oNew->Set('event_id', $oLog->GetKey());
 		}
 
-		// TODO: Is it secured?
 		$oNew->Set('request', serialize($oWebRequest));
 		$oNew->DBInsert();
 	}
@@ -101,8 +100,6 @@ class SendWebRequest extends AsyncTask
 		switch ($aResult['sender_status'])
 		{
 			case WebRequestSender::ENUM_SEND_STATE_OK:
-				// TODO: Refactor this
-				// TODO: Handle response
 				return 'Sent';
 
 			case WebRequestSender::ENUM_SEND_STATE_PENDING:
