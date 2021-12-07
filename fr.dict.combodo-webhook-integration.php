@@ -146,10 +146,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	// - Fieldsets
 	'ActionSlackNotification:message' => 'Basis message~~',
 	'ActionSlackNotification:additionalelements' => 'Additional elements~~',
+
+	// Payload
+	'ActionSlackNotification:Payload:BlockKit:UserInfo' => 'Notification de <%2$s|%1$s> (%3$s)',
 ));
 
 // Rocket.Chat
-Dict::Add('EN US', 'English', 'English', array(
+Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionRocketChatNotification
 	'Class:ActionRocketChatNotification' => 'Notification Rocket.Chat',
 	'Class:ActionRocketChatNotification+' => 'Send a notification as a rocket chat message in a channel or to a user~~',

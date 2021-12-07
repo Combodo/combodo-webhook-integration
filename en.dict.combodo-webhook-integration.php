@@ -171,6 +171,9 @@ IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignor
 	// - Fieldsets
 	'ActionSlackNotification:message' => 'Basis message',
 	'ActionSlackNotification:additionalelements' => 'Additional elements to include',
+
+	// Payload
+	'ActionSlackNotification:Payload:BlockKit:UserInfo' => 'Notification from <%2$s|%1$s> (%3$s)',
 ));
 
 // Rocket.Chat

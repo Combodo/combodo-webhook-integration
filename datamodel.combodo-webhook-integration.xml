@@ -1146,7 +1146,7 @@
 		$oContact = $oUser->GetContactObject() ?: $oUser;
 
 		$sContactClass = get_class($oContact);
-		$sContactLabel = MetaModel::GetName($sContactClass);
+		$sContactClassLabel = MetaModel::GetName($sContactClass);
 		$sContactName = $oContact->GetName();
 		$sContactUrl = ApplicationContext::MakeObjectUrl($sContactClass, $oContact->GetKey(), null, false);
 
@@ -1155,7 +1155,7 @@
 			'elements' => array(
 				array(
 					'type' => 'mrkdwn',
-					'text' => sprintf('*%s*: <%s|%s>', $sContactLabel, $sContactUrl, $sContactName),
+					'text' => Dict::Format('ActionSlackNotification:Payload:BlockKit:UserInfo', $sContactName, $sContactUrl, $sContactClassLabel),
 				),
 			),
 		);
@@ -1296,7 +1296,7 @@
 			array( array('<pre>', '</pre>'), array('```', '```') ),
 		);
 
-		// Replace HTML tags
+		// Replace HTML tags (list must contain at least tags from the $aReplacementsMatrix)
 		$sContent = strip_tags($sContent, '<h1><h2><h3><br><strong><b><em><i><del><s><li><code><pre><a>');
 		foreach($aReplacementsMatrix as $aReplacements)
 		{
