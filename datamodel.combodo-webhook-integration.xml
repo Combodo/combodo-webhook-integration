@@ -383,7 +383,14 @@
 				$this->LogHeaders($this->Get('headers'), $aHeaders, $oLog);
 			}
 			// - Payload
-			$payload = $this->PreparePayload($aContextArgs, $oLog);
+			// ... Force payload to be prepared from callback in the method of this class (avoid polymorphic inheritance)
+			if ($this->HasPreparePayloadCallback()) {
+				$payload = self::PreparePayload($aContextArgs, $oLog);
+			}
+			// ... Payload can be prepared using the polymorphic inheritance
+			else {
+				$payload = $this->PreparePayload($aContextArgs, $oLog);
+			}
 			if (!is_null($oLog))
 			{
 				$this->LogPayload($this->Get('payload'), $payload, $oLog);
@@ -660,6 +667,34 @@
 		$sClass = $oAttDef->GetTargetClass();
 
 		return MetaModel::GetObject($sClass, $sID, false, true);
+	}
+]]>
+					</code>
+				</method>
+				<method id="HasPreparePayloadCallback">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @return bool True if a callback is defined for preparing the payload
+	 */]]></comment>
+					<code><![CDATA[	public function HasPreparePayloadCallback()
+	{
+		return strlen($this->Get('prepare_payload_callback')) > 0;
+	}
+]]>
+					</code>
+				</method>
+				<method id="HasProcessResponseCallback">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @return bool True if a callback is defined to process the response
+	 */]]></comment>
+					<code><![CDATA[	public function HasProcessResponseCallback()
+	{
+		return strlen($this->Get('process_response_callback')) > 0;
 	}
 ]]>
 					</code>
