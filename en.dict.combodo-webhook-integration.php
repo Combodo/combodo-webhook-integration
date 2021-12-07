@@ -133,7 +133,7 @@ IMPORTANT: If set, the \'JSON data\' attribute will be ignored.',
 Dict::Add('EN US', 'English', 'English', array(
 	// ActionSlackNotification
 	'Class:ActionSlackNotification' => 'Slack notification',
-	'Class:ActionSlackNotification+' => 'Send a notification as a slack message in a channel or to a user',
+	'Class:ActionSlackNotification+' => 'Send a notification as a Slack message in a channel or to a user',
 	'Class:ActionSlackNotification/Attribute:message' => 'Message',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes' => 'Attributes from',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes+' => 'Display additional attributes below the message. They can be either from the usual \'list\' view or the custom \'slack\' view of the object triggering the notification . Note that the \'slack\' view must be defined in the datamodel first (zlist)',
@@ -177,7 +177,7 @@ IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignor
 Dict::Add('EN US', 'English', 'English', array(
 	// ActionRocketChatNotification
 	'Class:ActionRocketChatNotification' => 'Rocket.Chat notification',
-	'Class:ActionRocketChatNotification+' => 'Send a notification as a rocket chat message in a channel or to a user',
+	'Class:ActionRocketChatNotification+' => 'Send a notification as a Rocket.Chat message in a channel or to a user',
 	'Class:ActionRocketChatNotification/Attribute:message' => 'Message',
 	'Class:ActionRocketChatNotification/Attribute:message+' => 'Message that will be displayed in the chat',
 	'Class:ActionRocketChatNotification/Attribute:bot_alias' => 'Alias',
@@ -196,4 +196,22 @@ IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.'
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Basis message',
 	'ActionRocketChatNotification:additionalelements' => 'Bot information'
+));
+
+// Google Chat
+Dict::Add('EN US', 'English', 'English', array(
+	// ActionGoogleChatNotification
+	'Class:ActionGoogleChatNotification' => 'Google Chat notification',
+	'Class:ActionGoogleChatNotification+' => 'Send a notification as a Google Chat message in a space',
+	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message',
+	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message that will be displayed in the chat, only plain text is supported for now.',
+	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+
+You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'message\' will be ignored.',
+	// - Fieldsets
+	'ActionGoogleChatNotification:message' => 'Message',
 ));
