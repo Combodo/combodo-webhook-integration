@@ -27,10 +27,18 @@ namespace Combodo\iTop\Core;
  */
 class WebRequest
 {
-	/** @var string $sURL */
+	/** @var string URL of the request */
 	protected $sURL;
-	/** @var array $aOptions cURL options */
+	/** @var array cURL options */
 	protected $aOptions;
+	/**
+	 * @var string Name of the callback to be called on request's response
+	 *             - $this->Foo
+	 *             - \SomeClass::Foo
+	 */
+	protected $sResponseCallbackName;
+	/** @var array Structured data that will be passed to $sResponseCallbackName */
+	protected $aResponseCallbackParams;
 
 	/**
 	 * @param string $sURL Url which should called with this request
@@ -39,6 +47,8 @@ class WebRequest
 	{
 		$this->sURL = $sURL;
 		$this->aOptions = array();
+		$this->sResponseCallbackName = '';
+		$this->aResponseCallbackParams = [];
 	}
 
 	/**
@@ -105,5 +115,47 @@ class WebRequest
 		{
 			$this->aOptions[$sOption] = $sValue;
 		}
+	}
+
+	/**
+	 * @see \Combodo\iTop\Core\WebRequest::$sURL
+	 * @return string
+	 */
+	public function GetResponseCallbackName()
+	{
+		return $this->sResponseCallbackName;
+	}
+
+	/**
+	 * @param string $sCallbackName
+	 *
+	 * @see \Combodo\iTop\Core\WebRequest::$sResponseCallbackName
+	 * @return $this
+	 */
+	public function SetResponseCallbackName($sCallbackName)
+	{
+		$this->sResponseCallbackName = $sCallbackName;
+		return $this;
+	}
+
+	/**
+	 * @see \Combodo\iTop\Core\WebRequest::$aResponseCallbackParams
+	 * @return array
+	 */
+	public function GetResponseCallbackParams()
+	{
+		return $this->aResponseCallbackParams;
+	}
+
+	/**
+	 * @param array $aParams
+	 *
+	 * @see \Combodo\iTop\Core\WebRequest::$aResponseCallbackParams
+	 * @return $this
+	 */
+	public function SetResponseCallbackParams(array $aParams)
+	{
+		$this->aResponseCallbackParams = $aParams;
+		return $this;
 	}
 }
