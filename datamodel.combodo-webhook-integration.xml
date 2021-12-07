@@ -710,7 +710,7 @@
 						<item id="col:col1">
 							<rank>20</rank>
 							<items>
-								<item id="fieldset:ActionWebhook:requestsimple">
+								<item id="fieldset:ActionWebhook:requestparameters">
 									<rank>10</rank>
 									<items>
 										<item id="payload">
@@ -718,19 +718,14 @@
 										</item>
 									</items>
 								</item>
-								<item id="fieldset:ActionWebhook:requestadvanced">
-									<rank>20</rank>
+								<item id="fieldset:ActionWebhook:advancedparameters">
+									<rank>30</rank>
 									<items>
 										<item id="prepare_payload_callback">
 											<rank>10</rank>
 										</item>
-									</items>
-								</item>
-								<item id="fieldset:ActionWebhook:response">
-									<rank>30</rank>
-									<items>
 										<item id="process_response_callback">
-											<rank>10</rank>
+											<rank>20</rank>
 										</item>
 									</items>
 								</item>

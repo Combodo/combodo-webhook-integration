@@ -94,9 +94,7 @@ IMPORTANT: You can use 2 types of methods:
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',
-	'ActionWebhook:requestsimple' => 'Request, either fill option 1 (simple) ...~~',
-	'ActionWebhook:requestadvanced' => '... or option 2 (advanced)~~',
-	'ActionWebhook:response' => 'Réponse',
+	'ActionWebhook:requestparameters' => 'Paramètres de la requête',
 	'ActionWebhook:advancedparameters' => 'Paramètres avancés',
 ));
 

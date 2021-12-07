@@ -94,11 +94,8 @@ You can use 2 types of methods:
 	'ActionWebhook:baseinfo' => 'General information',
 	'ActionWebhook:moreinfo' => 'More information',
 	'ActionWebhook:webhookconnection' => 'Webhook connection',
-	'ActionWebhook:requestsimple' => 'Request, either use a static payload (simple) ...',
-	'ActionWebhook:requestadvanced' => '... or build it dynamically (advanced)',
 	// Note: This one is used by derivated classes
 	'ActionWebhook:requestparameters' => 'Request parameters',
-	'ActionWebhook:response' => 'Response',
 	'ActionWebhook:advancedparameters' => 'Advanced parameters',
 ));
 
