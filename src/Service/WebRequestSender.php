@@ -125,7 +125,6 @@ class WebRequestSender
 			// Log response
 			if($oLog !== null)
 			{
-				// TODO: Truncate to DB field limitation
 				$oLog->Set('response', $sResponse);
 				$oLog->DBUpdate();
 			}

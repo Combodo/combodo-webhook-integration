@@ -1,6 +1,3 @@
-DISCLAIMER: Do not use it as it is a WIP. Repo is just here to save / sync content.
-
-
 # Generic
 - Example of payload callback:
     - Make a snippet like:
