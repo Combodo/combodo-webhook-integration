@@ -14,7 +14,8 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		// Setup
 		//
 		'dependencies' => array(
-			'itop-config-mgmt/2.7.0',
+			// Dependency to this module is only here to force compatibility with iTop 2.7+, there is no functional dependency
+			'itop-config/2.7.0',
 		),
 		'mandatory' => false,
 		'visible' => true,
