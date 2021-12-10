@@ -4,10 +4,8 @@
        ```
        class WebhookPayloadHandler
         {
-            public static function MyPayloadPreparation($aContextArgs, $oLog)
+            public static function MyPayloadPreparation($oObject, $aContextArgs, $oLog, $oAction)
             {
-                $oObject = $aContextArgs['this->object()'];
-        
                 $aData = array(
                     'title' => $oObject->GetName(),
                     'description' => 'The object was updated',
