@@ -14,6 +14,8 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		// Setup
 		//
 		'dependencies' => array(
+			// Dependency to this module should be v2.7.0, but we set it to v2.6.0 to enbale compatibility with some legacy iTop 2.7 customer packages
+			'itop-config-mgmt/2.6.0',
 			// Dependency to this module is only here to force compatibility with iTop 2.7+, there is no functional dependency
 			'itop-config/2.7.0',
 		),
