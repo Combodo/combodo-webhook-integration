@@ -19,12 +19,13 @@
 
 // Important: Unfortunately, for now AsyncTask classes CANNOT have a namespace, it will crash the OQL parser.
 
-use AsyncTask;
-use AttributeString;
-use AttributeLongText;
 use Combodo\iTop\Core\WebRequest;
 use Combodo\iTop\Service\WebRequestSender;
-use MetaModel;
+// If we ever move this class back to a namespace, mind putting the following uses back
+//use AsyncTask;
+//use AttributeString;
+//use AttributeLongText;
+//use MetaModel;
 
 /**
  * Class SendWebRequest
