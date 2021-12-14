@@ -1892,6 +1892,7 @@
 		<menu id="Integrations" xsi:type="DashboardMenuNode" _delta="define">
 			<rank>120</rank>
 			<parent>ConfigurationTools</parent>
+			<enable_admin_only>1</enable_admin_only>
 			<definition>
 				<layout>DashboardLayoutOneCol</layout>
 				<title>Dashboard:Integrations:Title</title>
