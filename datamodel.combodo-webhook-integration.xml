@@ -381,6 +381,7 @@
 			if (!is_null($oLog))
 			{
 				$this->LogHeaders($this->Get('headers'), $aHeaders, $oLog);
+				$this->TruncateLogAttributeForDB($oLog, 'headers');
 			}
 			// - Payload
 			// ... Force payload to be prepared from callback in the method of this class (avoid polymorphic inheritance)
@@ -394,6 +395,7 @@
 			if (!is_null($oLog))
 			{
 				$this->LogPayload($this->Get('payload'), $payload, $oLog);
+				$this->TruncateLogAttributeForDB($oLog, 'payload');
 			}
 		} catch (Exception $oException) {
 			throw $oException;
@@ -695,6 +697,35 @@
 					<code><![CDATA[	public function HasProcessResponseCallback()
 	{
 		return strlen($this->Get('process_response_callback')) > 0;
+	}
+]]>
+					</code>
+				</method>
+				<method id="TruncateLogAttributeForDB">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Truncate the $sAttCode (based on its att. def.) to ensure that it fits in the DB
+	 *
+	 * @param \EventWebhook $oLog
+	 * @param string $sAttCode
+
+	 * @return void
+	 * @since 1.0.1
+	 */]]></comment>
+					<code><![CDATA[	public function TruncateLogAttributeForDB(\EventWebhook &$oLog, $sAttCode)
+	{
+		$oAttDef = MetaModel::GetAttributeDef(get_class($oLog), $sAttCode);
+		$iMaxSize = $oAttDef->GetMaxSize();
+		$sFitText = $oLog->Get($sAttCode);
+		$sEndingText = '[TRUNCATED]';
+		// Note: We don't use mb_* functions as we don't want to cut after a whole character but after a certain byte length
+		if ($iMaxSize && (strlen($sFitText) > $iMaxSize))
+		{
+			$sFitText = substr($sFitText, 0, $iMaxSize - strlen($sEndingText)) . $sEndingText;
+			$oLog->Set($sAttCode, $sFitText);
+		}
 	}
 ]]>
 					</code>
