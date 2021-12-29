@@ -21,6 +21,7 @@ namespace Combodo\iTop\Service;
 
 use Combodo\iTop\Core\WebRequest;
 use Combodo\iTop\Core\WebResponse;
+use ContextTag;
 use Exception;
 use IssueLog;
 use MetaModel;
@@ -46,6 +47,9 @@ class WebRequestSender
 	const ENUM_SEND_MODE_SYNC = 'sync';
 	/** @var string Request to be sent asynchronously = by the CRON job to avoid blocking script execution */
 	const ENUM_SEND_MODE_ASYNC = 'async';
+
+	/** @var string \ContextTag placed around the ResponseHandler call */
+	const CONTEXT_TAG_RESPONSE_HANDLER = 'Combodo\iTop\Service\WebRequestSender:ResponseHandler';
 
 	/** @var string */
 	const DEFAULT_SEND_MODE = self::ENUM_SEND_MODE_SYNC;
@@ -131,7 +135,10 @@ class WebRequestSender
 
 			// Handle response
 			if ($oRequest->HasResponseHandler()) {
+				$oCtx = new ContextTag(static::CONTEXT_TAG_RESPONSE_HANDLER);
 				call_user_func($oRequest->GetResponseHandlerName(), $oResponse, $oRequest->GetResponseHandlerParams());
+				// Manual var unset to force context tag to be removed, otherwise it will be removed when the current method ends
+				unset($oCtx);
 			}
 
 			return array(
