@@ -8,7 +8,7 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 	'combodo-webhook-integration/1.0.1', array(
 		// Identification
 		//
-		'label' => 'Webhook integration',
+		'label' => 'Webhook integrations',
 		'category' => 'business',
 
 		// Setup
