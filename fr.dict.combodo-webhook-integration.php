@@ -162,7 +162,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 // Google Chat
 Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionGoogleChatNotification
-	'Class:ActionGoogleChatNotification' => 'Google Chat notification~~',
+	'Class:ActionGoogleChatNotification' => 'Notification Google Chat',
 	'Class:ActionGoogleChatNotification+' => 'Send a notification as a Google Chat message in a space~~',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message~~',
 	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message that will be displayed in the chat, only plain text is supported for now.~~',
