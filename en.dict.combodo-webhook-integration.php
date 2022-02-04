@@ -215,3 +215,46 @@ IMPORTANT: If set, the \'message\' will be ignored.',
 	// - Fieldsets
 	'ActionGoogleChatNotification:message' => 'Message',
 ));
+
+// Microsoft Teams
+Dict::Add('EN US', 'English', 'English', array(
+	// ActionMicrosoftTeamsNotification
+	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams notification',
+	'Class:ActionMicrosoftTeamsNotification+' => 'Send a notification as a Microsft Teams message in a channel',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Title',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Message',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes' => 'Attributes from',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes+' => 'Display additional attributes below the message. They can be either from the usual \'list\' view or the custom \'msteams\' view of the object triggering the notification . Note that the \'msteams\' view must be defined in the datamodel first (zlist)',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:list' => 'the usual list view',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:msteams' => 'the custom msteams view',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button' => 'Modify button',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button+' => 'Include a button below the message to edit the object in '.ITOP_APPLICATION_SHORT,
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button/Value:no' => 'No',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button/Value:yes' => 'Yes',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button' => 'Delete button',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button+' => 'Include a button below the message to delete the object in '.ITOP_APPLICATION_SHORT,
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button/Value:no' => 'No',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button/Value:yes' => 'Yes',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button' => 'Other actions buttons',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button+' => 'Include other actions (such as transitions available in the current state) below the message',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:no' => 'No',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:specify' => 'Specify',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:yes' => 'Yes',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Other actions codes',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Highlight color',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight color of the message card in Microsoft Teams, must be a valid hexadecimal color',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Medallion picture',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL of the image to display as a medallion in the message card, it must be publicly accessible on the internet for Microsoft Teams to be able to display it',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+
+You can use 2 types of methods:
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+
+IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' will be ignored.',
+	// - Fieldsets
+	'ActionMicrosoftTeamsNotification:message' => 'Basis message',
+	'ActionMicrosoftTeamsNotification:additionalelements' => 'Additional elements to include',
+	'ActionMicrosoftTeamsNotification:theme' => 'Theme',
+));

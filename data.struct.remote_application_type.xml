@@ -12,4 +12,7 @@
   <RemoteApplicationType alias="RemoteApplicationType" id="4">
     <name>Google Chat</name>
   </RemoteApplicationType>
+  <RemoteApplicationType alias="RemoteApplicationType" id="5">
+    <name>Microsoft Teams</name>
+  </RemoteApplicationType>
 </Set>
