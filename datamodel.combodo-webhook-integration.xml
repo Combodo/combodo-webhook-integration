@@ -569,7 +569,27 @@
 		$sCallbackFQCN = $this->Get('prepare_payload_callback');
 		if (empty($sCallbackFQCN))
 		{
-			$payload = MetaModel::ApplyParams($this->Get('payload'), $aContextArgs);
+			// Convert / encode payload depending on the content-type header
+			$sContentType = null;
+			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
+			foreach ($aHeaders as $sHeader) {
+				preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
+			    if (strlen($aMatches[2]) > 0){
+					$sContentType = $aMatches[2];
+					break;
+				}
+			}
+
+			switch ($sContentType) {
+				case 'application/json':
+					// Apply params to payload recursively, to send properly encoded JSON
+					$payload = $this->ApplyParamsToJson($aContextArgs, $this->Get('payload'));
+					break;
+
+				default:
+					$payload = MetaModel::ApplyParams($this->Get('payload'), $aContextArgs);
+					break;
+			}
 		}
 		else
 		{
@@ -645,6 +665,61 @@
 					<code><![CDATA[	protected function LogPayload($sRawPayload, $sPreparedPayload, \EventNotification &$oLog)
 	{
 		$oLog->Set('payload', "Raw:\n".$sRawPayload."\n\nAfter preparation:\n".$sPreparedPayload);
+	}
+]]>
+					</code>
+				</method>
+				<method id="ApplyParamsToArray">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Apply $aContextParams recursively to $aInputData
+	 * @param array $aContextArgs
+	 * @param array $aInputData Data to apply params to
+	 *
+	 * @see \MetaModel::ApplyParams
+	 * @return array Same structure as $aInputData but with applied params
+	 */]]></comment>
+					<code><![CDATA[	protected function ApplyParamsToArray(array $aContextArgs, array $aInputData)
+	{
+		$aPreparedData = [];
+		foreach ($aInputData as $sKey => $value) {
+			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs);
+			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : MetaModel::ApplyParams($value, $aContextArgs);
+
+			$aPreparedData[$sPreparedKey] = $preparedValue;
+		}
+
+		return $aPreparedData;
+	}
+]]>
+					</code>
+				</method>
+				<method id="ApplyParamsToJson">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Apply $aContextParams to $sInputAsJson
+	 * @param array $aContextArgs
+	 * @param array $sInputAsJson JSON string to apply params to
+	 *
+	 * @see \MetaModel::ApplyParams
+	 * @return string Same string as $sInputAsJson but with applied params
+	 */]]></comment>
+					<code><![CDATA[	protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
+	{
+		$aInputAsArray = json_decode($sInputAsJson, true);
+		if (false === is_array($aInputAsArray)) {
+			IssueLog::Error('Wrong JSON format for input', 'console', ['input' => $sInputAsJson]);
+			throw new Exception('Wrong JSON format for input, see error log for more information.');
+		}
+
+		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
+		$sPreparedDataAsJson = json_encode($aPreparedDataAsArray);
+
+		return $sPreparedDataAsJson;
 	}
 ]]>
 					</code>
@@ -897,21 +972,10 @@
 		// Retrieve connection
 		$oRemoteApplicationConnection = $this->GetRemoteApplicationConnection();
 
-		// Apply params to payload recursively
-		$sPayloadAsJson = $this->Get('payload');
-		$aPayloadAsArray = json_decode($sPayloadAsJson, true);
-		if (false === $aPayloadAsArray) {
-			IssueLog::Error('Wrong JSON format for payload', 'console', ['payload' => $sPayloadAsJson]);
-			throw new Exception('Wrong JSON format for payload, see error log for more information.');
-		}
-
-		$aPreparedPayloadAsArray = $this->ApplyParamsToArray($aContextArgs, $aPayloadAsArray);
-		$sPreparedPayloadAsJson = json_encode($aPreparedPayloadAsArray);
-
 		// Retrieve basis parameters
 		$aParameters = array(
 			'version' => MetaModel::ApplyParams($oRemoteApplicationConnection->Get('version'), $aContextArgs),
-			'json_data' => $sPreparedPayloadAsJson,
+			'json_data' => $this->ApplyParamsToJson($aContextArgs, $this->Get('payload')),  // Apply params to payload recursively
 		);
 
 		foreach($aParameters as $sParamName => $sParamValue)
@@ -941,33 +1005,6 @@
 		$sPwdQueryParamObfuscated = 'auth_pwd=******';
 		$sObfuscatedPayload = preg_replace('/(auth_pwd=[^&]*)/', $sPwdQueryParamObfuscated, $sPreparedPayload);
 		parent::LogPayload($sRawPayload, $sObfuscatedPayload, $oLog);
-	}
-]]>
-					</code>
-				</method>
-				<method id="ApplyParamsToArray">
-					<static>false</static>
-					<access>protected</access>
-					<type>Overload-DBObject</type>
-					<comment><![CDATA[/**
-	 * Apply $aContextParams recursively to $aInputData
-	 * @param array $aContextArgs
-	 * @param array $aInputData Data to apply params to
-	 *
-	 * @see \MetaModel::ApplyParams
-	 * @return array Same structure as $aInputData but with applied params
-	 */]]></comment>
-					<code><![CDATA[	protected function ApplyParamsToArray(array $aContextArgs, array $aInputData)
-	{
-		$aPreparedData = [];
-		foreach ($aInputData as $sKey => $value) {
-			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs);
-			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : MetaModel::ApplyParams($value, $aContextArgs);
-
-			$aPreparedData[$sPreparedKey] = $preparedValue;
-		}
-
-		return $aPreparedData;
 	}
 ]]>
 					</code>
