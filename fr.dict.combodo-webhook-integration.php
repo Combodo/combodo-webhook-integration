@@ -178,7 +178,7 @@ IMPORTANT: If set, the \'message\' will be ignored.~~',
 ));
 
 // Microsoft Teams
-Dict::Add('EN US', 'English', 'English', array(
+Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionMicrosoftTeamsNotification
 	'Class:ActionMicrosoftTeamsNotification' => 'Notification Microsoft Teams',
 	'Class:ActionMicrosoftTeamsNotification+' => 'Envoi une notification en tant que message dans un canal Microsoft Teams',
