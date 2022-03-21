@@ -5,7 +5,7 @@
 //
 //
 SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'combodo-webhook-integration/1.1.0', array(
+	'combodo-webhook-integration/1.1.1', array(
 		// Identification
 		//
 		'label' => 'Webhook integrations',
@@ -14,8 +14,8 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		// Setup
 		//
 		'dependencies' => array(
-			// Dependency to this module should be v2.7.0, but we set it to v2.4.0 to enbale compatibility with some legacy iTop 2.7 customer packages
-			'itop-config-mgmt/2.4.0',
+			// Dependency to itop-config-mgmt should be v2.7.0, but we set it to v2.4.0 to enbale compatibility with some legacy iTop 2.7 customer packages
+			'itop-config-mgmt/2.4.0 || itop-structure/3.0.0',
 			// Dependency to this module is only here to force compatibility with iTop 2.7+, there is no functional dependency
 			'itop-config/2.7.0',
 		),
