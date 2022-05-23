@@ -15,3 +15,12 @@ When downloading directly from GitHub (by cloning or downloading as zip) you wil
 ## About Us
 
 This iTop module development is sponsored, led and supported by [Combodo](https://www.combodo.com).
+
+
+## Contributors
+
+We would like to give a special thank you 🤗 to the people from the community who contributed to this project, including:
+
+### Names
+
+- Bie, Dejin (a.k.a [@bdejin](https://www.github.com/bdejin))
