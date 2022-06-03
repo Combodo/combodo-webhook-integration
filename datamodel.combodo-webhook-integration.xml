@@ -686,7 +686,11 @@
 		$aPreparedData = [];
 		foreach ($aInputData as $sKey => $value) {
 			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs);
-			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : MetaModel::ApplyParams($value, $aContextArgs);
+			
+			// N°5367 - Fix non-string values (boolean, null) converted into empty string
+			// Some APIs explicitly require booleans such as 'false'; or null values.
+			// Do not convert those into a string by calling MetaModel::ApplyParams().
+			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : (is_string($value) ? MetaModel::ApplyParams($value, $aContextArgs) : $value);
 
 			$aPreparedData[$sPreparedKey] = $preparedValue;
 		}
