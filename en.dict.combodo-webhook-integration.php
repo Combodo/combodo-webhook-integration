@@ -112,7 +112,7 @@ IMPORTANT:
 - \'Content-type\' should be set to \'application/x-www-form-urlencoded\' for iTop, even though we send JSON
 - A \'Basic authorization\' header will be append automatically to request during sending, containing the credentials from the selected connection',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'JSON data',
-	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailled information',
+	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailed information',
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
@@ -188,7 +188,7 @@ You can use 2 types of methods:
 IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Basis message',
-	'ActionRocketChatNotification:additionalelements' => 'Bot information'
+	'ActionRocketChatNotification:additionalelements' => 'Bot information',
 ));
 
 // Google Chat
@@ -213,7 +213,7 @@ IMPORTANT: If set, the \'message\' will be ignored.',
 Dict::Add('EN US', 'English', 'English', array(
 	// ActionMicrosoftTeamsNotification
 	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams notification',
-	'Class:ActionMicrosoftTeamsNotification+' => 'Send a notification as a Microsft Teams message in a channel',
+	'Class:ActionMicrosoftTeamsNotification+' => 'Send a notification as a Microsoft Teams message in a channel',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Title',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Message',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes' => 'Attributes from',
