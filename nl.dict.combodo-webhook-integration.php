@@ -2,7 +2,7 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2022 Combodo
+ * @copyright   Copyright (C) 2022 Combodo SARL
  * @license     http://opensource.org/licenses/AGPL-3.0
  * @author      Jeffrey Bostoen - <jbostoen.itop@outlook.com> (2022)
  */
@@ -66,7 +66,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 	'Class:ActionWebhook/Attribute:headers' => 'Hoofding (headers)',
 	'Class:ActionWebhook/Attribute:headers+' => 'Headers voor het HTTP-verzoek. Eén header per regel (bv. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Bericht (payload)',
-	'Class:ActionWebhook/Attribute:payload+' => 'Data die verstuurd wordt tijdens het aanroepen van de webhook. Meestal is dit in JSON-formaat in een vast formaat.
+	'Class:ActionWebhook/Attribute:payload+' => 'Data die verstuurd wordt tijdens het aanroepen van de webhook. Meestal is dit in een vast JSON-formaat.
 
 BELANGRIJK: Dit wordt genegeerd als er een \'"Bericht opmaak"-functie\' geconfigureerd is',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback' => '"Bericht opmaak"-functie',
