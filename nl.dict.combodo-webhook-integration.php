@@ -64,7 +64,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
 	'Class:ActionWebhook/Attribute:path' => 'Pad',
-	'Class:ActionWebhook/Attribute:path+' => 'Additioneel pad om toe te voegen aan de connectie-URL',
+	'Class:ActionWebhook/Attribute:path+' => 'Additioneel pad om toe te voegen aan de connectie-URL (bv. \'/some/specific-endpoint\')',
 	'Class:ActionWebhook/Attribute:headers' => 'Hoofding (headers)',
 	'Class:ActionWebhook/Attribute:headers+' => 'Headers voor het HTTP-verzoek. Eén header per regel (bv. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Bericht (payload)',
