@@ -298,6 +298,11 @@
 					<default_value>post</default_value>
 					<is_null_allowed>false</is_null_allowed>
 				</field>
+				<field id="path" xsi:type="AttributeString">
+					<sql>path</sql>
+					<default_value/>
+					<is_null_allowed>true</is_null_allowed>
+				</field>
 				<field id="headers" xsi:type="AttributeText">
 					<sql>headers</sql>
 					<default_value/>
@@ -468,7 +473,7 @@
 		// Get URL
 		if($oRemoteApplicationConnection !== null)
 		{
-			$sURL = MetaModel::ApplyParams($oRemoteApplicationConnection->Get('url'), $aContextArgs);
+			$sURL = MetaModel::ApplyParams($oRemoteApplicationConnection->Get('url').$this->Get('path'), $aContextArgs);
 		}
 		elseif($this->IsBeingTested())
 		{
@@ -841,8 +846,11 @@
 										<item id="method">
 											<rank>30</rank>
 										</item>
-										<item id="headers">
+										<item id="path">
 											<rank>40</rank>
+										</item>
+										<item id="headers">
+											<rank>50</rank>
 										</item>
 									</items>
 								</item>
