@@ -62,6 +62,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
 	'Class:ActionWebhook/Attribute:headers' => 'Headers',
 	'Class:ActionWebhook/Attribute:headers+' => 'Headers of the HTTP request, must be one per line (eg. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Payload',

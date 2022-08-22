@@ -293,6 +293,7 @@
 						<value id="put">put</value>
 						<value id="patch">patch</value>
 						<value id="delete">delete</value>
+						<value id="head">head</value>
 					</values>
 					<sql>method</sql>
 					<default_value>post</default_value>
