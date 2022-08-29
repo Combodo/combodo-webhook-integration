@@ -859,6 +859,37 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 ]]>
 					</code>
 				</method>
+				<method id="DoCheckToWrite">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Check payload JSON
+	 * @since 1.1.2
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckToWrite()
+	{
+		parent::DoCheckToWrite();
+
+		if (get_class($this) !== ActionWebhook::class) {
+			// subclasses will fill payload value programmatically, so no check needed for those classes !
+			return;
+		}
+
+		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
+		$aContextArgs = [];
+		$sContentType = $this->GetContentType($aContextArgs);
+		if ($sContentType === 'application/json'){
+			$sPayload = $this->Get('payload');
+			$aInputAsArray = json_decode($sPayload, true);
+			if (false === is_array($aInputAsArray)) {
+				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
+			}
+		}
+	}
+]]>
+					</code>
+				</method>
 			</methods>
 			<presentation>
 				<details>
