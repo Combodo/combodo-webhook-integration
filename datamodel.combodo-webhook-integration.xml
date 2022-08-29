@@ -530,13 +530,12 @@
 	 * IMPORTANT: The array must be NON associative, otherwise the cURL lib. won't use it.
 	 *
 	 * @param array              $aContextArgs
-	 * @param \EventNotification $oLog
 	 *
 	 * @return array
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
+					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs)
 	{
 		$aHeaders = [];
 
@@ -583,15 +582,7 @@
 		if (empty($sCallbackFQCN))
 		{
 			// Convert / encode payload depending on the content-type header
-			$sContentType = null;
-			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
-			foreach ($aHeaders as $sHeader) {
-				preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
-			    if (strlen($aMatches[2]) > 0){
-					$sContentType = $aMatches[2];
-					break;
-				}
-			}
+			$sContentType = $this->GetContentType($aContextArgs);
 
 			switch ($sContentType) {
 				case 'application/json':
@@ -838,6 +829,32 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			$sFitText = substr($sFitText, 0, $iMaxSize - strlen($sEndingText)) . $sEndingText;
 			$oLog->Set($sAttCode, $sFitText);
 		}
+	}
+]]>
+					</code>
+				</method>
+				<method id="GetContentType">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @param array $aContextArgs
+	 * @return string
+	 * @since 1.1.2
+	 */]]></comment>
+					<code><![CDATA[	protected function GetContentType($aContextArgs)
+	{
+		$sContentType = null;
+		$aHeaders = $this->PrepareHeaders($aContextArgs);
+		foreach ($aHeaders as $sHeader) {
+			preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
+		    if (strlen($aMatches[2]) > 0){
+				$sContentType = $aMatches[2];
+				break;
+			}
+		}
+
+		return $sContentType;
 	}
 ]]>
 					</code>
