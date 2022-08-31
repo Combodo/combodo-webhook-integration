@@ -727,7 +727,16 @@
 	{
 		$aInputAsArray = json_decode($sInputAsJson, true);
 		if (false === is_array($aInputAsArray)) {
-			IssueLog::Error('Wrong JSON format for input', 'console', ['input' => $sInputAsJson]);
+			// LogChannels class and NOTIFICATION constant were introduced recently, we can't use it with a 2.7.0 compatibility
+			$sLogChannel = 'notifications';
+			$aLogContext = [
+				'action_class' => get_class($this),
+				'action_id'    => $this->GetKey(),
+				'action_name'  => $this->Get('name'),
+				'payload'      => $sInputAsJson,
+			];
+			IssueLog::Error('WebHook Action failed: wrong JSON format for input', $sLogChannel, $aLogContext);
+
 			throw new InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
