@@ -529,13 +529,18 @@
 	 *
 	 * IMPORTANT: The array must be NON associative, otherwise the cURL lib. won't use it.
 	 *
-	 * @param array              $aContextArgs
+	 * @param array $aContextArgs
+	 * @param \EventNotification|null $oLog Can be used to modify notification log
 	 *
 	 * @return array
+	 *
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
+	 *
+	 * @link https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.nullable cannot have nullable object type hinting in parameter before PHP 7.1.0
+	 * @link https://www.php.net/manual/en/language.oop5.references.php $oLog will be passed by reference
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs)
+					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, $oLog)
 	{
 		$aHeaders = [];
 
@@ -839,13 +844,17 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * @param array $aContextArgs
+	 * @param \EventNotification|null $oLog Can be used to modify notification log
 	 * @return string
 	 * @since 1.1.2
+	 *
+	 * @link https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.nullable cannot have nullable object type hinting in parameter before PHP 7.1.0
+	 * @link https://www.php.net/manual/en/language.oop5.references.php $oLog will be passed by reference
 	 */]]></comment>
-					<code><![CDATA[	protected function GetContentType($aContextArgs)
+					<code><![CDATA[	protected function GetContentType($aContextArgs, $oLog)
 	{
 		$sContentType = null;
-		$aHeaders = $this->PrepareHeaders($aContextArgs);
+		$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
 		foreach ($aHeaders as $sHeader) {
 			preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
 		    if (strlen($aMatches[2]) > 0){
@@ -878,7 +887,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
 		$aContextArgs = [];
-		$sContentType = $this->GetContentType($aContextArgs);
+		$sContentType = $this->GetContentType($aContextArgs, null);
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
 			$aInputAsArray = json_decode($sPayload, true);
