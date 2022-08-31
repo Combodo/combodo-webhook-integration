@@ -727,7 +727,7 @@
 	{
 		$aInputAsArray = json_decode($sInputAsJson, true);
 		if (false === is_array($aInputAsArray)) {
-			// LogChannels class and NOTIFICATION constant were introduced recently, we can't use it with a 2.7.0 compatibility
+			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
 				'action_class' => get_class($this),
