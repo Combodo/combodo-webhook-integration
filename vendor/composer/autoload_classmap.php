@@ -6,7 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Combodo\\iTop\\Core\\InvalidJsonValueException' => $baseDir . '/src/Core/InvalidJsonValueException.php',
+    'Combodo\\iTop\\Core\\Notification\\Action\\Webhook\\Exception\\WebhookInvalidJsonValueException' => $baseDir . '/src/Core/Notification/Action/Webhook/Exception/WebhookInvalidJsonValueException.php',
     'Combodo\\iTop\\Core\\Notification\\Action\\_ActionWebhook' => $baseDir . '/src/Core/Notification/Action/_ActionWebhook.php',
     'Combodo\\iTop\\Core\\WebRequest' => $baseDir . '/src/Core/WebRequest.php',
     'Combodo\\iTop\\Core\\WebResponse' => $baseDir . '/src/Core/WebResponse.php',
