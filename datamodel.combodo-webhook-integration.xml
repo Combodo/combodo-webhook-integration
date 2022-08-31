@@ -716,13 +716,19 @@
 	 *
 	 * @see \MetaModel::ApplyParams
 	 * @return string Same string as $sInputAsJson but with applied params
+	 *
+	 * @throw InvalidJsonValueException if payload has an invalid format
+	 *
+	 * @uses json_decode
+	 * @uses json_encode
+	 * @uses ApplyParamsToArray
 	 */]]></comment>
 					<code><![CDATA[	protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		$aInputAsArray = json_decode($sInputAsJson, true);
 		if (false === is_array($aInputAsArray)) {
 			IssueLog::Error('Wrong JSON format for input', 'console', ['input' => $sInputAsJson]);
-			throw new Exception('Wrong JSON format for input, see error log for more information.');
+			throw new InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
 		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
