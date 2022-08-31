@@ -737,7 +737,7 @@
 			];
 			IssueLog::Error('WebHook Action failed: wrong JSON format for input', $sLogChannel, $aLogContext);
 
-			throw new InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
+			throw new \Combodo\iTop\Core\InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
 		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
