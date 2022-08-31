@@ -723,7 +723,8 @@
 	 * @uses json_encode
 	 * @uses ApplyParamsToArray
 	 */]]></comment>
-					<code><![CDATA[	protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
+					<code><![CDATA[
+protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		$aInputAsArray = json_decode($sInputAsJson, true);
 		if (false === is_array($aInputAsArray)) {
@@ -737,7 +738,7 @@
 			];
 			IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
 
-			throw new \Combodo\iTop\Core\InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
+			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
 		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
