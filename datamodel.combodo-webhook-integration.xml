@@ -735,7 +735,7 @@
 				'action_name'  => $this->Get('name'),
 				'payload'      => $sInputAsJson,
 			];
-			IssueLog::Error('WebHook Action failed: wrong JSON format for input', $sLogChannel, $aLogContext);
+			IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
 
 			throw new \Combodo\iTop\Core\InvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
