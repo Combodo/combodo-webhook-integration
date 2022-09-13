@@ -731,10 +731,12 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
-				'action_class' => get_class($this),
-				'action_id'    => $this->GetKey(),
-				'action_name'  => $this->Get('name'),
-				'payload'      => $sInputAsJson,
+				'action_class'        => get_class($this),
+				'action_id'           => $this->GetKey(),
+				'action_name'         => $this->Get('name'),
+				'payload'             => $sInputAsJson,
+				'json_last_error'     => json_last_error(),
+				'json_last_error_msg' => json_last_error_msg(),
 			];
 			IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
 
