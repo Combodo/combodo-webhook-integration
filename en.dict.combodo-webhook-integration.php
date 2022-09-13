@@ -62,6 +62,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
 	'Class:ActionWebhook/Attribute:path' => 'Path',
 	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')',
 	'Class:ActionWebhook/Attribute:headers' => 'Headers',

@@ -62,6 +62,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
 	'Class:ActionWebhook/Attribute:headers' => '头信息',
 	'Class:ActionWebhook/Attribute:headers+' => 'HTTP请求的头信息，每个必须时1行（例如“Content-type: application/json”）',
 	'Class:ActionWebhook/Attribute:payload' => '载荷',

@@ -293,6 +293,7 @@
 						<value id="put">put</value>
 						<value id="patch">patch</value>
 						<value id="delete">delete</value>
+						<value id="head">head</value>
 					</values>
 					<sql>method</sql>
 					<default_value>post</default_value>
@@ -415,8 +416,7 @@
 		// Prepare cURL options
 		$aCURLOptions = array(
 			CURLOPT_RETURNTRANSFER => true,
-			// Note: Even though we might have something else than "get" and "post" in the $sMethod, for now we only set it to these 2 values in the cURL options. It should be reworked / fixed.
-			CURLOPT_POST => ($sMethod === 'post'),
+			CURLOPT_CUSTOMREQUEST => strtoupper($sMethod),
 			// Note: We pass headers as a cURL option to avoid  bug N°3267 in \utils::DoPostRequest()
 			CURLOPT_HTTPHEADER => $aHeaders,
 			CURLOPT_CONNECTTIMEOUT => $sConnectionTimeoutInSeconds,
