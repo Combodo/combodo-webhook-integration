@@ -716,13 +716,33 @@
 	 *
 	 * @see \MetaModel::ApplyParams
 	 * @return string Same string as $sInputAsJson but with applied params
+	 *
+	 * @throw InvalidJsonValueException if payload has an invalid format
+	 *
+	 * @uses json_decode
+	 * @uses json_encode
+	 * @uses ApplyParamsToArray
+	 *
+	 * @since 1.1.2 N°5473 in case invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
 	 */]]></comment>
-					<code><![CDATA[	protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
+					<code><![CDATA[
+protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		$aInputAsArray = json_decode($sInputAsJson, true);
 		if (false === is_array($aInputAsArray)) {
-			IssueLog::Error('Wrong JSON format for input', 'console', ['input' => $sInputAsJson]);
-			throw new Exception('Wrong JSON format for input, see error log for more information.');
+			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
+			$sLogChannel = 'notifications';
+			$aLogContext = [
+				'action_class'        => get_class($this),
+				'action_id'           => $this->GetKey(),
+				'action_name'         => $this->Get('name'),
+				'payload'             => $sInputAsJson,
+				'json_last_error'     => json_last_error(),
+				'json_last_error_msg' => json_last_error_msg(),
+			];
+			IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
+
+			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
 		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
