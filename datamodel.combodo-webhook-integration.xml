@@ -530,17 +530,14 @@
 	 * IMPORTANT: The array must be NON associative, otherwise the cURL lib. won't use it.
 	 *
 	 * @param array $aContextArgs
-	 * @param \EventNotification|null $oLog Can be used to modify notification log
+	 * @param \EventNotification $oLog Can be used to modify notification log
 	 *
 	 * @return array
 	 *
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
-	 *
-	 * @link https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.nullable cannot have nullable object type hinting in parameter before PHP 7.1.0
-	 * @link https://www.php.net/manual/en/language.oop5.references.php $oLog will be passed by reference
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, $oLog)
+					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$aHeaders = [];
 
@@ -587,7 +584,8 @@
 		if (empty($sCallbackFQCN))
 		{
 			// Convert / encode payload depending on the content-type header
-			$sContentType = $this->GetContentType($aContextArgs);
+			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
+			$sContentType = $this->GetContentType($aHeaders);
 
 			switch ($sContentType) {
 				case 'application/json':
@@ -843,23 +841,17 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
-	 * @param array $aContextArgs
-	 * @param \EventNotification|null $oLog Can be used to modify notification log
+	 * @param array $aHeaders
 	 * @return string
 	 * @since 1.1.2
-	 *
-	 * @link https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.nullable cannot have nullable object type hinting in parameter before PHP 7.1.0
-	 * @link https://www.php.net/manual/en/language.oop5.references.php $oLog will be passed by reference
 	 */]]></comment>
-					<code><![CDATA[	protected function GetContentType($aContextArgs, $oLog)
+					<code><![CDATA[	protected function GetContentType($aHeaders)
 	{
 		$sContentType = null;
-		$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
 		foreach ($aHeaders as $sHeader) {
 			preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
-		    if (strlen($aMatches[2]) > 0){
-				$sContentType = $aMatches[2];
-				break;
+      if (strlen($aMatches[2]) > 0){
+				return $aMatches[2];
 			}
 		}
 
@@ -886,8 +878,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		}
 
 		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
-		$aContextArgs = [];
-		$sContentType = $this->GetContentType($aContextArgs, null);
+		$sHeaders = $this->Get('headers');
+		$aHeaders = explode("\n", $sHeaders);
+		$sContentType = $this->GetContentType($aHeaders);
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
 			$aInputAsArray = json_decode($sPayload, true);
