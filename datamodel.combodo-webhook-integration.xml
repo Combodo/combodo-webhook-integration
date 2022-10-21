@@ -746,7 +746,7 @@
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
-		$aInputAsArray = json_decode($sInputAsJson, true);
+		$aInputAsArray = $this->ValidateJsonString($sInputAsJson);
 		if (false === is_array($aInputAsArray)) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
@@ -876,6 +876,27 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 ]]>
 					</code>
 				</method>
+				<method id="ValidateJsonString">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @param string $sJson
+	 * @return boolean|array<string, string> false if the JSON can't be deserialized, otherwise the deserialized structure
+	 * @since 1.1.2
+	 * @use json_decode
+	 */]]></comment>
+					<code><![CDATA[	protected function ValidateJsonString($sJson)
+	{
+		$aJsonStructure = json_decode($sJson, true);
+		if (false === is_array($aJsonStructure)) {
+			return false;
+		}
+		return $aJsonStructure;
+	}
+]]>
+					</code>
+				</method>
 				<method id="DoCheckToWrite">
 					<static>false</static>
 					<access>public</access>
@@ -888,19 +909,32 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		parent::DoCheckToWrite();
 
-		if (get_class($this) !== ActionWebhook::class) {
-			// subclasses will fill payload value programmatically, so no check needed for those classes !
-			return;
+		if (get_class($this) === ActionWebhook::class) {
+			// We don't know what the subclasses will do !
+			// If you need the check in your impl, just implement your own DoCheckToWrite and call the below method
+			$this->DoCheckPayload();
 		}
-
+	}
+]]>
+					</code>
+				</method>
+				<method id="DoCheckPayload">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Check payload JSON
+	 * @since 1.1.2
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckPayload()
+	{
 		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
 		$sHeadersAsText = $this->Get('headers');
 		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
 		$sContentType = $this->GetContentType($aHeaders);
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
-			$aInputAsArray = json_decode($sPayload, true);
-			if (false === is_array($aInputAsArray)) {
+			if (false === $this->ValidateJsonString($sPayload)) {
 				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
 			}
 		}
