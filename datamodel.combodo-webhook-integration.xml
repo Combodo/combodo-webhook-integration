@@ -542,21 +542,8 @@
 		$aHeaders = [];
 
 		$sHeadersAsText = MetaModel::ApplyParams($this->Get('headers'), $aContextArgs);
-		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
-		foreach ($aLines as $sLine) {
-			$sLine = trim($sLine);
-			if (empty($sLine)) {
-				continue;
-			}
 
-			$aHeaders[] = $sLine;
-		}
-
-		if (count($aHeaders) === 0) {
-			$aHeaders[] = 'Content-type: application/json';
-		}
-
-		return $aHeaders;
+		return $this->HeadersStringToArray($sHeadersAsText);
 	}
 ]]>
 					</code>
@@ -622,6 +609,35 @@
 		}
 
 		return $payload;
+	}
+]]>
+					</code>
+				</method>
+				<method id="HeadersStringToArray">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @param string sHeadersAsText
+	 * @return string[] one header per line
+	 */]]></comment>
+					<code><![CDATA[	protected function HeadersStringToArray($sHeadersAsText)
+	{
+		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
+		foreach ($aLines as $sLine) {
+			$sLine = trim($sLine);
+			if (empty($sLine)) {
+				continue;
+			}
+
+			$aHeaders[] = $sLine;
+		}
+
+		if (count($aHeaders) === 0) {
+			$aHeaders[] = 'Content-type: application/json';
+		}
+
+		return $aHeaders;
 	}
 ]]>
 					</code>
@@ -878,8 +894,8 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		}
 
 		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
-		$sHeaders = $this->Get('headers');
-		$aHeaders = explode("\n", $sHeaders);
+		$sHeadersAsText = $this->Get('headers');
+		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
 		$sContentType = $this->GetContentType($aHeaders);
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
