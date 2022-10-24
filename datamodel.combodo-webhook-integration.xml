@@ -421,6 +421,7 @@
 			CURLOPT_HTTPHEADER => $aHeaders,
 			CURLOPT_CONNECTTIMEOUT => $sConnectionTimeoutInSeconds,
 			CURLOPT_POSTFIELDS => $payload,
+			CURLOPT_POST => !empty($payload),
 		);
 
 		// Certificate options
