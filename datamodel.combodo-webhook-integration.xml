@@ -441,7 +441,7 @@
 		if (!empty($sCACertFile))
 		{
 			// The name of a file containing a PEM formatted certificate.
-			$aCurlOptions[CURLOPT_SSLCERT] = $sCACertFile;
+			$aCURLOptions[CURLOPT_SSLCERT] = $sCACertFile;
 		}
 
 		$oWebRequest = new \Combodo\iTop\Core\WebRequest($sURL);
