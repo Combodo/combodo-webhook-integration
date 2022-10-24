@@ -338,7 +338,7 @@
 	 *
 	 * @return \RemoteApplicationConnection {@see static::GetRemoteApplicationConnection}
 	 */]]></comment>
-					<code><![CDATA[	static public function GetRemoteApplicationConnectionFromActionWebhok($oAction)
+					<code><![CDATA[	static public function GetRemoteApplicationConnectionFromActionWebhook($oAction)
 	{
 		return $oAction->GetRemoteApplicationConnection();
 	}
