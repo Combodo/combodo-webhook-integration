@@ -424,11 +424,11 @@
 		);
 
 		// Actually send payload for POST and PUT requests
-		switch ($sMethod)
-		{
+		switch ($sMethod) {
 			case 'post':
 			case 'put':
 				$aCURLOptions[CURLOPT_POST] = true;
+				break;
 		}
 
 		// Certificate options
