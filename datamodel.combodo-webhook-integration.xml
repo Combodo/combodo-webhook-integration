@@ -421,8 +421,15 @@
 			CURLOPT_HTTPHEADER => $aHeaders,
 			CURLOPT_CONNECTTIMEOUT => $sConnectionTimeoutInSeconds,
 			CURLOPT_POSTFIELDS => $payload,
-			CURLOPT_POST => !empty($payload),
 		);
+
+		// Actually send payload for POST and PUT requests
+		switch ($sMethod)
+		{
+			case 'post':
+			case 'put':
+				$aCURLOptions[CURLOPT_POST] = true;
+		}
 
 		// Certificate options
 		// - Should we check its validity?
