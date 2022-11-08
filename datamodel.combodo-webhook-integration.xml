@@ -423,6 +423,14 @@
 			CURLOPT_POSTFIELDS => $payload,
 		);
 
+		// Actually send payload for POST and PUT requests
+		switch ($sMethod) {
+			case 'post':
+			case 'put':
+				$aCURLOptions[CURLOPT_POST] = true;
+				break;
+		}
+
 		// Certificate options
 		// - Should we check its validity?
 		if (MetaModel::GetModuleSetting('combodo-webhook-integration', 'certificate_check', true))
@@ -440,7 +448,7 @@
 		if (!empty($sCACertFile))
 		{
 			// The name of a file containing a PEM formatted certificate.
-			$aCurlOptions[CURLOPT_SSLCERT] = $sCACertFile;
+			$aCURLOptions[CURLOPT_SSLCERT] = $sCACertFile;
 		}
 
 		$oWebRequest = new \Combodo\iTop\Core\WebRequest($sURL);
