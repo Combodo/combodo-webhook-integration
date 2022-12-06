@@ -2448,7 +2448,8 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		<menu id="Integrations" xsi:type="DashboardMenuNode" _delta="define">
 			<rank>120</rank>
 			<parent>ConfigurationTools</parent>
-			<enable_admin_only>1</enable_admin_only>
+			<enable_class>RemoteApplicationConnection</enable_class>
+			<enable_action>UR_ACTION_MODIFY</enable_action>
 			<definition>
 				<layout>DashboardLayoutOneCol</layout>
 				<title>Dashboard:Integrations:Title</title>
@@ -2486,6 +2487,17 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			</definition>
 		</menu>
 	</menus>
+	<user_rights>
+		<groups>
+			<group id="WebhookNotifications" _delta="define">
+				<classes>
+					<class id="RemoteApplicationType"/>
+					<class id="RemoteApplicationConnection"/>
+					<class id="ActionWebhook"/>
+				</classes>
+			</group>
+		</groups>
+	</user_rights>
 	<module_parameters>
 		<parameters id="combodo-webhook-integration" _delta="define">
 			<prefer_asynchronous type="bool">false</prefer_asynchronous>
