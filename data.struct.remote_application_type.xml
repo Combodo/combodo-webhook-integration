@@ -15,4 +15,7 @@
   <RemoteApplicationType alias="RemoteApplicationType" id="5">
     <name>Microsoft Teams</name>
   </RemoteApplicationType>
+  <RemoteApplicationType alias="RemoteApplicationType" id="6">
+    <name>Other / Generic</name>
+  </RemoteApplicationType>
 </Set>
