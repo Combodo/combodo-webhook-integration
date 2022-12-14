@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<installation>
+  <mode>upgrade</mode>
+  <preinstall>
+  </preinstall>
+  <source_dir>datamodels/2.x/</source_dir>
+  <datamodel_version>2.7.0</datamodel_version>
+  <previous_configuration_file>/var/www/html/iTop/conf/production/config-itop.php</previous_configuration_file>
+  <extensions_dir>extensions</extensions_dir>
+  <target_env>production</target_env>
+  <workspace_dir></workspace_dir>
+  <database>
+    <server>itop_db</server>
+    <user>itop-user</user>
+    <pwd>**removed**</pwd>
+    <name>itop_db</name>
+    <db_tls_enabled></db_tls_enabled>
+    <db_tls_ca></db_tls_ca>
+    <prefix></prefix>
+  </database>
+  <url>http://webserver:8081/iTop/</url>
+  <graphviz_path>/usr/bin/dot</graphviz_path>
+  <admin_account>
+    <user></user>
+    <pwd>**removed**</pwd>
+    <language></language>
+  </admin_account>
+  <language></language>
+  <selected_modules type="array">
+    <item>authent-cas</item>
+    <item>authent-external</item>
+    <item>authent-ldap</item>
+    <item>authent-local</item>
+    <item>itop-backup</item>
+    <item>itop-config</item>
+    <item>itop-files-information</item>
+    <item>itop-portal-base</item>
+    <item>itop-profiles-itil</item>
+    <item>itop-sla-computation</item>
+    <item>itop-tickets</item>
+    <item>itop-welcome-itil</item>
+    <item>itop-config-mgmt</item>
+    <item>itop-attachments</item>
+    <item>combodo-db-tools</item>
+    <item>itop-core-update</item>
+    <item>itop-hub-connector</item>
+    <item>itop-datacenter-mgmt</item>
+    <item>itop-endusers-devices</item>
+    <item>itop-storage-mgmt</item>
+    <item>itop-virtualization-mgmt</item>
+    <item>itop-bridge-virtualization-storage</item>
+    <item>itop-service-mgmt</item>
+    <item>itop-request-mgmt</item>
+    <item>itop-portal</item>
+    <item>itop-change-mgmt</item>
+    <item>combodo-webhook-integration</item>
+  </selected_modules>
+  <selected_extensions type="array">
+    <item>itop-config-mgmt-core</item>
+    <item>itop-config-mgmt-datacenter</item>
+    <item>itop-config-mgmt-end-user</item>
+    <item>itop-config-mgmt-storage</item>
+    <item>itop-config-mgmt-virtualization</item>
+    <item>itop-service-mgmt-enterprise</item>
+    <item>itop-ticket-mgmt-simple-ticket</item>
+    <item>itop-ticket-mgmt-simple-ticket-enhanced-portal</item>
+    <item>itop-change-mgmt-simple</item>
+    <item>combodo-fulltext-search</item>
+  </selected_extensions>
+  <sample_data></sample_data>
+  <old_addon></old_addon>
+  <options type="array"/>
+  <mysql_bindir></mysql_bindir>
+</installation>
