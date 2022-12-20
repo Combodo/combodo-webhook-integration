@@ -65,7 +65,7 @@
     <item>itop-ticket-mgmt-simple-ticket</item>
     <item>itop-ticket-mgmt-simple-ticket-enhanced-portal</item>
     <item>itop-change-mgmt-simple</item>
-    <item>combodo-fulltext-search</item>
+    <item>combodo-webhook-integration</item>
   </selected_extensions>
   <sample_data></sample_data>
   <old_addon></old_addon>
