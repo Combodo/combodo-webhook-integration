@@ -728,8 +728,6 @@
 	 * @throw InvalidJsonValueException if payload has an invalid format
 	 *
 	 * @uses json_decode
-	 * @uses json_encode
-	 * @uses ApplyParamsToArray
 	 *
 	 * @since 1.1.2 N°5473 in case invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
 	 */]]></comment>
