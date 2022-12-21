@@ -881,7 +881,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * @param string $sJson
-	 * @return boolean|array<string, string> false if the JSON can't be deserialized, otherwise the deserialized structure
+	 * @return boolean|array<string, mixed> false if the JSON can't be deserialized, otherwise the deserialized structure
 	 * @since 1.2.1 N°5472
 	 * @use json_decode
 	 */]]></comment>
