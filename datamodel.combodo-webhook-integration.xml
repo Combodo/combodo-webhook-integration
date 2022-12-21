@@ -888,7 +888,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<code><![CDATA[	protected function ValidateJsonString($sJson)
 	{
 		$aJsonStructure = json_decode($sJson, true);
-		if (false === is_array($aJsonStructure)) {
+		if (json_last_error() !== JSON_ERROR_NONE) {
 			return false;
 		}
 		return $aJsonStructure;
