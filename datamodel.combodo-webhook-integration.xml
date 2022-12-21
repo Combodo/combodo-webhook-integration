@@ -736,15 +736,16 @@
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
-		$aInputAsArray = json_decode($sInputAsJson, true);
-		if (false === is_array($aInputAsArray)) {
+		$sPreparedDataAsJson = MetaModel::ApplyParams($sInputAsJson, $aContextArgs);
+		$aPreparedDataAsArray = json_decode($sPreparedDataAsJson, true);
+		if (false === is_array($aPreparedDataAsArray)) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
 				'action_class'        => get_class($this),
 				'action_id'           => $this->GetKey(),
 				'action_name'         => $this->Get('name'),
-				'payload'             => $sInputAsJson,
+				'payload'             => $sPreparedDataAsJson,
 				'json_last_error'     => json_last_error(),
 				'json_last_error_msg' => json_last_error_msg(),
 			];
@@ -752,9 +753,6 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
-
-		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
-		$sPreparedDataAsJson = json_encode($aPreparedDataAsArray);
 
 		return $sPreparedDataAsJson;
 	}
