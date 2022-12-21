@@ -741,7 +741,7 @@
 	 * @uses json_encode
 	 * @uses ApplyParamsToArray
 	 *
-	 * @since 1.1.2 N°5473 in case invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
+	 * @since 1.2.0 N°5473 in case invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
 	 */]]></comment>
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
@@ -859,7 +859,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<comment><![CDATA[/**
 	 * @param array $aHeaders
 	 * @return null|string null if nothing found
-	 * @since 1.1.2
+	 * @since 1.2.1 N°5472
 	 */]]></comment>
 					<code><![CDATA[	protected function GetContentType($aHeaders)
 	{
@@ -882,7 +882,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<comment><![CDATA[/**
 	 * @param string $sJson
 	 * @return boolean|array<string, string> false if the JSON can't be deserialized, otherwise the deserialized structure
-	 * @since 1.1.2
+	 * @since 1.2.1 N°5472
 	 * @use json_decode
 	 */]]></comment>
 					<code><![CDATA[	protected function ValidateJsonString($sJson)
@@ -902,7 +902,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * Check payload JSON
-	 * @since 1.1.2
+	 * @since 1.2.1 N°5472
 	 */]]></comment>
 					<code><![CDATA[	public function DoCheckToWrite()
 	{
@@ -923,7 +923,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * Check payload JSON
-	 * @since 1.1.2
+	 * @since 1.2.1 N°5472
 	 */]]></comment>
 					<code><![CDATA[	public function DoCheckPayload()
 	{
