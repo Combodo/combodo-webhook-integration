@@ -735,8 +735,8 @@
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		$sPreparedDataAsJson = MetaModel::ApplyParams($sInputAsJson, $aContextArgs);
-		$aPreparedDataAsArray = json_decode($sPreparedDataAsJson, true);
-		if (false === is_array($aPreparedDataAsArray)) {
+		json_decode($sPreparedDataAsJson, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
