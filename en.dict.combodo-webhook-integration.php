@@ -106,6 +106,10 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:RemoteiTopConnection/Attribute:version' => 'API version',
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Version of the API called (eg. 1.3)',
 
+	// RemoteiTopConnectionToken
+	'Class:RemoteiTopConnectionToken' => 'Remote iTop connection using a Token',
+	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Token',
+
 	// ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'iTop webhook call',
 	'Class:ActioniTopWebhook+' => 'Webhook call to a remote iTop application',
