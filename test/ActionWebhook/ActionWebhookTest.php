@@ -35,7 +35,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		parent::setUp();
 	}
 
-	public function testPrepareHeader()
+	public function testPrepareHeaderWithUserAndPassword()
 	{
 		$oRemoteApplicationType = new RemoteApplicationType();
 		$oRemoteApplicationType->Set('name', 'iTop');
@@ -60,7 +60,15 @@ class ActionWebhookTest extends ItopDataTestCase
 		
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
+		
+	}
 
+	public function testPrepareHeaderWithToken()
+	{
+		$oRemoteApplicationType = new RemoteApplicationType();
+		$oRemoteApplicationType->Set('name', 'iTop');
+		$oRemoteApplicationType->DBWrite();
+		
 		// iTop connexion via a token
 		$oRemoteApplicationToken = new RemoteiTopConnectionToken();
 		$oRemoteApplicationToken->Set('name', 'Test iTop');
@@ -69,15 +77,15 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oRemoteApplicationToken->Set('token', 'HAhq2Zfyr24ge!/jqsdf)sCf45A');
 		$oRemoteApplicationToken->DBWrite();
 		
-		$oAction2 = new ActioniTopWebhook();
-		$oAction2->Set('remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction2->Set('test_remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction2->Set('name', 'test2');
-		$oAction2->DBWrite();
+		$oAction = new ActioniTopWebhook();
+		$oAction->Set('remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
+		$oAction->Set('test_remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
+		$oAction->Set('name', 'test2');
+		$oAction->DBWrite();
 		
 		$oLog = new EventNotification();
 		
-		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction2, [[], &$oLog]);
+		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 		
 	}
