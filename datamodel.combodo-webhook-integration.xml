@@ -62,7 +62,7 @@
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
-						<attribute id="application"/>
+						<attribute id="remoteapplicationtype_id"/>
 						<attribute id="environment"/>
 					</attributes>
 				</reconciliation>
@@ -175,7 +175,7 @@
 				<reconciliation>
 					<attributes>
 						<attribute id="name"/>
-						<attribute id="application"/>
+						<attribute id="remoteapplicationtype_id"/>
 						<attribute id="environment"/>
 					</attributes>
 				</reconciliation>
