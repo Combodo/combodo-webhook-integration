@@ -9,7 +9,7 @@ namespace Combodo\iTop\Test\UnitTest\Core;
 use Combodo\iTop\Core\Notification\Action\_ActionWebhook;
 use Combodo\iTop\Test\UnitTest\ItopTestCase;
 
-class ActionWebhookTest extends ItopTestCase {
+class _ActionWebhookTest extends ItopTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
