@@ -746,8 +746,8 @@
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
-		$aInputAsArray = $this->ValidateJsonString($sInputAsJson);
-		if (false === is_array($aInputAsArray)) {
+		$aInputAsArray = $this->GetArrayFromJsonString($sInputAsJson);
+		if (false === $aInputAsArray) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
@@ -875,25 +875,27 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 ]]>
 					</code>
 				</method>
-				<method id="ValidateJsonString">
+				<method id="GetArrayFromJsonString">
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * @param string $sJson
-	 * @return bool|array<string, mixed> false if the JSON can't be deserialized, otherwise the deserialized structure as an array, or true if it can be decoded but not parsed to an array
+	 * @return false|array<string, mixed>
+	 *               - false if the JSON can't be deserialized to an array
+	 *               - or the decoded associative array
 	 * @since 1.2.1 N°5472
 	 * @use json_decode
 	 */]]></comment>
-					<code><![CDATA[	protected function ValidateJsonString($sJson)
+					<code><![CDATA[	protected function GetArrayFromJsonString($sJson)
 	{
 		$aJsonStructure = json_decode($sJson, true);
 		if (json_last_error() !== JSON_ERROR_NONE) {
 			return false;
 		}
-		if ($aJsonStructure === false) {
+		if (false === is_array($aJsonStructure)) {
 			// We can decode the value, but can't return an array
-			return true;
+			return false;
 		}
 		return $aJsonStructure;
 	}
@@ -937,7 +939,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		$sContentType = $this->GetContentType($aHeaders);
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
-			if (false === $this->ValidateJsonString($sPayload)) {
+			if (false === $this->GetArrayFromJsonString($sPayload)) {
 				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
 			}
 		}
