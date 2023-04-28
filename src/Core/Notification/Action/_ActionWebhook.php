@@ -196,7 +196,7 @@ abstract class _ActionWebhook extends ActionNotification
 	}
 
 	/**
-	 * @param array              $aContextArgs
+	 * @param array $aContextArgs
 	 * @param \EventNotification $oLog
 	 *
 	 * @return \Combodo\iTop\Core\WebRequest Prepare and return the WebRequest to be sent
@@ -204,4 +204,26 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @throws \CoreException
 	 */
 	abstract protected function PrepareWebRequest(array $aContextArgs, \EventNotification &$oLog);
+
+	/**
+	 * @param mixed $sJson
+	 *
+	 * @return false|array<string, mixed>
+	 *               - false if the JSON can't be deserialized to an array
+	 *               - or the decoded associative array
+	 * @since 1.2.1 N°5472
+	 * @use json_decode
+	 */
+	public static function GetArrayFromJsonString($sJson) {
+		$aJsonStructure = json_decode($sJson, true);
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			return false;
+		}
+		if (false === is_array($aJsonStructure)) {
+			// We can decode the value, but can't return an array
+			return false;
+		}
+
+		return $aJsonStructure;
+	}
 }
