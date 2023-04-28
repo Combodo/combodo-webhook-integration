@@ -7,6 +7,7 @@
 namespace Combodo\iTop\Test\UnitTest\Core;
 
 use Combodo\iTop\Core\Notification\Action\_ActionWebhook;
+use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
 use Combodo\iTop\Test\UnitTest\ItopTestCase;
 
 class _ActionWebhookTest extends ItopTestCase {
@@ -15,6 +16,7 @@ class _ActionWebhookTest extends ItopTestCase {
 
 		// no datamodel loaded so we need to include module file manually
 		$this->RequireOnceItopFile('env-production/combodo-webhook-integration/src/Core/Notification/Action/_ActionWebhook.php');
+		$this->RequireOnceItopFile('env-production/combodo-webhook-integration/src/Core/Notification/Action/Webhook/Exception/WebhookInvalidJsonValueException.php');
 	}
 
 	/**
@@ -23,22 +25,33 @@ class _ActionWebhookTest extends ItopTestCase {
 	 *
 	 * @return void
 	 *
-	 * @dataProvider GetArrayFromJsonStringProvider
+	 * @dataProvider IsJsonValidProvider
 	 */
-	public function testGetArrayFromJsonString($sJson, $expected) {
-		$result = _ActionWebhook::GetArrayFromJsonString($sJson);
+	public function testIsJsonValid($json, $bExpectException, $expected = null) {
+		if ($bExpectException) {
+			$this->expectException(WebhookInvalidJsonValueException::class);
+		}
+		$result = _ActionWebhook::JsonDecodeWithError($json);
 
-		$this->assertSame($expected, $result);
+		if (false === $bExpectException) {
+			$this->assertSame($expected, $result);
+		}
 	}
 
-	public function GetArrayFromJsonStringProvider() {
+	public function IsJsonValidProvider() {
 		return [
-			'false' => [false, false],
-			'true' => [true, false],
-			'false string' => ['false', false],
-			'true string' => ['true', false],
-			'null' => [null, false],
-			'simple array' => ['{"foo":"bar"}', ['foo' => 'bar']],
+			'null' => [null, true],
+
+			'false' => [false, true],
+			'true' => [true, false, 1],
+
+			'false string' => ['false', false, false],
+			'true string' => ['true', false, true],
+			'string without quotes' => ['foobar', true],
+			'string with quotes' => ['"foobar"', false, 'foobar'],
+
+			'simple array' => ['{"foo":"bar"}', false, ['foo' => 'bar']],
+			'invalid array' => ['{foo:bar}', true],
 		];
 	}
 }
