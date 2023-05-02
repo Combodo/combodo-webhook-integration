@@ -723,7 +723,7 @@
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
 	 * Apply $aContextParams recursively to $aInputData
-	 * @param array $aContextArgs
+	 * @param array $aContextArgs List of args to be used by {@see \MetaModel::ApplyParams}
 	 * @param mixed $value Data to apply params to
 	 *
 	 * @see \MetaModel::ApplyParams
