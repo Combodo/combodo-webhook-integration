@@ -48,4 +48,32 @@ class ActionWebhookTest extends ItopDataTestCase {
 			'Array quotes in json Param replaced' => ['{"value":"$this->value$"}', false, '{"value":"toto"}', ['this->value' => 'toto']],
 		];
 	}
+
+	/**
+	 * @dataProvider GetContentTypeProvider
+	 */
+	public function testGetContentType($sInput, $expectedReturnedContentType) {
+		$aHeaders = [$sInput];
+
+		$oActionWebhook = new ActionWebhook();
+		$result         = $this->InvokeNonPublicMethod(ActionWebhook::class, 'GetContentType', $oActionWebhook,
+			[$aHeaders]);
+
+		$this->assertSame($expectedReturnedContentType, $result);
+	}
+
+	public function GetContentTypeProvider() {
+		return [
+			'null' => [null, null],
+			'empty string' => ['', null],
+
+			'typo in header' => ['ContentTypo:application/json', null],
+
+			'correct header JSON' => ['Content-type:application/json', 'application/json'],
+			'correct header JSON with spaces and tab' => ['Content-type   :		   application/json', 'application/json'],
+
+			'header no value' => ['Content-type:', null],
+			'header value only spaces and tab' => ['Content-type:   	    ', null],
+		];
+	}
 }
