@@ -934,7 +934,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		if ($sContentType === 'application/json'){
 			$sPayload = $this->Get('payload');
 			try{
-				static::GetArrayFromJsonString($sPayload);
+				static::JsonDecodeWithError($sPayload);
 			} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e){
 				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
 			}
