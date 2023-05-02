@@ -886,7 +886,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		foreach ($aHeaders as $sHeader) {
 			preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
-      if (strlen($aMatches[2]) > 0){
+      if (array_key_exists(2, $aMatches) && (strlen($aMatches[2]) > 0)){
 				return $aMatches[2];
 			}
 		}
