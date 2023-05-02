@@ -45,6 +45,7 @@ class _ActionWebhookTest extends ItopTestCase {
 			'false' => [false, true],
 			'true' => [true, false, 1],
 
+			'null string' => ['null', false, null],
 			'false string' => ['false', false, false],
 			'true string' => ['true', false, true],
 			'string without quotes' => ['foobar', true],

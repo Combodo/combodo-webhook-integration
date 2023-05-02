@@ -209,7 +209,7 @@ abstract class _ActionWebhook extends ActionNotification
 	/**
 	 * @param mixed $sJson
 	 *
-	 * @return string|array decoded value
+	 * @return string|array|boolean|null decoded value
 	 * @throws \Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException if error on decode
 	 *
 	 * @uses json_decode
