@@ -5,7 +5,6 @@
  * @copyright   Copyright (C) 2022
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 // Menus
 Dict::Add('SK SK', 'Slovak', 'Slovenčina', array(
 	'Menu:Integrations' => 'Integrations~~',

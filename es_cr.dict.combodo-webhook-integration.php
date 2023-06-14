@@ -15,7 +15,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 // Base classes
 Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
-	// RemoteApplicationType
+    // RemoteApplicationType
 	'Class:RemoteApplicationType' => 'Tipo de aplicación remota',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnection_explanation' => 'Explicación de la conexión',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnection_explanation+' => 'Explicación sobre cómo configurar una conexión para esa aplicación, por ejemplo, dónde y cómo crear el punto final',
@@ -23,7 +23,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:RemoteApplicationType/Attribute:action_explanation+' => 'Explicación sobre cómo configurar una acción webhook en '.ITOP_APPLICATION_SHORT.' (activada por un disparador) para esa aplicación. Por ejemplo, cómo construir una carga o qué esperar en la respuesta.',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list' => 'Conexiones',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list+' => 'Conexiones para esta aplicación',
- // RemoteApplicationConnection
+    // RemoteApplicationConnection
 	'Class:RemoteApplicationConnection' => 'Conexión de aplicación remota',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id' => 'Tipo de aplicación',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id+' => 'Tipo de aplicación para la que es la conexión (use \'Genérico\' si la suya no está en la lista)',
@@ -36,18 +36,18 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:RemoteApplicationConnection/Attribute:url' => 'URL',
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Notificaciones Webhook',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Notificacioens usadas por esta conexión Webhook',
- // - Fieldsets
+    // - Fieldsets
 	'RemoteApplicationConnection:baseinfo' => 'Información General',
 	'RemoteApplicationConnection:moreinfo' => 'Más information',
 	'RemoteApplicationConnection:authinfo' => 'Autenticación',
- // EventWebhook
+    // EventWebhook
 	'Class:EventWebhook' => 'Evento de emisión Webhook',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Clase Final',
 	'Class:EventWebhook/Attribute:webhook_url' => 'URL Webhook URL',
 	'Class:EventWebhook/Attribute:headers' => 'Encabezados',
 	'Class:EventWebhook/Attribute:payload' => 'Carga',
 	'Class:EventWebhook/Attribute:response' => 'Respuesta',
- // ActionWebhook
+    // ActionWebhook
 	'Class:ActionWebhook' => 'Llamada Webhook (genérica)',
 	'Class:ActionWebhook+' => 'Llamada Webhook para cualquier tipo de aplicación',
 	'Class:ActionWebhook/Attribute:language' => 'Idioma',
@@ -89,11 +89,11 @@ Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 - $oResponse puede ser nulo en algunos casos (ejem. request failed to send)',
-	// - Fieldsets
+    // - Fieldsets
 	'ActionWebhook:baseinfo' => 'Información General',
 	'ActionWebhook:moreinfo' => 'Más información',
 	'ActionWebhook:webhookconnection' => 'Conexión Webhook',
-	// Note: This one is used by derivated classes
+    // Note: This one is used by derivated classes
 	'ActionWebhook:requestparameters' => 'Parámetros de Solicitud',
 	'ActionWebhook:advancedparameters' => 'Parámetros Avanzados',
 ));

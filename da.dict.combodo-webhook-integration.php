@@ -5,7 +5,6 @@
  * @copyright   Copyright (C) 2022
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 // Menus
 Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	'Menu:Integrations' => 'Integrations~~',

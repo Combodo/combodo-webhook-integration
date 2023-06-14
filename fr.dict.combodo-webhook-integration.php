@@ -15,11 +15,11 @@ Dict::Add('FR FR', 'French', 'Français', array(
 
 // Base classes
 Dict::Add('FR FR', 'French', 'Français', array(
-	// RemoteApplicationType
+    // RemoteApplicationType
 	'Class:RemoteApplicationType' => 'Type d\'application distante',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list' => 'Connexions',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list+' => 'Connexions pour cette application',
- // RemoteApplicationConnection
+    // RemoteApplicationConnection
 	'Class:RemoteApplicationConnection' => 'Connexion application distante',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id' => 'Application',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id+' => 'Type d\'application de la connexion (mettre \'Générique\' si le votre ne figure pas la liste)',
@@ -37,18 +37,18 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteApplicationConnection/Attribute:version+' => 'Version de l\'API utilisée sur l\'itop distant (ex : 1.3)',
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Appels webhook',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Appels utilisant cette URL de webhook',
- // - Fieldsets
+    // - Fieldsets
 	'RemoteApplicationConnection:baseinfo' => 'Informations générales',
 	'RemoteApplicationConnection:moreinfo' => 'Autres informations',
 	'RemoteApplicationConnection:authinfo' => 'Authentification',
- // EventWebhook
+    // EventWebhook
 	'Class:EventWebhook' => 'Evènement d\'envoi de webhook',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Classe finale',
 	'Class:EventWebhook/Attribute:webhook_url' => 'URL du webhook',
 	'Class:EventWebhook/Attribute:headers' => 'Entêtes',
 	'Class:EventWebhook/Attribute:payload' => 'Charge utile',
 	'Class:EventWebhook/Attribute:response' => 'Réponse',
- // ActionWebhook
+    // ActionWebhook
 	'Class:ActionWebhook' => 'Appel de webhook (générique)',
 	'Class:ActionWebhook+' => 'Appel webhook pour tout types d\'applications',
 	'Class:ActionWebhook/Attribute:language' => 'Langue',
@@ -86,7 +86,7 @@ IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Example : $this->XXX($oResponse, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \\UneClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse peut être null dans certains cas (ex : échec de l\'envoi de la requête)',
-	// - Fieldsets
+    // - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
 	'ActionWebhook:moreinfo' => 'More information~~',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',
@@ -96,7 +96,7 @@ IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 
 // iTop
 Dict::Add('FR FR', 'French', 'Français', array(
-	// RemoteiTopConnection
+    // RemoteiTopConnection
 	'Class:RemoteiTopConnection' => 'Connexion iTop distant',
 	'Class:RemoteiTopConnection/Attribute:auth_user' => 'Nom d\'utilisateur',
 	'Class:RemoteiTopConnection/Attribute:auth_user+' => 'Nom d\'utilisateur (sur l\'iTop distant) utilisé pour l\'authentification',
@@ -104,7 +104,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteiTopConnection/Attribute:auth_pwd+' => 'Mot de passe de l\'utilisateur (sur l\'iTop distant) utilisé pour l\'authentification',
 	'Class:RemoteiTopConnection/Attribute:version' => 'Version de l\'API',
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Version de l\'API utilisée sur l\'itop distant (ex : 1.3)',
- // ActioniTopWebhook
+    // ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'Appel de webhook iTop',
 	'Class:ActioniTopWebhook+' => 'Appel de webhook d\'une application iTop distante',
 	'Class:ActioniTopWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/x-www-form-urlencoded\')
@@ -114,7 +114,7 @@ IMPORTANT :
 - Une entête \'Basic authorization\' sera ajoutée automatiquement à la requête durant l\'envoi, contenant les identifiants de la connexion sélectionnée',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'Données JSON',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'La charge utile JSON, doit être une chaine JSON contenant le nom de l\'opération et ses paramètres, voir la documentation pour plus d\'informations',
- // - Fieldsets
+    // - Fieldsets
 	'ActioniTopWebhook:requestparameters' => 'Paramètres de la requêtre',
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
