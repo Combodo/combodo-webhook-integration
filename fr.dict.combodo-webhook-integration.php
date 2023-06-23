@@ -65,8 +65,8 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
 	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
-	'Class:ActionWebhook/Attribute:path' => 'Path~~',
-	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')~~',
+	'Class:ActionWebhook/Attribute:path' => 'Chemin',
+	'Class:ActionWebhook/Attribute:path+' => 'Chemin additionnel à concaténer à l\'URL de la connection (par exemple :  \'/some/specific-endpoint\')',
 	'Class:ActionWebhook/Attribute:headers' => 'Entêtes',
 	'Class:ActionWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Charge utile',
@@ -88,7 +88,7 @@ IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 - $oResponse peut être null dans certains cas (ex : échec de l\'envoi de la requête)',
     // - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
-	'ActionWebhook:moreinfo' => 'More information~~',
+	'ActionWebhook:moreinfo' => 'Autres informations',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',
 	'ActionWebhook:requestparameters' => 'Paramètres de la requête',
 	'ActionWebhook:advancedparameters' => 'Paramètres avancés',
@@ -115,14 +115,14 @@ IMPORTANT :
 	'Class:ActioniTopWebhook/Attribute:payload' => 'Données JSON',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'La charge utile JSON, doit être une chaine JSON contenant le nom de l\'opération et ses paramètres, voir la documentation pour plus d\'informations',
     // - Fieldsets
-	'ActioniTopWebhook:requestparameters' => 'Paramètres de la requêtre',
-	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
+	'ActioniTopWebhook:requestparameters' => 'Paramètres de la requête',
+	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'Si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
-You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+Deux types de méthodes peuvent être utilisés :
+- Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), dans ce cas elle doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, dans ce cas doit être publique ET statique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction),
 
-IMPORTANT: If set, the \'JSON data\' attribute will be ignored.~~',
+IMPORTANT : Si ce champ est renseigné, le champ \'Charge utile\' sera ignoré.',
 ));
 
 // Slack
@@ -153,7 +153,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:specify' => 'A spécifier',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:yes' => 'Oui',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Autres codes d\'actions',
-	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')~~',
+	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Liste des actions qui seront incluses sous forme de boutons sous le message. La valeur doit être une liste de code d\'actions séparés par virgule (par exemple :  \'ev_reopen, ev_close\')',
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
 
 Vous pouvez utiliser 2 types de méthodes :
