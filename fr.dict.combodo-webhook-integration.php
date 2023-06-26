@@ -154,13 +154,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:yes' => 'Oui',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Autres codes d\'actions',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Liste des actions qui seront incluses sous forme de boutons sous le message. La valeur doit être une liste de code d\'actions séparés par virgule (par exemple :  \'ev_reopen, ev_close\')',
-	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'message\' et tous les \'éléments additionels\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'message\' et tous les \'éléments additionels\' seront ignorés.',
 	// - Fieldsets
 	'ActionSlackNotification:message' => 'Message de base',
 	'ActionSlackNotification:additionalelements' => 'Eléments additionnels à inclure',
@@ -182,13 +182,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar+' => 'Remplace l\'avatar par défaut du bot, doit être une URL absolue de l\'image à utiliser',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar' => 'Avatar emoji',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar+' => 'Remplace l\'avatar par défaut du bot, peut être n\'importe quel emojis de Rocket.Chat (ex : :ghost:, :white_check_mark:, ...). Note : si une "avatar image" est renseigné, l\'emoji ne sera pas affiché.',
-	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'message\' et toutes les \'informations du bot\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'message\' et toutes les \'informations du bot\' seront ignorés.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Message de base',
 	'ActionRocketChatNotification:additionalelements' => 'Informations du bot',
@@ -201,13 +201,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionGoogleChatNotification+' => 'Envoi une notification sous forme de message dans un espace Google Chat',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message',
 	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message qui sera affiché dans le chat, seul le text brut est supporté pour le moment.',
-	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, le champ \'message\' sera ignoré.',
+IMPORTANT : Si ce champ est renseigné, le champ \'message\' sera ignoré.',
 	// - Fieldsets
 	'ActionGoogleChatNotification:message' => 'Message',
 ));
@@ -242,13 +242,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Couleur du liseret du message dans Microsft Teams, doit être une couleur hexadecimale valide (ex : FF0000)',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Image en médallion',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL de l\'image à afficher comme médaillon du message, elle doit être accessible publiquement sur Internet pour que Microsoft Teams puisse l\'afficher',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 	
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'titre\', \'message\' et tous les \'éléments additionnels\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'titre\', \'message\' et tous les \'éléments additionnels\' seront ignorés.',
 	// - Fieldsets
 	'ActionMicrosoftTeamsNotification:message' => 'Message de base',
 	'ActionMicrosoftTeamsNotification:additionalelements' => 'Eléments additionnels à inclure',
