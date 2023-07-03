@@ -37,6 +37,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteApplicationConnection/Attribute:version+' => 'Version de l\'API utilisée sur l\'itop distant (ex : 1.3)',
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Appels webhook',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Appels utilisant cette URL de webhook',
+
     // - Fieldsets
 	'RemoteApplicationConnection:baseinfo' => 'Informations générales',
 	'RemoteApplicationConnection:moreinfo' => 'Autres informations',
@@ -104,6 +105,12 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteiTopConnection/Attribute:auth_pwd+' => 'Mot de passe de l\'utilisateur (sur l\'iTop distant) utilisé pour l\'authentification',
 	'Class:RemoteiTopConnection/Attribute:version' => 'Version de l\'API',
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Version de l\'API utilisée sur l\'itop distant (ex : 1.3)',
+
+    // RemoteiTopConnectionToken
+	'Class:RemoteiTopConnectionToken' => 'Connexion iTop distant via un Jeton',
+	'Class:RemoteiTopConnectionToken/Attribute:token' => 'Jeton',
+	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Un jeton personnel d\'identification',
+
     // ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'Appel de webhook iTop',
 	'Class:ActioniTopWebhook+' => 'Appel de webhook d\'une application iTop distante',
