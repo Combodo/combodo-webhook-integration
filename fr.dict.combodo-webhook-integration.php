@@ -2,10 +2,9 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2017 ITOMIG GmbH
+ * @copyright   Copyright (C) 2022
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 // Menus
 Dict::Add('FR FR', 'French', 'Français', array(
 	'Menu:Integrations' => 'Intégrations',
@@ -16,12 +15,11 @@ Dict::Add('FR FR', 'French', 'Français', array(
 
 // Base classes
 Dict::Add('FR FR', 'French', 'Français', array(
-	// RemoteApplicationType
+    // RemoteApplicationType
 	'Class:RemoteApplicationType' => 'Type d\'application distante',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list' => 'Connexions',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list+' => 'Connexions pour cette application',
-
-	// RemoteApplicationConnection
+    // RemoteApplicationConnection
 	'Class:RemoteApplicationConnection' => 'Connexion application distante',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id' => 'Application',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id+' => 'Type d\'application de la connexion (mettre \'Générique\' si le votre ne figure pas la liste)',
@@ -40,20 +38,18 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Appels webhook',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Appels utilisant cette URL de webhook',
 
-	// - Fieldsets
+    // - Fieldsets
 	'RemoteApplicationConnection:baseinfo' => 'Informations générales',
 	'RemoteApplicationConnection:moreinfo' => 'Autres informations',
 	'RemoteApplicationConnection:authinfo' => 'Authentification',
-
-	// EventWebhook
+    // EventWebhook
 	'Class:EventWebhook' => 'Evènement d\'envoi de webhook',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Classe finale',
 	'Class:EventWebhook/Attribute:webhook_url' => 'URL du webhook',
 	'Class:EventWebhook/Attribute:headers' => 'Entêtes',
 	'Class:EventWebhook/Attribute:payload' => 'Charge utile',
 	'Class:EventWebhook/Attribute:response' => 'Réponse',
-
-	// ActionWebhook
+    // ActionWebhook
 	'Class:ActionWebhook' => 'Appel de webhook (générique)',
 	'Class:ActionWebhook+' => 'Appel webhook pour tout types d\'applications',
 	'Class:ActionWebhook/Attribute:language' => 'Langue',
@@ -70,6 +66,8 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
 	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
+	'Class:ActionWebhook/Attribute:path' => 'Chemin',
+	'Class:ActionWebhook/Attribute:path+' => 'Chemin additionnel à concaténer à l\'URL de la connection (par exemple :  \'/some/specific-endpoint\')',
 	'Class:ActionWebhook/Attribute:headers' => 'Entêtes',
 	'Class:ActionWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Charge utile',
@@ -81,16 +79,17 @@ IMPORTANT : Sera ignoré si le champ \'Callback de préparation de la charge uti
 
 IMPORTANT : Si renseigné, le champ \'Charge utile\' sera ignoré. Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)',
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Callback de traitement de la réponse',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'Méthode PHP pour traiter la réponse de reçue lors de l\'appel webhook.
 
 IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Example : $this->XXX($oResponse, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \UneClass::XXX($oObject, $oResponse, $oAction)
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \\UneClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse peut être null dans certains cas (ex : échec de l\'envoi de la requête)',
-	// - Fieldsets
+    // - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
+	'ActionWebhook:moreinfo' => 'Autres informations',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',
 	'ActionWebhook:requestparameters' => 'Paramètres de la requête',
 	'ActionWebhook:advancedparameters' => 'Paramètres avancés',
@@ -98,7 +97,7 @@ IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 
 // iTop
 Dict::Add('FR FR', 'French', 'Français', array(
-	// RemoteiTopConnection
+    // RemoteiTopConnection
 	'Class:RemoteiTopConnection' => 'Connexion iTop distant',
 	'Class:RemoteiTopConnection/Attribute:auth_user' => 'Nom d\'utilisateur',
 	'Class:RemoteiTopConnection/Attribute:auth_user+' => 'Nom d\'utilisateur (sur l\'iTop distant) utilisé pour l\'authentification',
@@ -107,12 +106,12 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteiTopConnection/Attribute:version' => 'Version de l\'API',
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Version de l\'API utilisée sur l\'itop distant (ex : 1.3)',
 
-	// RemoteiTopConnectionToken
+    // RemoteiTopConnectionToken
 	'Class:RemoteiTopConnectionToken' => 'Connexion iTop distant via un Jeton',
 	'Class:RemoteiTopConnectionToken/Attribute:token' => 'Jeton',
 	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Un jeton personnel d\'identification',
 
-	// ActioniTopWebhook
+    // ActioniTopWebhook
 	'Class:ActioniTopWebhook' => 'Appel de webhook iTop',
 	'Class:ActioniTopWebhook+' => 'Appel de webhook d\'une application iTop distante',
 	'Class:ActioniTopWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/x-www-form-urlencoded\')
@@ -122,8 +121,15 @@ IMPORTANT :
 - Une entête \'Basic authorization\' sera ajoutée automatiquement à la requête durant l\'envoi, contenant les identifiants de la connexion sélectionnée',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'Données JSON',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'La charge utile JSON, doit être une chaine JSON contenant le nom de l\'opération et ses paramètres, voir la documentation pour plus d\'informations',
-	// - Fieldsets
-	'ActioniTopWebhook:requestparameters' => 'Paramètres de la requêtre',
+    // - Fieldsets
+	'ActioniTopWebhook:requestparameters' => 'Paramètres de la requête',
+	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'Si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
+
+Deux types de méthodes peuvent être utilisés :
+- Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), dans ce cas elle doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, dans ce cas doit être publique ET statique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction),
+
+IMPORTANT : Si ce champ est renseigné, le champ \'Charge utile\' sera ignoré.',
 ));
 
 // Slack
@@ -154,13 +160,14 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:specify' => 'A spécifier',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:yes' => 'Oui',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Autres codes d\'actions',
-	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Liste des actions qui seront incluses sous forme de boutons sous le message. La valeur doit être une liste de code d\'actions séparés par virgule (par exemple :  \'ev_reopen, ev_close\')',
+	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'message\' et tous les \'éléments additionels\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'message\' et tous les \'éléments additionels\' seront ignorés.',
 	// - Fieldsets
 	'ActionSlackNotification:message' => 'Message de base',
 	'ActionSlackNotification:additionalelements' => 'Eléments additionnels à inclure',
@@ -182,16 +189,16 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar+' => 'Remplace l\'avatar par défaut du bot, doit être une URL absolue de l\'image à utiliser',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar' => 'Avatar emoji',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar+' => 'Remplace l\'avatar par défaut du bot, peut être n\'importe quel emojis de Rocket.Chat (ex : :ghost:, :white_check_mark:, ...). Note : si une "avatar image" est renseigné, l\'emoji ne sera pas affiché.',
-	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'message\' et toutes les \'informations du bot\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'message\' et toutes les \'informations du bot\' seront ignorés.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Message de base',
-	'ActionRocketChatNotification:additionalelements' => 'Informations du bot'
+	'ActionRocketChatNotification:additionalelements' => 'Informations du bot',
 ));
 
 // Google Chat
@@ -201,13 +208,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionGoogleChatNotification+' => 'Envoi une notification sous forme de message dans un espace Google Chat',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message',
 	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message qui sera affiché dans le chat, seul le text brut est supporté pour le moment.',
-	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, le champ \'message\' sera ignoré.',
+IMPORTANT : Si ce champ est renseigné, le champ \'message\' sera ignoré.',
 	// - Fieldsets
 	'ActionGoogleChatNotification:message' => 'Message',
 ));
@@ -237,18 +244,18 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:specify' => 'A spécifier',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:yes' => 'Oui',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Autres codes d\'actions',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Spécifie les autres actions à ajouter comme boutons sous le message. Doit être liste de code d\{actions séparés par des virgules (ex : \'ev_reopen, ev_close\')',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Spécifie les autres actions à ajouter comme boutons sous le message. Doit être liste de code d\'actions séparés par des virgules (ex : \'ev_reopen, ev_close\')',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Couleur du liseret',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Couleur du liseret du message dans Microsft Teams, doit être une couleur hexadecimale valide (ex : FF0000)',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Image en médallion',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL de l\'image à afficher comme médaillon du message, elle doit être accessible publiquement sur Internet pour que Microsoft Teams puisse l\'afficher',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Méthode PHP pour préparer les données de la charge utile à envoyer lors de l\'appel du webhook. Utiliser ce champ si les options standard ne sont pas assez flexibles ou si la structure doit être construite dynamiquement.
+	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Si les options standard ne sont pas assez flexibles ou si la charge utile JSON doit être construite dynamiquement, ce champ contiendra le nom de la méthode PHP pour la générer lors de l\'appel au Webhook.
 	
 Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Exemple : $this->XXX($aContextArgs, $oLog, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple: \\UneClasse::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
-IMPORTANT : Si renseigné, les champs \'titre\', \'message\' et tous les \'éléments additionnels\' seront ignorés.',
+IMPORTANT : Si ce champ est renseigné, les champs \'titre\', \'message\' et tous les \'éléments additionnels\' seront ignorés.',
 	// - Fieldsets
 	'ActionMicrosoftTeamsNotification:message' => 'Message de base',
 	'ActionMicrosoftTeamsNotification:additionalelements' => 'Eléments additionnels à inclure',

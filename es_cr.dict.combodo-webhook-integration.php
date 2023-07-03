@@ -2,10 +2,9 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2017 ITOMIG GmbH
+ * @copyright   Copyright (C) 2022
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
-
 // Menus
 Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Menu:Integrations' => 'Integraciones',
@@ -16,7 +15,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 // Base classes
 Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
-	// RemoteApplicationType
+    // RemoteApplicationType
 	'Class:RemoteApplicationType' => 'Tipo de aplicación remota',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnection_explanation' => 'Explicación de la conexión',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnection_explanation+' => 'Explicación sobre cómo configurar una conexión para esa aplicación, por ejemplo, dónde y cómo crear el punto final',
@@ -24,8 +23,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:RemoteApplicationType/Attribute:action_explanation+' => 'Explicación sobre cómo configurar una acción webhook en '.ITOP_APPLICATION_SHORT.' (activada por un disparador) para esa aplicación. Por ejemplo, cómo construir una carga o qué esperar en la respuesta.',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list' => 'Conexiones',
 	'Class:RemoteApplicationType/Attribute:remoteapplicationconnections_list+' => 'Conexiones para esta aplicación',
-
-	// RemoteApplicationConnection
+    // RemoteApplicationConnection
 	'Class:RemoteApplicationConnection' => 'Conexión de aplicación remota',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id' => 'Tipo de aplicación',
 	'Class:RemoteApplicationConnection/Attribute:remoteapplicationtype_id+' => 'Tipo de aplicación para la que es la conexión (use \'Genérico\' si la suya no está en la lista)',
@@ -38,20 +36,18 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:RemoteApplicationConnection/Attribute:url' => 'URL',
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Notificaciones Webhook',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Notificacioens usadas por esta conexión Webhook',
-	// - Fieldsets
+    // - Fieldsets
 	'RemoteApplicationConnection:baseinfo' => 'Información General',
 	'RemoteApplicationConnection:moreinfo' => 'Más information',
 	'RemoteApplicationConnection:authinfo' => 'Autenticación',
-
-	// EventWebhook
+    // EventWebhook
 	'Class:EventWebhook' => 'Evento de emisión Webhook',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Clase Final',
 	'Class:EventWebhook/Attribute:webhook_url' => 'URL Webhook URL',
 	'Class:EventWebhook/Attribute:headers' => 'Encabezados',
 	'Class:EventWebhook/Attribute:payload' => 'Carga',
 	'Class:EventWebhook/Attribute:response' => 'Respuesta',
-
-	// ActionWebhook
+    // ActionWebhook
 	'Class:ActionWebhook' => 'Llamada Webhook (genérica)',
 	'Class:ActionWebhook+' => 'Llamada Webhook para cualquier tipo de aplicación',
 	'Class:ActionWebhook/Attribute:language' => 'Idioma',
@@ -69,6 +65,9 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD~~',
+	'Class:ActionWebhook/Attribute:path' => 'Path~~',
+	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')~~',
 	'Class:ActionWebhook/Attribute:headers' => 'Encabezados',
 	'Class:ActionWebhook/Attribute:headers+' => 'Encabezados de la solicitud HTTP, debe ser uno por línea (ejem. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Carga',
@@ -80,7 +79,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 
 IMPORTANTE: Si se habilita, se ignorará el atributo \'Carga\'.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Procesar llamada de respuesta',
@@ -88,13 +87,13 @@ IMPORTANTE: Si se habilita, se ignorará el atributo \'Carga\'.',
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 - $oResponse puede ser nulo en algunos casos (ejem. request failed to send)',
-	// - Fieldsets
+    // - Fieldsets
 	'ActionWebhook:baseinfo' => 'Información General',
 	'ActionWebhook:moreinfo' => 'Más información',
 	'ActionWebhook:webhookconnection' => 'Conexión Webhook',
-	// Note: This one is used by derivated classes
+    // Note: This one is used by derivated classes
 	'ActionWebhook:requestparameters' => 'Parámetros de Solicitud',
 	'ActionWebhook:advancedparameters' => 'Parámetros Avanzados',
 ));
@@ -124,7 +123,7 @@ IMPORTANTE:
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 
 IMPORTANTE: Si se habilita, el atributo \'JSON data\' será ignorado.',
 ));
@@ -162,11 +161,11 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
 	// - Fieldsets
-	'ActionSlackNotification:message' =>'Mensaje base',
+	'ActionSlackNotification:message' => 'Mensaje base',
 	'ActionSlackNotification:additionalelements' => 'Elementos adicionales a incluir',
 
 	// Payload
@@ -190,12 +189,12 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' y toda la \'información bot\' serán ignorados.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Mensaje base',
-	'ActionRocketChatNotification:additionalelements' => 'Información Bot'
+	'ActionRocketChatNotification:additionalelements' => 'Información Bot',
 ));
 
 // Google Chat
@@ -209,7 +208,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' será ignorados.',
 	// - Fieldsets
@@ -250,7 +249,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', array(
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
-- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
+- Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \\AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'title\', \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
 	// - Fieldsets

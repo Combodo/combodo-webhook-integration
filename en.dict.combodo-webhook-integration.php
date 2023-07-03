@@ -2,7 +2,7 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2017 ITOMIG GmbH
+ * @copyright   Copyright (C) 2022
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 

@@ -6,7 +6,6 @@
  * @license     http://opensource.org/licenses/AGPL-3.0
  * @author      Jeffrey Bostoen - <jbostoen.itop@outlook.com> (2022)
  */
-
 // Menus
 Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 	'Menu:Integrations' => 'Integraties',
@@ -77,7 +76,7 @@ BELANGRIJK: Dit wordt genegeerd als er een \'"Bericht opmaak"-functie\' geconfig
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zal het \'Payload\'-veld genegeerd worden.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => '"Verwerk antwoord"-functie',
@@ -85,7 +84,7 @@ BELANGRIJK: Indien geconfigureerd, zal het \'Payload\'-veld genegeerd worden.',
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: $this->XXX($oResponse, $oAction)
-- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass:XXX" waarbij deze functie gedefinieerd is in de PHP-klasse "\SomeClass" als "public static function XXX($oObject, $oResponse, $oAction)"
+- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass:XXX" waarbij deze functie gedefinieerd is in de PHP-klasse "\\SomeClass" als "public static function XXX($oObject, $oResponse, $oAction)"
 - $oResponse kan null zijn in sommige gevallen (bv. de HTTP-aanvraag is mislukt)',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Algemene info',
@@ -121,7 +120,7 @@ BELANGRIJK:
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). De methode moet publiek zijn. Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zal het \'JSON-data\'-veld genegeerd worden.',
 ));
@@ -159,7 +158,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'bericht\' en \'Extra elementen\' genegeerd worden.',
 	// - Fieldsets
@@ -187,7 +186,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'bericht\' en alle \'bot-informatie\' genegeerd worden.',
 	// - Fieldsets
@@ -206,7 +205,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zal \'bericht\' genegeerd worden.',
 	// - Fieldsets
@@ -247,7 +246,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 
 Je kan 2 soorten methodes gebruiken:
 - Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\\SomeClass::XXX" voor een functie die in de PHP-klasse "\\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'titel\', \'bericht\' en alle \'extra elementen\' genegeerd worden.',
 	// - Fieldsets
