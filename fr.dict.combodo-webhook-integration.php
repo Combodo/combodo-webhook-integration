@@ -87,7 +87,8 @@ IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
 - Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Example : $this->XXX($oResponse, $oAction)
 - Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \\UneClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse peut être null dans certains cas (ex : échec de l\'envoi de la requête)',
-    // - Fieldsets
+	'Class:ActionWebhook:Error:payload:InvalidJson' => 'Attention : Le champ Charge Utile contient un JSON invalide, l\'action pourrait ne pas être exécutée.',
+	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Informations générales',
 	'ActionWebhook:moreinfo' => 'Autres informations',
 	'ActionWebhook:webhookconnection' => 'Informations de connexion',

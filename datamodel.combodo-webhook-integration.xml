@@ -673,7 +673,7 @@
 	 * IMPORTANT: The array must be NON associative, otherwise the cURL lib. won't use it.
 	 *
 	 * @param array              $aContextArgs
-	 * @param \EventNotification $oLog
+	 * @param \EventNotification $oLog Can be used to modify notification log
 	 *
 	 * @return array
 	 * @throws \ArchivedObjectException
@@ -681,27 +681,13 @@
 	 */]]></comment>
 					<code><![CDATA[	protected function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
 	{
-		$aHeaders = [];
-
 		$sHeadersAsText = MetaModel::ApplyParams($this->Get('headers'), $aContextArgs);
-		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
-		foreach ($aLines as $sLine) {
-			$sLine = trim($sLine);
-			if (empty($sLine)) {
-				continue;
-			}
 
-			$aHeaders[] = $sLine;
-		}
-
-		if (count($aHeaders) === 0) {
-			$aHeaders[] = 'Content-type: application/json';
-		}
+		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
 
 		// Retrieve connection, to let it add some extra headers (e.g. authentication)
 		$oRemoteApplicationconnection = $this->GetRemoteApplicationConnection();
 		$aExtraHeaders = $oRemoteApplicationconnection->PrepareHeaders($aContextArgs, $oLog);
-
 		foreach($aExtraHeaders as $sExtraHeader)
 		{
 			$aHeaders[] = $sExtraHeader;
@@ -737,13 +723,7 @@
 			// Convert / encode payload depending on the content-type header
 			$sContentType = null;
 			$aHeaders = $this->PrepareHeaders($aContextArgs, $oLog);
-			foreach ($aHeaders as $sHeader) {
-				preg_match('/(Content-type)[\s]*:[\s]*(.*)/', $sHeader, $aMatches);
-			    if (strlen($aMatches[2]) > 0){
-					$sContentType = $aMatches[2];
-					break;
-				}
-			}
+			$sContentType = $this->GetContentType($aHeaders);
 
 			switch ($sContentType) {
 				case 'application/json':
@@ -780,6 +760,34 @@
 		}
 
 		return $payload;
+	}
+]]>
+					</code>
+				</method>
+				<method id="HeadersStringToArray">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @param string sHeadersAsText
+	 * @return string[] one header per line
+	 */]]></comment>
+					<code><![CDATA[	protected function HeadersStringToArray($sHeadersAsText)
+	{
+		$aHeaders = [];
+		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
+		foreach ($aLines as $sLine) {
+			$sLine = trim($sLine);
+			if (empty($sLine)) {
+				continue;
+			}
+			$aHeaders[] = $sLine;
+		}
+		if (count($aHeaders) === 0) {
+			$aHeaders[] = 'Content-type: application/json';
+		}
+
+		return $aHeaders;
 	}
 ]]>
 					</code>
@@ -851,16 +859,33 @@
 		$aPreparedData = [];
 		foreach ($aInputData as $sKey => $value) {
 			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs);
-			
-			// N°5367 - Fix non-string values (boolean, null) converted into empty string
-			// Some APIs explicitly require booleans such as 'false'; or null values.
-			// Do not convert those into a string by calling MetaModel::ApplyParams().
-			$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : (is_string($value) ? MetaModel::ApplyParams($value, $aContextArgs) : $value);
-
-			$aPreparedData[$sPreparedKey] = $preparedValue;
+			$aPreparedData[$sPreparedKey] = $this->ApplyParamsToValue($aContextArgs, $value);
 		}
 
 		return $aPreparedData;
+	}
+]]>
+					</code>
+				</method>
+				<method id="ApplyParamsToValue">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+ * Apply $aContextParams recursively to $aInputData
+	 * @param array $aContextArgs List of args to be used by {@see \MetaModel::ApplyParams}
+	 * @param mixed $value Data to apply params to
+	 *
+	 * @see \MetaModel::ApplyParams
+	 * @return array Same structure as $aInputData but with applied params
+	 */]]></comment>
+					<code><![CDATA[	protected function ApplyParamsToValue(array $aContextArgs, $value)
+	{
+		// N°5367 - Fix non-string values (boolean, null) converted into empty string
+		// Some APIs explicitly require booleans such as 'false'; or null values.
+		// Do not convert those into a string by calling MetaModel::ApplyParams().
+		$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : (is_string($value) ? MetaModel::ApplyParams($value, $aContextArgs) : $value);
+		return $preparedValue;
 	}
 ]]>
 					</code>
@@ -870,26 +895,30 @@
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
-	 * Apply $aContextParams to $sInputAsJson
-	 * @param array $aContextArgs
-	 * @param array $sInputAsJson JSON string to apply params to
+	 * @param array $aContextArgs List of args to be used by {@see \MetaModel::ApplyParams}
+	 * @param string $sInputAsJson JSON string possibly containing placeholders
 	 *
-	 * @see \MetaModel::ApplyParams
-	 * @return string Same string as $sInputAsJson but with applied params
+	 * @return string Input string with replaced placeholders
 	 *
-	 * @throw InvalidJsonValueException if payload has an invalid format
+	 * @throw WebhookInvalidJsonValueException if replaced input has an invalid format
 	 *
-	 * @uses json_decode
+	 * @uses static::ApplyParamsToValue
+	 * @uses static::JsonDecodeWithError
 	 * @uses json_encode
-	 * @uses ApplyParamsToArray
 	 *
-	 * @since 1.1.2 N°5473 in case invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
+	 * @link https://www.itophub.io/wiki/page?id=latest:admin:placeholders Placeholders documentation
+	 *
+	 * @since 1.2.0 N°5473 In case of invalid JSON : replace Exception by WebhookInvalidJsonValueException, and more data logged (IssueLog)
+	 * @since 1.2.1 N°5472 Replace placeholders before trying to decode
 	 */]]></comment>
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
-		$aInputAsArray = json_decode($sInputAsJson, true);
-		if (false === is_array($aInputAsArray)) {
+		$sReplacedInput = $this->ApplyParamsToValue($aContextArgs, $sInputAsJson);
+
+		try{
+			$decodedJson = static::JsonDecodeWithError($sReplacedInput);
+		} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
 			$aLogContext = [
@@ -905,8 +934,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
-		$aPreparedDataAsArray = $this->ApplyParamsToArray($aContextArgs, $aInputAsArray);
-		$sPreparedDataAsJson = json_encode($aPreparedDataAsArray);
+		$sPreparedDataAsJson = json_encode($decodedJson);
 
 		return $sPreparedDataAsJson;
 	}
@@ -961,6 +989,75 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<code><![CDATA[	public function HasProcessResponseCallback()
 	{
 		return strlen($this->Get('process_response_callback')) > 0;
+	}
+]]>
+					</code>
+				</method>
+				<method id="GetContentType">
+					<static>false</static>
+					<access>protected</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @param array $aHeaders
+	 * @return null|string null if nothing found
+	 * @since 1.2.1 N°5472
+	 */]]></comment>
+					<code><![CDATA[	protected function GetContentType($aHeaders)
+	{
+		foreach ($aHeaders as $sHeader) {
+			if (preg_match('/(Content-type)[\s]*:[\s]*(\S+)/', $sHeader, $aMatches)) {
+				return $aMatches[2];
+			}
+		}
+
+		return null;
+	}
+]]>
+					</code>
+				</method>
+				<method id="DoCheckToWrite">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Check payload JSON
+	 * @since 1.2.1 N°5472
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckToWrite()
+	{
+		parent::DoCheckToWrite();
+
+		if (get_class($this) === ActionWebhook::class) {
+			// We don't know what the subclasses will do !
+			// If you need the check in your impl, just implement your own DoCheckToWrite and call the below method
+			$this->DoCheckPayload();
+		}
+	}
+]]>
+					</code>
+				</method>
+				<method id="DoCheckPayload">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Check payload JSON
+	 * @since 1.2.1 N°5472
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckPayload()
+	{
+		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
+		$sHeadersAsText = $this->Get('headers');
+		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
+		$sContentType = $this->GetContentType($aHeaders);
+		if ($sContentType === 'application/json'){
+			$sPayload = $this->Get('payload');
+			try{
+				static::JsonDecodeWithError($sPayload);
+			} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e){
+				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
+			}
+		}
 	}
 ]]>
 					</code>
