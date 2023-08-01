@@ -1030,6 +1030,27 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		if (get_class($this) === ActionWebhook::class) {
 			// We don't know what the subclasses will do !
 			// If you need the check in your impl, just implement your own DoCheckToWrite and call the below method
+			$this->DoCheckPayloadForJsonContentType();
+		}
+	}
+]]>
+					</code>
+				</method>
+				<method id="DoCheckPayloadForJsonContentType">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * @uses DoCheckPayLoad
+	 * @since 1.2.1 N°5472
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckPayloadForJsonContentType()
+	{
+		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
+		$sHeadersAsText = $this->Get('headers');
+		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
+		$sContentType = $this->GetContentType($aHeaders);
+		if ($sContentType === 'application/json'){
 			$this->DoCheckPayload();
 		}
 	}
@@ -1046,17 +1067,11 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 */]]></comment>
 					<code><![CDATA[	public function DoCheckPayload()
 	{
-		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
-		$sHeadersAsText = $this->Get('headers');
-		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
-		$sContentType = $this->GetContentType($aHeaders);
-		if ($sContentType === 'application/json'){
-			$sPayload = $this->Get('payload');
-			try{
-				static::JsonDecodeWithError($sPayload);
-			} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e){
-				$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
-			}
+		$sPayload = $this->Get('payload');
+		try{
+			static::JsonDecodeWithError($sPayload);
+		} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e){
+			$this->m_aCheckWarnings[] = Dict::S('Class:ActionWebhook:Error:payload:InvalidJson');
 		}
 	}
 ]]>
@@ -1270,6 +1285,24 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 ]]>
 					</code>
 				</method>
+				<method id="DoCheckToWrite">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Check payload JSON
+	 * @since 1.2.1 N°5472
+	 */]]></comment>
+					<code><![CDATA[	public function DoCheckToWrite()
+	{
+		parent::DoCheckToWrite();
+
+		$this->DoCheckPayload();
+	}
+]]>
+					</code>
+				</method>
+
 			</methods>
 			<presentation>
 				<details>
