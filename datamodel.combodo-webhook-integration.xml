@@ -1030,34 +1030,18 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		if (get_class($this) === ActionWebhook::class) {
 			// We don't know what the subclasses will do !
 			// If you need the check in your impl, just implement your own DoCheckToWrite and call the below method
-			$this->DoCheckPayloadForJsonContentType();
+			$sHeadersAsText = $this->Get('headers');
+			$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
+			$sContentType = $this->GetContentType($aHeaders);
+			if ($sContentType === 'application/json'){
+				$this->CheckPayloadIsValid();
+			}
 		}
 	}
 ]]>
 					</code>
 				</method>
-				<method id="DoCheckPayloadForJsonContentType">
-					<static>false</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<comment><![CDATA[/**
-	 * @uses DoCheckPayLoad
-	 * @since 1.3.2 N°5472 method creation
-	 */]]></comment>
-					<code><![CDATA[	public function DoCheckPayloadForJsonContentType()
-	{
-		// Here we don't have the notification source object... so we won't detect content-type that are fixed with the $this placeholder :/
-		$sHeadersAsText = $this->Get('headers');
-		$aHeaders = $this->HeadersStringToArray($sHeadersAsText);
-		$sContentType = $this->GetContentType($aHeaders);
-		if ($sContentType === 'application/json'){
-			$this->DoCheckPayload();
-		}
-	}
-]]>
-					</code>
-				</method>
-				<method id="DoCheckPayload">
+				<method id="CheckPayloadIsValid">
 					<static>false</static>
 					<access>public</access>
 					<type>Overload-DBObject</type>
@@ -1065,7 +1049,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 * Check payload JSON
 	 * @since 1.3.2 N°5472 method creation
 	 */]]></comment>
-					<code><![CDATA[	public function DoCheckPayload()
+					<code><![CDATA[	public function CheckPayloadIsValid()
 	{
 		$sPayload = $this->Get('payload');
 		try{
@@ -1297,7 +1281,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		parent::DoCheckToWrite();
 
-		$this->DoCheckPayload();
+		$this->CheckPayloadIsValid();
 	}
 ]]>
 					</code>
