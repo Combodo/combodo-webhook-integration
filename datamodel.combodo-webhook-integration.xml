@@ -920,9 +920,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
-		$sPreparedDataAsJson = json_encode($decodedJson);
-
-		return $sPreparedDataAsJson;
+		return $sReplacedInput;
 	}
 ]]>
 					</code>
