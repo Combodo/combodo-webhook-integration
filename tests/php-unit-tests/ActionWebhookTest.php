@@ -111,6 +111,9 @@ class ActionWebhookTest extends ItopDataTestCase
 
 			'Array quotes in json Param not replaced' => ['{"value":"$this->value$"}', false, '{"value":"$this->value$"}', []],
 			'Array quotes in json Param replaced' => ['{"value":"$this->value$"}', false, '{"value":"toto"}', ['this->value' => 'toto']],
+
+			'Array int value in json Param not replaced' => ['{"value":$this->value$}', true],
+			'Array int value in json Param replaced' => ['{"value":$this->value$}', false, '{"value":2}', ['this->value' => 2]],
 		];
 	}
 
