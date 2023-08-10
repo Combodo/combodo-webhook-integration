@@ -106,14 +106,13 @@ class ActionWebhookTest extends ItopDataTestCase
 			'String Param not replaced' => ['$this->value$', true],
 			'String Param replaced' => ['$this->value$', false, '"toto"', ['this->value' => '"toto"']],
 
-			'Array quotes in value Param not replaced' => ['{"value":$this->value$}', true],
-			'Array quotes in value Param replaced' => ['{"value":$this->value$}', false, '{"value":"toto"}', ['this->value' => '"toto"']],
+			'Array value without quotes Param not replaced' => ['{"value":$this->value$}', true],
+			'Array value without quotes Param replaced with not quoted string' => ['{"value":$this->value$}', true, null, ['this->value' => 'toto']],
+			'Array value without quotes Param replaced with quoted string' => ['{"value":$this->value$}', false, '{"value":"toto"}', ['this->value' => '"toto"']],
+			'Array value without quotes Param replaced with numeric value' => ['{"value":$this->value$}', false, '{"value":2}', ['this->value' => 2]],
 
-			'Array quotes in json Param not replaced' => ['{"value":"$this->value$"}', false, '{"value":"$this->value$"}', []],
-			'Array quotes in json Param replaced' => ['{"value":"$this->value$"}', false, '{"value":"toto"}', ['this->value' => 'toto']],
-
-			'Array int value in json Param not replaced' => ['{"value":$this->value$}', true],
-			'Array int value in json Param replaced' => ['{"value":$this->value$}', false, '{"value":2}', ['this->value' => 2]],
+			'Array value with quotes Param not replaced' => ['{"value":"$this->value$"}', false, '{"value":"$this->value$"}', []],
+			'Array value with quotes Param replaced' => ['{"value":"$this->value$"}', false, '{"value":"toto"}', ['this->value' => 'toto']],
 		];
 	}
 
