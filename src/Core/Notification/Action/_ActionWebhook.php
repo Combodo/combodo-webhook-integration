@@ -227,7 +227,8 @@ abstract class _ActionWebhook extends ActionNotification
 		if ($decodeError !== JSON_ERROR_NONE) {
 			throw new WebhookInvalidJsonValueException('Invalid JSON format', [
 				'value' => $sJson,
-				'error' => $decodeError,
+				'json_decode.error' => $decodeError,
+				'json_decode.errormessage' => json_last_error_msg(),
 			]);
 		}
 
