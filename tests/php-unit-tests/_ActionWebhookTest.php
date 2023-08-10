@@ -52,6 +52,7 @@ class _ActionWebhookTest extends ItopTestCase {
 			'string with quotes' => ['"foobar"', false, 'foobar'],
 
 			'simple array' => ['{"foo":"bar"}', false, ['foo' => 'bar']],
+			'integer array' => ['{"foo":123}', false, ['foo' => 123]],
 			'invalid array' => ['{foo:bar}', true],
 		];
 	}
