@@ -207,7 +207,7 @@ abstract class _ActionWebhook extends ActionNotification
 	abstract protected function PrepareWebRequest(array $aContextArgs, \EventNotification &$oLog);
 
 	/**
-	 * @param mixed $sJson
+	 * @param string $sJson
 	 *
 	 * @return string|array|boolean|null decoded value
 	 * @throws WebhookInvalidJsonValueException if error on decode
@@ -215,7 +215,8 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @uses json_decode
 	 * @uses json_last_error
 	 *
-	 * @link https://www.json.org/json-en.html JSON can contain an object, but also null, or boolean or string values
+	 * @link https://www.json.org/json-en.html JSON string can contain an object (associative array),
+	 *              but also "null", or boolean ("true" or "false") or any other string values (for example "foo")
 	 * @link https://www.php.net/manual/en/function.json-last-error.php for JSON error codes
 	 *
 	 * @since 1.3.2 N°6647 more generic method to check JSON validity
