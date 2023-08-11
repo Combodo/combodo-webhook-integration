@@ -218,7 +218,7 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @link https://www.json.org/json-en.html JSON can contain an object, but also null, or boolean or string values
 	 * @link https://www.php.net/manual/en/function.json-last-error.php for JSON error codes
 	 *
-	 * @since 1.2.1 N°5472
+	 * @since 1.3.2 N°6647 more generic method to check JSON validity
 	 */
 	public static function JsonDecodeWithError($sJson)
 	{
