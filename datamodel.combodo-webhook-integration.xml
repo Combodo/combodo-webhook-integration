@@ -900,8 +900,10 @@
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
+		// replacing placeholders...
 		$sReplacedInput = $this->ApplyParamsToValue($aContextArgs, $sInputAsJson);
 
+		// and now checking JSON validity !
 		try{
 			$decodedJson = static::JsonDecodeWithError($sReplacedInput);
 		} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
