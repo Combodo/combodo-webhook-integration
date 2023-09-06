@@ -40,17 +40,19 @@ class _ActionWebhookTest extends ItopTestCase {
 
 	public function IsJsonValidProvider() {
 		return [
+			// non string values should exit right away
 			'null' => [null, true],
-
 			'false' => [false, true],
-			'true' => [true, false, 1],
+			'true' => [true, true],
 
+			// simple strings
 			'null string' => ['null', false, null],
 			'false string' => ['false', false, false],
 			'true string' => ['true', false, true],
 			'string without quotes' => ['foobar', true],
 			'string with quotes' => ['"foobar"', false, 'foobar'],
 
+			// strings containing json objects
 			'simple array' => ['{"foo":"bar"}', false, ['foo' => 'bar']],
 			'integer array' => ['{"foo":123}', false, ['foo' => 123]],
 			'invalid array' => ['{foo:bar}', true],

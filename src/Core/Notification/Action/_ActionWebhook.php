@@ -223,6 +223,12 @@ abstract class _ActionWebhook extends ActionNotification
 	 */
 	public static function JsonDecodeWithError($sJson)
 	{
+		if (false === is_string($sJson)) {
+			throw new WebhookInvalidJsonValueException('Input JSON is not a string', [
+				'value' => $sJson,
+			]);
+		}
+
 		$decodedValue = json_decode($sJson, true);
 		$decodeError = json_last_error();
 		if ($decodeError !== JSON_ERROR_NONE) {
