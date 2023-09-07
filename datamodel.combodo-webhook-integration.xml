@@ -901,11 +901,11 @@
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
 		// replacing placeholders...
-		$sReplacedInput = $this->ApplyParamsToValue($aContextArgs, $sInputAsJson);
+		$sJsonWithReplacedPlaceholders = $this->ApplyParamsToValue($aContextArgs, $sInputAsJson);
 
 		// and now checking JSON validity !
 		try{
-			$decodedJson = static::JsonDecodeWithError($sReplacedInput);
+			static::JsonDecodeWithError($sJsonWithReplacedPlaceholders);
 		} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
 			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
 			$sLogChannel = 'notifications';
@@ -922,7 +922,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
 
-		return $sReplacedInput;
+		return $sJsonWithReplacedPlaceholders;
 	}
 ]]>
 					</code>
