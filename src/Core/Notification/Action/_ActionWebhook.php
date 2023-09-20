@@ -4,6 +4,7 @@ namespace Combodo\iTop\Core\Notification\Action;
 
 use ActionNotification;
 use ApplicationContext;
+use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
 use Combodo\iTop\Core\WebResponse;
 use Combodo\iTop\Service\WebRequestSender;
 use EventWebhook;
@@ -196,7 +197,7 @@ abstract class _ActionWebhook extends ActionNotification
 	}
 
 	/**
-	 * @param array              $aContextArgs
+	 * @param array $aContextArgs
 	 * @param \EventNotification $oLog
 	 *
 	 * @return \Combodo\iTop\Core\WebRequest Prepare and return the WebRequest to be sent
@@ -204,4 +205,40 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @throws \CoreException
 	 */
 	abstract protected function PrepareWebRequest(array $aContextArgs, \EventNotification &$oLog);
+
+	/**
+	 * @param string $sJson
+	 *
+	 * @return string|array|boolean|null decoded value
+	 * @throws WebhookInvalidJsonValueException if error on decode
+	 *
+	 * @uses json_decode
+	 * @uses json_last_error
+	 *
+	 * @link https://www.json.org/json-en.html JSON string can contain an object (associative array),
+	 *              but also "null", or boolean ("true" or "false") or any other string values (for example "foo")
+	 * @link https://www.php.net/manual/en/function.json-last-error.php for JSON error codes
+	 *
+	 * @since 1.3.2 N°6647 more generic method to check JSON validity
+	 */
+	public static function JsonDecodeWithError($sJson)
+	{
+		if (false === is_string($sJson)) {
+			throw new WebhookInvalidJsonValueException('Input JSON is not a string', [
+				'value' => $sJson,
+			]);
+		}
+
+		$decodedValue = json_decode($sJson, true);
+		$decodeError = json_last_error();
+		if ($decodeError !== JSON_ERROR_NONE) {
+			throw new WebhookInvalidJsonValueException('Invalid JSON format', [
+				'value' => $sJson,
+				'json_decode.error' => $decodeError,
+				'json_decode.errormessage' => json_last_error_msg(),
+			]);
+		}
+
+		return $decodedValue;
+	}
 }
