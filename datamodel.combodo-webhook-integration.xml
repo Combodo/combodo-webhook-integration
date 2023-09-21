@@ -991,6 +991,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<code><![CDATA[	protected function GetContentType($aHeaders)
 	{
 		foreach ($aHeaders as $sHeader) {
+			if (is_null($sHeader)) {
+				continue;
+			}
 			if (preg_match('/(Content-type)\s*:\s*(\S+)/', $sHeader, $aMatches)) {
 				return $aMatches[2];
 			}
