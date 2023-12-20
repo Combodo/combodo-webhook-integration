@@ -2,9 +2,10 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2022
+ * @copyright   Copyright (C) 2023
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
+
 // Menus
 Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Menu:Integrations' => 'Integrációk',
@@ -28,7 +29,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Class:RemoteApplicationConnection/Attribute:environment+' => 'A kapcsolat környezetének típusa',
 	'Class:RemoteApplicationConnection/Attribute:environment/Value:1-development' => 'Fejlesztés alatt',
 	'Class:RemoteApplicationConnection/Attribute:environment/Value:2-test' => 'Tesztelés alatt',
-	'Class:RemoteApplicationConnection/Attribute:environment/Value:3-production' => 'Használatban',
+	'Class:RemoteApplicationConnection/Attribute:environment/Value:3-production' => 'Bevezetve',
 	'Class:RemoteApplicationConnection/Attribute:url' => 'URL',
 	'Class:RemoteApplicationConnection/Attribute:actions_list' => 'Webhook értesítések',
 	'Class:RemoteApplicationConnection/Attribute:actions_list+' => 'Webhook értesítések ezzel a kapcsolattal',
@@ -51,7 +52,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Class:ActionWebhook/Attribute:language' => 'Nyelv',
 	'Class:ActionWebhook/Attribute:language+' => 'Az értesítés nyelve, leginkább az értesítések keresésekor használatos, de az attribútumok címkéjének lefordítására is használható.',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Kapcsolat',
-	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'A \'használatban\' állapot esetén használandó kapcsolati információ',
+	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'A \'Bevezetve\' állapot esetén használandó kapcsolati információ',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => 'Teszt kapcsolat',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id+' => 'Kapcsolati információ, amelyet akkor kell használni, ha az állapot \'Tesztelés alatt\'',
 	'Class:ActionWebhook/Attribute:method' => 'Módszer',
@@ -61,7 +62,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
-	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD~~',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
 	'Class:ActionWebhook/Attribute:path' => 'Path~~',
 	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')~~',
 	'Class:ActionWebhook/Attribute:headers' => 'Fejlécek',
