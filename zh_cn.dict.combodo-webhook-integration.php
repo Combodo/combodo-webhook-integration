@@ -75,7 +75,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了，则会忽略“载荷”属性。',
 	'Class:ActionWebhook/Attribute:process_response_callback' => '处理响应回调',
@@ -83,7 +83,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($oResponse, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $oResponse, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $oResponse, $oAction)
 ——在某些情况下$oResponse可以为空（例如发送请求失败）',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => '常规信息',
@@ -119,7 +119,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了此参数，则会忽略“JSON数据”参数。',
 ));
@@ -157,7 +157,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了此参数，则会忽略“消息”和所有的“附加元素”参数。',
 	// - Fieldsets
@@ -185,7 +185,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了此参数，则会忽略“消息”和所有的“自动程序信息”参数。',
 	// - Fieldsets
@@ -204,7 +204,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了此参数，则会忽略“消息”参数。',
 	// - Fieldsets
@@ -245,7 +245,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 
 可以使用2种类型的方法：
 ——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 请注意：如果设置了此参数，则会忽略“标题”、“消息”和所有的“附加元素”参数。',
 	// - Fieldsets

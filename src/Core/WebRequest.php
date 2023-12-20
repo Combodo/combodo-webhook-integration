@@ -34,7 +34,7 @@ class WebRequest
 	/**
 	 * @var string Name of the handler to be called on request's response
 	 *             - $this->Foo
-	 *             - \SomeClass::Foo
+	 *             - SomeClass::Foo
 	 */
 	protected $sResponseHandlerName;
 	/** @var array Structured data that will be passed to $sResponseHandlerName */
