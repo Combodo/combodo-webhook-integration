@@ -75,7 +75,7 @@ WICHTIG: Wird ignoriert, wenn \'Callback zur Vorbereitung des Payloads\' gesetzt
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Callback zur Verarbeitung der Antwort',
@@ -83,7 +83,7 @@ WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($oResponse, $oAction)
-- - Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $oResponse, $oAction)
+- - Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse kann in einigen Fällen null sein (bspw. wenn der Request fehlgeschlagen ist)',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Allgemeine Informationen',
@@ -119,7 +119,7 @@ WICHTIG:
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 ));
@@ -157,7 +157,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Nachricht\' sowie alle \'zusätzlichen Elemente\' ignoriert.',
 	// - Fieldsets
@@ -185,7 +185,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Nachricht\' sowie alle \'Bot-Informationen\' ignoriert.',
 	// - Fieldsets
@@ -204,7 +204,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn dies gesetzt ist, wird das Attribut \'Nachricht\' ignoriert.',
 	// - Fieldsets
@@ -245,7 +245,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 
 Sie können 2 Arten von Methoden verwenden:
 - Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Titel\', \'Nachricht\' sowie alle \'zusätzlichen Elemente\' ignoriert.',
 	// - Fieldsets
