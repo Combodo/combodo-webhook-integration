@@ -76,7 +76,7 @@ IMPORTANT: Will be ignored if \'Prepare payload callback\' is set',
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'Payload\' attribute will be ignored.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Process response callback',
@@ -84,7 +84,7 @@ IMPORTANT: If set, the \'Payload\' attribute will be ignored.',
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($oResponse, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $oResponse, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse can be null in some cases (eg. request failed to send)',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'General information',
@@ -124,7 +124,7 @@ IMPORTANT:
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'JSON data\' attribute will be ignored.',
 ));
@@ -162,7 +162,7 @@ Dict::Add('EN US', 'English', 'English', array(
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignored.',
 	// - Fieldsets
@@ -190,7 +190,7 @@ Dict::Add('EN US', 'English', 'English', array(
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.',
 	// - Fieldsets
@@ -209,7 +209,7 @@ Dict::Add('EN US', 'English', 'English', array(
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'message\' will be ignored.',
 	// - Fieldsets
@@ -250,7 +250,7 @@ Dict::Add('EN US', 'English', 'English', array(
 
 You can use 2 types of methods:
 - From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' will be ignored.',
 	// - Fieldsets

@@ -2,7 +2,7 @@
 /**
  * Localized data
  *
- * @copyright   Copyright (C) 2017 ITOMIG GmbH
+ * @copyright   Copyright (C) 2023
  * @license     http://opensource.org/licenses/AGPL-3.0
  */
 
@@ -62,6 +62,9 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
+	'Class:ActionWebhook/Attribute:path' => 'Path~~',
+	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')~~',
 	'Class:ActionWebhook/Attribute:headers' => 'Fejlécek',
 	'Class:ActionWebhook/Attribute:headers+' => 'A HTTP-kérelem fejlécei, soronként egynek kell lennie (pl. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Adatfolyam',
@@ -73,7 +76,7 @@ FONTOS: A rendszer figyelmen kívül hagyja, ha a \'Adatfolyam visszahívás el�
 
 2 féle módszert használhat:
 - A kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, az \'Adatfolyam\' attribútumot figyelmen kívül hagyjuk.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Folyamat válasz visszahívás',
@@ -81,7 +84,7 @@ FONTOS: Ha be van állítva, az \'Adatfolyam\' attribútumot figyelmen kívül h
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($oResponse, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $oResponse, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $oResponse, $oAction)
 - $oResponse bizonyos esetekben (pl. a kérés elküldése sikertelen) null lehet.',
 	// - Fieldsets
 	'ActionWebhook:baseinfo' => 'Általános információ',
@@ -117,7 +120,7 @@ IFONTOS:
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, a \'JSON adat\' attribútum figyelmen kívül marad.',
 ));
@@ -155,7 +158,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, az \'Üzenet\' és az összes \'További elemek\' figyelmen kívül marad.',
 	// - Fieldsets
@@ -183,12 +186,12 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, a \'Üzenet\' és az összes \'Bot információ\' figyelmen kívül marad.',
 	// - Fieldsets
 	'ActionRocketChatNotification:message' => 'Bázisüzenet',
-	'ActionRocketChatNotification:additionalelements' => 'Bot információ'
+	'ActionRocketChatNotification:additionalelements' => 'Bot információ',
 ));
 
 // Google Chat
@@ -202,7 +205,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, az \'Üzenet\' figyelmen kívül marad.',
 	// - Fieldsets
@@ -243,7 +246,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 
 2 típusú metódust használhat:
 - Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
 
 FONTOS: Ha be van állítva, a \'Cím\', \'Üzenet\' és minden \'További elemek\' figyelmen kívül marad.',
 	// - Fieldsets
