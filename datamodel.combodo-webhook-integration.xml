@@ -2664,42 +2664,4 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			<ca_certificate_file/>
 		</parameters>
 	</module_parameters>
-  <snippets>
-    <snippet id="_ActionWebhookLegacyHelper" _delta="define">
-      <placement>module</placement>
-      <module>combodo-webhook-integration</module>
-      <rank>1</rank>
-      <content>
-        <![CDATA[
-abstract class _ActionWebhookLegacyHelper extends cmdbAbstractObject
-{
-	/**
-	 * @throws \CoreException
-	 */
-	public static function Init()
-	{	
-		$aParams = array
-		(
-			"category"            => "",
-			"key_type"            => "autoincrement",
-			"name_attcode"        => "",
-			"state_attcode"       => "",
-			"reconc_keys"         => array(),
-			"db_table"            => "_actionwebhooklegacyhelper",
-			"db_key_field"        => "id",
-			"db_finalclass_field" => "realclass",
-		);
-		MetaModel::Init_Params($aParams);
-		
-	
-    // - Declare an attribute for class ActionWebhook in PHP as we need a condition for older versions
-		if (version_compare(ITOP_DESIGN_LATEST_VERSION, '3.2', '<')) {
-		  MetaModel::Init_AddAttribute(new AttributeApplicationLanguage("language", array("sql"=>'language', "is_null_allowed"=>false, "default_value"=>'EN US', "allowed_values"=>null, "depends_on"=>array(), "always_load_in_tables"=>false)), 'ActionWebhook');
-    }
-	}
-}
-        ]]>
-      </content>
-    </snippet>
-  </snippets>
 </itop_design>
