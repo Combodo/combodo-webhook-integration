@@ -5,7 +5,7 @@
     <copies type="array"/>
   </preinstall>
   <source_dir>datamodels/2.x/</source_dir>
-  <datamodel_version>2.7.1</datamodel_version>
+  <datamodel_version>3.2.0</datamodel_version>
   <previous_configuration_file></previous_configuration_file>
   <extensions_dir>extensions</extensions_dir>
   <target_env>production</target_env>
@@ -32,12 +32,14 @@
     <item>authent-external</item>
     <item>authent-ldap</item>
     <item>authent-local</item>
+    <item>combodo-backoffice-darkmoon-theme</item>
     <item>itop-backup</item>
     <item>itop-config</item>
     <item>itop-files-information</item>
     <item>itop-portal-base</item>
     <item>itop-profiles-itil</item>
     <item>itop-sla-computation</item>
+    <item>itop-structure</item>
     <item>itop-tickets</item>
     <item>itop-welcome-itil</item>
     <item>itop-config-mgmt</item>
