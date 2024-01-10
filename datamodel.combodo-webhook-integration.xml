@@ -1648,6 +1648,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			$sContent = str_replace($aResult[0][$iIdx], '<'.$aResult[1][$iIdx].'|'.$aResult[2][$iIdx].'>', $sContent);
 		}
 
+		// Replace user Ids
+		$sContent = preg_replace('/&lt;([!@].*?)&gt;/', '<$1>', $sContent);
+
 		return $sContent;
 	}
 ]]>
