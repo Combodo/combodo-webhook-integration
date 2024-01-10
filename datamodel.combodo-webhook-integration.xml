@@ -1648,7 +1648,8 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			$sContent = str_replace($aResult[0][$iIdx], '<'.$aResult[1][$iIdx].'|'.$aResult[2][$iIdx].'>', $sContent);
 		}
 
-		// Replace user Ids
+		// Replace users and groups IDs to ensure they don't have HTML entities
+		// Note: As an input, only HTML entities IDs (eg. "&lt;@U123ABC&gt;") are supported as raw IDs (eg. "<@U123ABC>") will be considered unexpected tags and be removed by the `strip_tags()` above.
 		$sContent = preg_replace('/&lt;([!@].*?)&gt;/', '<$1>', $sContent);
 
 		return $sContent;
