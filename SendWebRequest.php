@@ -97,7 +97,7 @@ class SendWebRequest extends AsyncTask
 
 		// Retrieve log event
 		/** @var \AttributeExternalKey $oAttDef */
-		$oAttDef = MetaModel::GetAttributeDef(get_class(), 'event_id');
+		$oAttDef = MetaModel::GetAttributeDef(get_class($this), 'event_id');
 		$oLog = MetaModel::GetObject($oAttDef->GetTargetClass(), $this->Get('event_id'), false, true);
 
 		$oSenderService = WebRequestSender::GetInstance();
