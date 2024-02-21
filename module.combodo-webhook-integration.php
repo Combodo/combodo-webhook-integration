@@ -18,6 +18,7 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		),
 		'mandatory' => false,
 		'visible' => true,
+		'installer' => 'WebhookIntegrationInstaller',
 
 		// Components
 		//
@@ -44,3 +45,31 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		'settings' => array(),
 	)
 );
+
+if (!class_exists('WebhookIntegrationInstaller'))
+{
+	// Module installation handler
+	//
+	class WebhookIntegrationInstaller extends ModuleInstallerAPI
+	{
+		/**
+		 * @inheritDoc
+		 * @since 1.4.0
+		 */
+		public static function BeforeDatabaseCreation(Config $oConfiguration, $sPreviousVersion, $sCurrentVersion)
+		{
+			if (strlen($sPreviousVersion) === 0) {
+				return;
+			}
+
+			// Search for existing ActionWebhook where the language attribute was defined on its child
+			if (version_compare($sPreviousVersion, '1.4.0', '<')) {
+				SetupLog::Info("|  Migrate ActionWebhook language attribute values to its parent.");
+				$sTableToRead = MetaModel::DBGetTable('ActionWebhook');
+				$sTableToSet = MetaModel::DBGetTable('ActionNotification');
+				self::MoveColumnInDB($sTableToRead, 'language', $sTableToSet, 'language', true);
+				SetupLog::Info("|  ActionWebhook migration done.");
+			}
+		}
+	}
+}
