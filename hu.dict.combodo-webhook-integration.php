@@ -51,6 +51,7 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', array(
 	'Class:ActionWebhook+' => 'Webhook hívás bármilyen alkalmazáshoz',
 	'Class:ActionWebhook/Attribute:language' => 'Nyelv',
 	'Class:ActionWebhook/Attribute:language+' => 'Az értesítés nyelve, leginkább az értesítések keresésekor használatos, de az attribútumok címkéjének lefordítására is használható.',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'Whether this action should be executed in background or not (mind that global setting for webhook actions is the "prefer_asynchronous" conf. parameter of the "combodo-webhook-action" module)~~',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Kapcsolat',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'A \'Bevezetve\' állapot esetén használandó kapcsolati információ',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => 'Teszt kapcsolat',

@@ -51,6 +51,7 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', array(
 	'Class:ActionWebhook+' => 'Webhook voor eender welke soort applicatie',
 	'Class:ActionWebhook/Attribute:language' => 'Taal',
 	'Class:ActionWebhook/Attribute:language+' => 'Taal van deze notificatie. Meestal gebruikt om meldingen te zoeken, maar ook om de labels van attributen te vertalen',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'Whether this action should be executed in background or not (mind that global setting for webhook actions is the "prefer_asynchronous" conf. parameter of the "combodo-webhook-action" module)~~',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Connectie',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'Welke informatie gebruikt moet worden als de status \'In productie\' is',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => 'Test-connection',

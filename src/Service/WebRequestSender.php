@@ -80,17 +80,17 @@ class WebRequestSender
 	 * @param \Combodo\iTop\Core\WebRequest $oRequest        The web request to send
 	 * @param array                         $aIssues         Array of errors that occurred during sending
 	 * @param null|\EventNotification       $oLog
-	 * @param null|string                   $bForcedSendMode If null, will check module parameter, otherwise force mode using static::ENUM_SEND_MODE_SYNC or static::ENUM_SEND_MODE_ASYNC
+	 * @param null|string                   $sForcedSendMode If null, will check module parameter, otherwise force mode using static::ENUM_SEND_MODE_SYNC or static::ENUM_SEND_MODE_ASYNC
 	 *
 	 * @return array An array containing the 'sender_status' (static::ENUM_SEND_STATE_XXX) and optionally 'response' a WebResponse object.
 	 */
-	public function Send(WebRequest $oRequest, &$aIssues, $oLog = null, $bForcedSendMode = null)
+	public function Send(WebRequest $oRequest, &$aIssues, $oLog = null, $sForcedSendMode = null)
 	{
-		if($bForcedSendMode === static::ENUM_SEND_MODE_SYNC)
+		if($sForcedSendMode === static::ENUM_SEND_MODE_SYNC)
 		{
 			$aResult = $this->SendSynchronously($oRequest, $aIssues, $oLog);
 		}
-		elseif($bForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
+		elseif($sForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
 		{
 			$aResult = $this->SendAsynchronously($oRequest, $aIssues, $oLog);
 		}

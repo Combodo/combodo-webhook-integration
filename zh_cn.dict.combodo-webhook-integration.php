@@ -50,6 +50,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', array(
 	'Class:ActionWebhook+' => 'Webhook调用可用于任何应用',
 	'Class:ActionWebhook/Attribute:language' => '语言',
 	'Class:ActionWebhook/Attribute:language+' => '通知的语言，通常用于搜索通知，也可用于翻译属性标签',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'Whether this action should be executed in background or not (mind that global setting for webhook actions is the "prefer_asynchronous" conf. parameter of the "combodo-webhook-action" module)~~',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => '连接',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => '状态为“线上”时使用的连接信息',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => '测试的连接',

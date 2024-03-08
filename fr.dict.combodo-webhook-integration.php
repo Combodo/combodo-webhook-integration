@@ -49,11 +49,13 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:EventWebhook/Attribute:headers' => 'Entêtes',
 	'Class:EventWebhook/Attribute:payload' => 'Charge utile',
 	'Class:EventWebhook/Attribute:response' => 'Réponse',
+
     // ActionWebhook
 	'Class:ActionWebhook' => 'Appel de webhook (générique)',
 	'Class:ActionWebhook+' => 'Appel webhook pour tout types d\'applications',
 	'Class:ActionWebhook/Attribute:language' => 'Langue',
 	'Class:ActionWebhook/Attribute:language+' => 'Langue de la notification, principalement utilisée pour filtrer les notifications, mais peut aussi être utilisée pour traduire des libellés d\'attributs',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'L\'action est-elle exécutée en arrière plan ? (notez que le paramètrage global pour les actions webhooks est le paramètre de conf. "prefer_asynchronous" du module "combodo-webhook-action")',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Connexion',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'Informations de connexion à utiliser quand le statut est à \'en production\'',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => 'Connexion de test',

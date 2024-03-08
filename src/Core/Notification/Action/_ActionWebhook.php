@@ -12,6 +12,7 @@ use Exception;
 use IssueLog;
 use MetaModel;
 use UserRights;
+use utils;
 
 abstract class _ActionWebhook extends ActionNotification
 {
@@ -62,6 +63,16 @@ abstract class _ActionWebhook extends ActionNotification
 		{
 			throw new Exception('Process response callback is not callable ('.$sResponseCallback.')');
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @since 1.4.0
+	 */
+	public static function GetAsynchronousGlobalSetting(): bool
+	{
+		$oConfig = utils::GetConfig();
+		return $oConfig->GetModuleSetting('combodo-webhook-integration', 'prefer_asynchronous', (WebRequestSender::DEFAULT_SEND_MODE === WebRequestSender::ENUM_SEND_MODE_ASYNC));
 	}
 
 	/**
@@ -171,8 +182,11 @@ abstract class _ActionWebhook extends ActionNotification
 				return 'Not sent as there was no test webhook URL defined';
 			}
 
+			// Prepare "send mode"
+			$sSendMode = $this->IsAsynchronous() ? WebRequestSender::ENUM_SEND_MODE_ASYNC : WebRequestSender::ENUM_SEND_MODE_SYNC;
+
 			$oSender = WebRequestSender::GetInstance();
-			$aResult = $oSender->Send($oRequest, $this->aRequestErrors, $oLog);
+			$aResult = $oSender->Send($oRequest, $this->aRequestErrors, $oLog, $sSendMode);
 
 			switch ($aResult['sender_status'])
 			{

@@ -50,6 +50,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 	'Class:ActionWebhook+' => 'Webhook-Aufruf für eine beliebige Art von Anwendung',
 	'Class:ActionWebhook/Attribute:language' => 'Sprache',
 	'Class:ActionWebhook/Attribute:language+' => 'Sprache dieser Benachrichtigung, wird meist bei der Suche nach Benachrichtigungen verwendet, kann aber auch zur Übersetzung von Attributen verwendet werden',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'Whether this action should be executed in background or not (mind that global setting for webhook actions is the "prefer_asynchronous" conf. parameter of the "combodo-webhook-action" module)~~',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Verbindung',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'Verbindungsinformationen, die zu verwenden sind, wenn der Status \'Im Einsatz\' ist',
 	'Class:ActionWebhook/Attribute:test_remoteapplicationconnection_id' => 'Testverbindung',
