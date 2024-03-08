@@ -506,8 +506,7 @@
 	{
 		// Switch to action language in order to have dictionary entries in the right language
 		// Note: We save current user language so we can switch back to it afterwards
-		$sUserLang = Dict::GetUserLanguage();
-		Dict::SetUserLanguage($this->Get('language'));
+		[$sPreviousLanguage, $aPreviousPluginProperties] = $this->SetNotificationLanguage();
 
 		// Surround with try/catch to make sure to restore user language in case of crash and don't contaminate the rest of the app.
 		try {
@@ -545,7 +544,7 @@
 			throw $oException;
 		} finally {
 			// Switch back to current user language
-			Dict::SetUserLanguage($sUserLang);
+			$this->SetNotificationLanguage($sPreviousLanguage, $aPreviousPluginProperties['language_code'] ?? null);
 		}
 
 		// Get module parameters
