@@ -402,6 +402,10 @@
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-48px.png</icon>
@@ -1132,6 +1136,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-itop-48px.png</icon>
@@ -1295,6 +1303,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-slack-48px.png</icon>
@@ -1763,6 +1775,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-rocketchat-48px.png</icon>
@@ -1974,6 +1990,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-googlechat-48px.png</icon>
@@ -2092,6 +2112,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				  <attributes>
 				    <attribute id="name"/>
 				  </attributes>
+          <complementary_attributes>
+            <attribute id="finalclass"/>
+            <attribute id="description"/>
+          </complementary_attributes>
 				</naming>
 				<display_template/>
 				<icon>asset/img/icon-webhook-microsoftteams-48px.png</icon>
