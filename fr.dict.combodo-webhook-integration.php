@@ -43,7 +43,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'RemoteApplicationConnection:moreinfo' => 'Autres informations',
 	'RemoteApplicationConnection:authinfo' => 'Authentification',
     // EventWebhook
-	'Class:EventWebhook' => 'Evènement d\'envoi de webhook',
+	'Class:EventWebhook' => 'Webhook déclenché',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Classe finale',
 	'Class:EventWebhook/Attribute:webhook_url' => 'URL du webhook',
 	'Class:EventWebhook/Attribute:headers' => 'Entêtes',
@@ -51,7 +51,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:EventWebhook/Attribute:response' => 'Réponse',
 
     // ActionWebhook
-	'Class:ActionWebhook' => 'Appel de webhook (générique)',
+	'Class:ActionWebhook' => 'Action par webhook (générique)',
 	'Class:ActionWebhook+' => 'Appel webhook pour tout types d\'applications',
 	'Class:ActionWebhook/Attribute:language' => 'Langue',
 	'Class:ActionWebhook/Attribute:language+' => 'Langue de la notification, principalement utilisée pour filtrer les notifications, mais peut aussi être utilisée pour traduire des libellés d\'attributs',
@@ -114,7 +114,7 @@ Dict::Add('FR FR', 'French', 'Français', array(
 	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Un jeton personnel d\'identification',
 
     // ActioniTopWebhook
-	'Class:ActioniTopWebhook' => 'Appel de webhook iTop',
+	'Class:ActioniTopWebhook' => 'Action par API REST ' . ITOP_APPLICATION_SHORT,
 	'Class:ActioniTopWebhook+' => 'Appel de webhook d\'une application iTop distante',
 	'Class:ActioniTopWebhook/Attribute:headers+' => 'Entêtes de la requête HTTP, seulement une par ligne (ex : \'Content-type: application/x-www-form-urlencoded\')
 
@@ -137,7 +137,7 @@ IMPORTANT : Si ce champ est renseigné, le champ \'Charge utile\' sera ignoré.'
 // Slack
 Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionSlackNotification
-	'Class:ActionSlackNotification' => 'Notification Slack',
+	'Class:ActionSlackNotification' => 'Notification par Slack',
 	'Class:ActionSlackNotification+' => 'Envoi une notification sous forme de message dans un canal ou à un utilisateur Slack',
 	'Class:ActionSlackNotification/Attribute:message' => 'Message',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes' => 'Attributs de',
@@ -181,7 +181,7 @@ IMPORTANT : Si ce champ est renseigné, les champs \'message\' et tous les \'él
 // Rocket.Chat
 Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionRocketChatNotification
-	'Class:ActionRocketChatNotification' => 'Notification Rocket.Chat',
+	'Class:ActionRocketChatNotification' => 'Notification par Rocket.Chat',
 	'Class:ActionRocketChatNotification+' => 'Envoi une notification sous forme de message dans un canal ou à un utilisateur Rocket.Chat',
 	'Class:ActionRocketChatNotification/Attribute:message' => 'Message',
 	'Class:ActionRocketChatNotification/Attribute:message+' => 'Message qui sera affiché dans le chat',
@@ -206,7 +206,7 @@ IMPORTANT : Si ce champ est renseigné, les champs \'message\' et toutes les \'i
 // Google Chat
 Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionGoogleChatNotification
-	'Class:ActionGoogleChatNotification' => 'Notification Google Chat',
+	'Class:ActionGoogleChatNotification' => 'Notification par Google Chat',
 	'Class:ActionGoogleChatNotification+' => 'Envoi une notification sous forme de message dans un espace Google Chat',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message',
 	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message qui sera affiché dans le chat, seul le text brut est supporté pour le moment.',
@@ -224,7 +224,7 @@ IMPORTANT : Si ce champ est renseigné, le champ \'message\' sera ignoré.',
 // Microsoft Teams
 Dict::Add('FR FR', 'French', 'Français', array(
 	// ActionMicrosoftTeamsNotification
-	'Class:ActionMicrosoftTeamsNotification' => 'Notification Microsoft Teams',
+	'Class:ActionMicrosoftTeamsNotification' => 'Notification par Microsoft Teams',
 	'Class:ActionMicrosoftTeamsNotification+' => 'Envoi une notification sous forme de message dans un canal Microsoft Teams',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Titre',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Message',
