@@ -38,7 +38,7 @@ Dict::Add('TR TR', 'Turkish', 'Türkçe', array(
 	'RemoteApplicationConnection:authinfo' => 'Authentication~~',
 
 	// EventWebhook
-	'Class:EventWebhook' => 'Webhook emission event~~',
+	'Class:EventWebhook' => 'Webhook triggered',
 	'Class:EventWebhook/Attribute:action_finalclass' => 'Final class~~',
 	'Class:EventWebhook/Attribute:webhook_url' => 'Webhook URL~~',
 	'Class:EventWebhook/Attribute:headers' => 'Headers~~',
