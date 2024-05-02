@@ -46,7 +46,7 @@ Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	'Class:EventWebhook/Attribute:response' => 'Response~~',
 
 	// ActionWebhook
-	'Class:ActionWebhook' => 'Webhook call (generic)~~',
+	'Class:ActionWebhook' => 'Action by Webhook (generic)',
 	'Class:ActionWebhook+' => 'Webhook call for any kind of application~~',
 	'Class:ActionWebhook/Attribute:language' => 'Language~~',
 	'Class:ActionWebhook/Attribute:language+' => 'Language of this notification, mostly used when searching for notifications but might also be used to translate attributes label~~',
@@ -107,7 +107,7 @@ Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Version of the API called (eg. 1.3)~~',
 
 	// ActioniTopWebhook
-	'Class:ActioniTopWebhook' => 'iTop webhook call~~',
+	'Class:ActioniTopWebhook' => 'Action by ' . ITOP_APPLICATION_SHORT .' REST API',
 	'Class:ActioniTopWebhook+' => 'Webhook call to a remote iTop application~~',
 	'Class:ActioniTopWebhook/Attribute:headers+' => 'Headers of the HTTP request, must be one per line (eg. \'Content-type: application/x-www-form-urlencoded\')
 
@@ -128,7 +128,7 @@ IMPORTANT: If set, the \'JSON data\' attribute will be ignored.~~',
 // Slack
 Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	// ActionSlackNotification
-	'Class:ActionSlackNotification' => 'Slack notification~~',
+	'Class:ActionSlackNotification' => 'Notification by Slack',
 	'Class:ActionSlackNotification+' => 'Send a notification as a Slack message in a channel or to a user~~',
 	'Class:ActionSlackNotification/Attribute:message' => 'Message~~',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes' => 'Attributes from~~',
@@ -172,7 +172,7 @@ IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignor
 // Rocket.Chat
 Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	// ActionRocketChatNotification
-	'Class:ActionRocketChatNotification' => 'Rocket.Chat notification~~',
+	'Class:ActionRocketChatNotification' => 'Notification by Rocket.Chat',
 	'Class:ActionRocketChatNotification+' => 'Send a notification as a Rocket.Chat message in a channel or to a user~~',
 	'Class:ActionRocketChatNotification/Attribute:message' => 'Message~~',
 	'Class:ActionRocketChatNotification/Attribute:message+' => 'Message that will be displayed in the chat~~',
@@ -197,7 +197,7 @@ IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.~
 // Google Chat
 Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	// ActionGoogleChatNotification
-	'Class:ActionGoogleChatNotification' => 'Google Chat notification~~',
+	'Class:ActionGoogleChatNotification' => 'Notification by Google Chat',
 	'Class:ActionGoogleChatNotification+' => 'Send a notification as a Google Chat message in a space~~',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Message~~',
 	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message that will be displayed in the chat, only plain text is supported for now.~~',
@@ -215,7 +215,7 @@ IMPORTANT: If set, the \'message\' will be ignored.~~',
 // Microsoft Teams
 Dict::Add('DA DA', 'Danish', 'Dansk', array(
 	// ActionMicrosoftTeamsNotification
-	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams notification~~',
+	'Class:ActionMicrosoftTeamsNotification' => 'Notification by Microsoft Teams',
 	'Class:ActionMicrosoftTeamsNotification+' => 'Send a notification as a Microsoft Teams message in a channel~~',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Title~~',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Message~~',
