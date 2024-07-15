@@ -208,7 +208,7 @@ BELANGRIJK: Indien geconfigureerd, zal het \'JSON-data\'-veld genegeerd worden.'
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Soort webhook-acties',
 	'Dashboard:Integrations:Outgoing:Title' => 'Uitgaande webhook-integraties',
 	'Dashboard:Integrations:Title' => 'Integraties met externe applicaties',
-	'Menu:Integrations' => 'Integraties',
+	'Menu:Webhook' => 'Webhooks~~',
 	'RemoteApplicationConnection:authinfo' => 'Authenticatie',
 	'RemoteApplicationConnection:baseinfo' => 'Algemene info',
 	'RemoteApplicationConnection:moreinfo' => 'Meer info',

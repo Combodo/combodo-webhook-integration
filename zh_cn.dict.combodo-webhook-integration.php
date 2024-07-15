@@ -207,7 +207,7 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Webhook类型操作',
 	'Dashboard:Integrations:Outgoing:Title' => '外部的webhook集成',
 	'Dashboard:Integrations:Title' => '与外部应用集成',
-	'Menu:Integrations' => '集成',
+	'Menu:Webhook' => 'Webhooks~~',
 	'RemoteApplicationConnection:authinfo' => '认证',
 	'RemoteApplicationConnection:baseinfo' => '常规信息',
 	'RemoteApplicationConnection:moreinfo' => '更多信息',

@@ -2648,9 +2648,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		</class>
 	</classes>
 	<menus>
-		<menu id="Integrations" xsi:type="DashboardMenuNode" _delta="define">
+		<menu id="Webhook" xsi:type="DashboardMenuNode" _delta="define">
 			<rank>120</rank>
-			<parent>ConfigurationTools</parent>
+			<parent>Integrations</parent>
 			<enable_class>RemoteApplicationConnection</enable_class>
 			<enable_action>UR_ACTION_MODIFY</enable_action>
 			<definition>

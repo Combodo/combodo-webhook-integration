@@ -207,7 +207,7 @@ FONTOS: Ha be van állítva, a \'JSON adat\' attribútum figyelmen kívül marad
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Webhook típusú műveletek',
 	'Dashboard:Integrations:Outgoing:Title' => 'Kimenő webhook integrációk',
 	'Dashboard:Integrations:Title' => 'Integrációk külső alkalmazásokkal',
-	'Menu:Integrations' => 'Integrációk',
+	'Menu:Webhook' => 'Webhooks~~',
 	'RemoteApplicationConnection:authinfo' => 'Azonosítás',
 	'RemoteApplicationConnection:baseinfo' => 'Általános információ',
 	'RemoteApplicationConnection:moreinfo' => 'További információ',

@@ -8,7 +8,7 @@
 
 // Menus
 Dict::Add('EN US', 'English', 'English', array(
-	'Menu:Integrations' => 'Integrations',
+	'Menu:Webhook' => 'Webhooks',
 	'Dashboard:Integrations:Title' => 'Integrations with external applications',
 	'Dashboard:Integrations:Outgoing:Title' => 'Outgoing webhook integrations',
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Webhook type actions',
