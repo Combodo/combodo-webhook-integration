@@ -212,6 +212,7 @@ IMPORTANT : Si ce champ est renseigné, le champ \'Charge utile\' sera ignoré.'
 	'Class:v/Attribute:auth_user+' => 'Nom d\'utilisateur (sur l\'iTop distant) utilisé pour l\'authentification',
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Actions de type webhook',
 	'Dashboard:Integrations:Outgoing:Title' => 'Webhooks d\'intégration sortants',
+	'Menu:Webhook' => 'Webhooks',
 	'Dashboard:Integrations:Title' => 'Intégrations avec les applications externes',
 	'Menu:Integrations' => 'Intégrations',
 	'RemoteApplicationConnection:authinfo' => 'Authentification',
