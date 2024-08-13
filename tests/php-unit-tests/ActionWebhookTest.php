@@ -14,6 +14,8 @@ use EventNotification;
 use RemoteApplicationType;
 use RemoteiTopConnection;
 use RemoteiTopConnectionToken;
+use RemoteOauthConnection;
+use Combodo\iTop\Service\OAuthService;
 
 
 /**
@@ -29,37 +31,25 @@ class ActionWebhookTest extends ItopDataTestCase
 
 	public function testPrepareHeaderWithUserAndPassword()
 	{
-		$oRemoteApplicationType = new RemoteApplicationType();
-		$oRemoteApplicationType->Set('name', 'iTop');
-		$oRemoteApplicationType->DBWrite();
+		$oRemoteApplicationType = $this->GetApplicationType();
+		$oRemoteApplication = $this->createObject(RemoteiTopConnection::class,
+			[
+				'name' => 'Test iTop',
+				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),
+				'url' => 'https://www.combodo.com',
+				'auth_user' => 'administrator',
+				'auth_pwd' => 'Adm1nistrator++!!'
+			]
+		);
 
-		// iTop connexion via username / password
-		$oRemoteApplication = new RemoteiTopConnection();
-		$oRemoteApplication->Set('name', 'Test iTop');
-		$oRemoteApplication->Set('remoteapplicationtype_id', $oRemoteApplicationType->GetKey());
-		$oRemoteApplication->Set('url', 'https://www.combodo.com');
-		$oRemoteApplication->Set('auth_user', 'administrator');
-		$oRemoteApplication->Set('auth_pwd', 'Adm1nistrator++!!');
-		$oRemoteApplication->DBWrite();
-
-		$oAction = new ActioniTopWebhook();
-		$oAction->Set('remoteapplicationconnection_id', $oRemoteApplication->GetKey());
-		$oAction->Set('test_remoteapplicationconnection_id', $oRemoteApplication->GetKey());
-		$oAction->Set('name', 'test');
-		$oAction->DBWrite();
-
-		$oLog = new EventNotification();
-
-		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
 
 	}
 
 	public function testPrepareHeaderWithToken()
 	{
-		$oRemoteApplicationType = new RemoteApplicationType();
-		$oRemoteApplicationType->Set('name', 'iTop');
-		$oRemoteApplicationType->DBWrite();
+		$oRemoteApplicationType = $this->GetApplicationType();
 
 		// iTop connexion via a token
 		$oRemoteApplicationToken = new RemoteiTopConnectionToken();
@@ -69,17 +59,63 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oRemoteApplicationToken->Set('token', 'HAhq2Zfyr24ge!/jqsdf)sCf45A');
 		$oRemoteApplicationToken->DBWrite();
 
-		$oAction = new ActioniTopWebhook();
-		$oAction->Set('remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction->Set('test_remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction->Set('name', 'test2');
-		$oAction->DBWrite();
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplicationToken);
+		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
+	}
+
+	public function testPrepareHeaderWithOaut()
+	{
+		$oRemoteApplicationType = $this->GetApplicationType();
+
+		$oOAuthClient = $this->createObject(\OAuthClientAzure::class,
+			[
+				'name' => 'Test OAuthClientAzure Azure',
+				'provider' => "Azure",
+				'client_id' => "client_id",
+				'client_secret' => "client_secret",
+				'scope' => "WEBHOOK",
+			]
+		);
+
+		$oRemoteApplication = $this->createObject(RemoteOauthConnection::class,
+			[
+				'name' => 'Test iTop',
+				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),
+				'url' => 'https://www.combodo.com',
+				'oauth_id' => $oOAuthClient->GetKey(),
+			]
+		);
+
+		$oOAuthServiceMock = $this->createMock(OAuthService::class);
+		$oOAuthServiceMock->expects($this->once())
+			->method('PrepareHeaders')
+			->willReturn(['Content-type: application/json', 'titi:toto']);
+		OAuthService::$oInstance = $oOAuthServiceMock;
+
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
+		$this->assertEquals(['Content-type: application/json', 'titi:toto'], $aHeaders);
+	}
+
+	public function InvokePrepareHeaders($oRemoteApplication): array {
+		$oAction = $this->createObject(ActioniTopWebhook::class,
+			[
+				'remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
+				'test_remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
+				'name' => 'test'
+			]
+		);
 
 		$oLog = new EventNotification();
 
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
-		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 
+		return array($oLog, $aHeaders);
+	}
+
+	public function GetApplicationType() : RemoteApplicationType {
+		$oRemoteApplicationType = $this->createObject(RemoteApplicationType::class, ['name' => 'iTop']);
+
+		return $oRemoteApplicationType;
 	}
 
 	/**

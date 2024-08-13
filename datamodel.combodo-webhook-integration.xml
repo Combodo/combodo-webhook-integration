@@ -439,14 +439,11 @@ SELECT OAuthClientGoogle AS g WHERE g.scope LIKE "%WEBHOOK%"
 	 */]]></comment>
 					<code><![CDATA[	public function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
 	{
-		//$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
+		$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
 
-		// Prepare Basic Auth header
-		//$sToken = $this->Get('token');
-		//$aHeaders[] = "Auth-Token: $sToken";
+		$oOAuthService = Combodo\iTop\Service\OAuthService::GetInstance();
 
-		//return $aHeaders;
-		return [];
+		return $oOAuthService->PrepareHeaders($this->Get('oauth_id'), $aHeaders);
 	}
 ]]>
 					</code>
