@@ -17,7 +17,7 @@ class OAuthService {
 		return static::$oInstance;
 	}
 
-	public function PrepareHeaders(OAuthClient $oAuthClient, array $aHeaders) : array {
+	public function PrepareHeaders(int $oAuthClientId, array $aHeaders) : array {
 		return [];
 	}
 
