@@ -285,7 +285,7 @@
 				</details>
 			</presentation>
 		</class>
-        <class id="RemoteiTopConnectionToken" _delta="define">
+    <class id="RemoteiTopConnectionToken" _delta="define">
 			<parent>RemoteApplicationConnection</parent>
 			<properties>
 				<category>grant_by_profile,bizmodel,searchable</category>
@@ -374,6 +374,111 @@
 									<rank>20</rank>
 									<items>
 										<item id="token">
+											<rank>10</rank>
+										</item>
+									</items>
+								</item>
+							</items>
+						</item>
+						<item id="actions_list">
+							<rank>100</rank>
+						</item>
+					</items>
+				</details>
+			</presentation>
+		</class>
+    <class id="RemoteOauthConnection" _delta="define">
+			<parent>RemoteApplicationConnection</parent>
+			<properties>
+				<category>grant_by_profile,bizmodel,searchable</category>
+				<abstract>false</abstract>
+				<key_type>autoincrement</key_type>
+				<db_table>remoteitopoauthconnection</db_table>
+				<db_key_field>id</db_key_field>
+				<db_final_class_field/>
+				<naming>
+					<attributes>
+						<attribute id="name"/>
+					</attributes>
+				</naming>
+				<display_template/>
+				<icon/>
+				<reconciliation>
+					<attributes>
+						<attribute id="name"/>
+						<attribute id="remoteapplicationtype_id"/>
+						<attribute id="environment"/>
+					</attributes>
+				</reconciliation>
+			</properties>
+			<fields>
+				<field id="oauth_id" xsi:type="AttributeExternalKey">
+          <sql>oauth_id</sql>
+          <dependencies/>
+          <is_null_allowed>false</is_null_allowed>
+          <target_class>OAuthClient</target_class>
+          <on_target_delete>DEL_AUTO</on_target_delete>
+          <tracking_level>all</tracking_level>
+					<filter>
+						SELECT OAuthClient WHERE id IN (
+SELECT OAuthClientAzure AS a WHERE a.scope LIKE "%WEBHOOK%"
+UNION
+SELECT OAuthClientGoogle AS g WHERE g.scope LIKE "%WEBHOOK%"
+)
+					</filter>
+        </field>
+			</fields>
+			<methods>
+				<method id="PrepareHeaders">
+					<static>false</static>
+					<access>public</access>
+					<type>Overload-DBObject</type>
+					<comment><![CDATA[/**
+	 * Prepare connection specific headers (e.g. authentication)
+	 * @return string[]
+	 */]]></comment>
+					<code><![CDATA[	public function PrepareHeaders(array $aContextArgs, \EventNotification &$oLog)
+	{
+		//$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
+
+		// Prepare Basic Auth header
+		//$sToken = $this->Get('token');
+		//$aHeaders[] = "Auth-Token: $sToken";
+
+		//return $aHeaders;
+		return [];
+	}
+]]>
+					</code>
+				</method>
+			</methods>
+			<presentation>
+				<details>
+					<items>
+						<item id="col:col0">
+							<rank>10</rank>
+							<items>
+								<item id="fieldset:RemoteApplicationConnection:baseinfo">
+									<rank>10</rank>
+									<items>
+										<item id="name">
+											<rank>10</rank>
+										</item>
+										<item id="remoteapplicationtype_id">
+											<rank>20</rank>
+										</item>
+										<item id="environment">
+											<rank>30</rank>
+										</item>
+										<item id="url">
+											<rank>40</rank>
+										</item>
+									</items>
+								</item>
+								<item id="fieldset:RemoteApplicationConnection:authinfo">
+									<rank>20</rank>
+									<items>
+										<item id="oauth_id">
 											<rank>10</rank>
 										</item>
 									</items>
