@@ -442,8 +442,9 @@ SELECT OAuthClientGoogle AS g WHERE g.scope LIKE "%WEBHOOK%"
 		$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
 
 		$oOAuthService = Combodo\iTop\Service\OAuthService::GetInstance();
-
-		return $oOAuthService->PrepareHeaders($this->Get('oauth_id'), $aHeaders);
+		$sToken = $oOAuthService->GetAccessToken($this->Get('oauth_id'));
+		$aHeaders[] = "Authorization: Bearer $sToken";
+		return $aHeaders;
 	}
 ]]>
 					</code>

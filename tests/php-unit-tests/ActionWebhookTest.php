@@ -105,12 +105,12 @@ class ActionWebhookTest extends ItopDataTestCase
 
 		$oOAuthServiceMock = $this->createMock(OAuthService::class);
 		$oOAuthServiceMock->expects($this->once())
-			->method('PrepareHeaders')
-			->willReturn(['titi:toto']);
+			->method('GetAccessToken')
+			->willReturn('zomeu');
 		OAuthService::$oInstance = $oOAuthServiceMock;
 
 		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
-		$this->assertEquals(['Content-type: application/json', 'titi:toto'], $aHeaders);
+		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer zomeu"], $aHeaders);
 	}
 
 	public function InvokePrepareHeaders($oRemoteApplication): array {
