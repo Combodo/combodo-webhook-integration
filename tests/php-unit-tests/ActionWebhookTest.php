@@ -38,7 +38,7 @@ class ActionWebhookTest extends ItopDataTestCase
 				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),
 				'url' => 'https://www.combodo.com',
 				'auth_user' => 'administrator',
-				'auth_pwd' => 'Adm1nistrator++!!'
+				'auth_pwd' => 'Adm1nistrator++!!',
 			]
 		);
 
@@ -63,7 +63,24 @@ class ActionWebhookTest extends ItopDataTestCase
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 	}
 
-	public function testPrepareHeaderWithOaut()
+	public function PrepareHeaderWithOautProvider() {
+		$aUsecases=[];
+
+		$aData = ["Azure" => \OAuthClientAzure::class, "Google" => \OAuthClientGoogle::class,];
+		foreach ($aData as $sOauthProvider => $sOauthClientClass){
+			$aUsecases[$sOauthProvider] = [
+				'sOauthProvider' => $sOauthProvider,
+				'sOauthClientClass' => $sOauthClientClass,
+			];
+		}
+
+		return $aUsecases;
+
+	}
+	/**
+	 * @dataProvider PrepareHeaderWithOautProvider
+	 */
+	public function testPrepareHeaderWithOaut(string $sOauthProvider, string $sOauthClientClass)
 	{
 		$oRemoteApplicationType = $this->GetApplicationType();
 
@@ -101,7 +118,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			[
 				'remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
 				'test_remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
-				'name' => 'test'
+				'name' => 'test',
 			]
 		);
 
