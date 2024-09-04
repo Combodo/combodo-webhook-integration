@@ -79,7 +79,7 @@
 						<value id="development">1-development</value>
 						<value id="test">2-test</value>
 						<value id="production">3-production</value>
-					</values>config
+					</values>
 					<sql>environment</sql>
 					<default_value>2-test</default_value>
 					<is_null_allowed>false</is_null_allowed>
