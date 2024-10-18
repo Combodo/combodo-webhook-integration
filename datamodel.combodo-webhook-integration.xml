@@ -797,8 +797,8 @@
 		// Obfuscate authorization header
 		$sRegExp = '/^Authorization:(.+)$/m';
 		$sAuthHeaderObfuscated = 'Authorization: ******';
-		$sObfuscatedRawHeaders = preg_replace($sRegExp, $sAuthHeaderObfuscated, $sRawHeaders);
-		$sObfuscatedPreparedHeaders = preg_replace($sRegExp, $sAuthHeaderObfuscated, implode("\n", $aPreparedHeaders));
+		$sObfuscatedRawHeaders = Combodo\iTop\Service\WebRequestService::GetInstance()->ObfuscateRawHeader($sAuthHeaderObfuscated);
+		$sObfuscatedPreparedHeaders = Combodo\iTop\Service\WebRequestService::GetInstance()->ObfuscateRawHeader(implode("\n", $aPreparedHeaders));
 
 		$oLog->Set('headers', "Raw:\n".$sObfuscatedRawHeaders."\n\nAfter preparation:\n".$sObfuscatedPreparedHeaders);
 	}

@@ -26,6 +26,7 @@ class ComposerStaticInit5c648c5cddb3c29c87aec82f31f7e556
         'Combodo\\iTop\\Core\\WebRequest' => __DIR__ . '/../..' . '/src/Core/WebRequest.php',
         'Combodo\\iTop\\Core\\WebResponse' => __DIR__ . '/../..' . '/src/Core/WebResponse.php',
         'Combodo\\iTop\\Service\\WebRequestSender' => __DIR__ . '/../..' . '/src/Service/WebRequestSender.php',
+        'Combodo\\iTop\\Service\\WebRequestService' => __DIR__ . '/../..' . '/src/Service/WebRequestService.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
