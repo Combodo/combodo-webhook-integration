@@ -27,19 +27,29 @@ class ActionWebhookTest extends ItopDataTestCase
 		parent::setUp();
 	}
 
-	public function testPrepareHeaderWithUserAndPassword()
-	{
+
+	private function GetRemoteApplicationType() : RemoteApplicationType {
 		$oRemoteApplicationType = new RemoteApplicationType();
 		$oRemoteApplicationType->Set('name', 'iTop');
-		$oRemoteApplicationType->DBWrite();
+	}
 
-		// iTop connexion via username / password
+	private function GetRemoteItopConnection(RemoteApplicationType $oRemoteApplicationType) : RemoteiTopConnection {
 		$oRemoteApplication = new RemoteiTopConnection();
 		$oRemoteApplication->Set('name', 'Test iTop');
 		$oRemoteApplication->Set('remoteapplicationtype_id', $oRemoteApplicationType->GetKey());
 		$oRemoteApplication->Set('url', 'https://www.combodo.com');
 		$oRemoteApplication->Set('auth_user', 'administrator');
 		$oRemoteApplication->Set('auth_pwd', 'Adm1nistrator++!!');
+		return $oRemoteApplication;
+	}
+
+	public function testPrepareHeaderWithUserAndPassword()
+	{
+		$oRemoteApplicationType = $this->GetRemoteApplicationType();
+		$oRemoteApplicationType->DBWrite();
+
+		// iTop connexion via username / password
+		$oRemoteApplication = $this->GetRemoteItopConnection($oRemoteApplicationType);
 		$oRemoteApplication->DBWrite();
 
 		$oAction = new ActioniTopWebhook();
@@ -53,20 +63,39 @@ class ActionWebhookTest extends ItopDataTestCase
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
 
+		$aAdditionalHeaders = <<<TXT
+Authorization: TOTO1
+Auth-Token:TOTO4
+Authorization: TOTO2
+Auth-Token:TOTO3
+TXT;
+
+		$this->InvokeNonPublicMethod(get_class($oRemoteApplication), 'LogHeaders', $oRemoteApplication, [$aHeaders, $aAdditionalHeaders, &$oLog]);
+		$sLoggedHeaders = $oLog->Get('headers');
+
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'Adm1nistrator++!!'), "Webhook password should not appear");
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='), "Webhook password should not appear even encrypted");
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear");
+
 	}
 
-	public function testPrepareHeaderWithToken()
-	{
-		$oRemoteApplicationType = new RemoteApplicationType();
-		$oRemoteApplicationType->Set('name', 'iTop');
-		$oRemoteApplicationType->DBWrite();
-
-		// iTop connexion via a token
+	public function GetRemoteiTopConnectionToken(RemoteApplicationType $oRemoteApplicationType) : RemoteiTopConnectionToken {
 		$oRemoteApplicationToken = new RemoteiTopConnectionToken();
 		$oRemoteApplicationToken->Set('name', 'Test iTop');
 		$oRemoteApplicationToken->Set('remoteapplicationtype_id', $oRemoteApplicationType->GetKey());
 		$oRemoteApplicationToken->Set('url', 'https://www.combodo.com');
 		$oRemoteApplicationToken->Set('token', 'HAhq2Zfyr24ge!/jqsdf)sCf45A');
+
+		return $oRemoteApplicationToken;
+	}
+
+	public function testPrepareHeaderWithToken()
+	{
+		$oRemoteApplicationType = $this->GetRemoteApplicationType();
+		$oRemoteApplicationType->DBWrite();
+
+		// iTop connexion via a token
+		$oRemoteApplicationToken = $this->GetRemoteiTopConnectionToken($oRemoteApplicationType);
 		$oRemoteApplicationToken->DBWrite();
 
 		$oAction = new ActioniTopWebhook();
@@ -80,6 +109,18 @@ class ActionWebhookTest extends ItopDataTestCase
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 
+		$aAdditionalHeaders = <<<TXT
+Authorization: TOTO1
+Auth-Token:TOTO3
+Authorization: TOTO2
+Auth-Token:TOTO4
+TXT;
+
+		$this->InvokeNonPublicMethod(get_class($oRemoteApplicationToken), 'LogHeaders', $oRemoteApplicationToken, [$aHeaders, $aAdditionalHeaders, &$oLog]);
+		$sLoggedHeaders = $oLog->Get('headers');
+
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'HAhq2Zfyr24ge!/jqsdf)sCf45A'), "Webhook token should not appear");
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear");
 	}
 
 	/**
