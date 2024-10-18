@@ -31,6 +31,7 @@ class ActionWebhookTest extends ItopDataTestCase
 	private function GetRemoteApplicationType() : RemoteApplicationType {
 		$oRemoteApplicationType = new RemoteApplicationType();
 		$oRemoteApplicationType->Set('name', 'iTop');
+		return $oRemoteApplicationType;
 	}
 
 	private function GetRemoteItopConnection(RemoteApplicationType $oRemoteApplicationType) : RemoteiTopConnection {
@@ -58,24 +59,21 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oAction->Set('name', 'test');
 		$oAction->DBWrite();
 
-		$oLog = new EventNotification();
+		$oLog = new \EventWebhook();
 
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
 
-		$aAdditionalHeaders = <<<TXT
-Authorization: TOTO1
-Auth-Token:TOTO4
-Authorization: TOTO2
-Auth-Token:TOTO3
+		$sAdditionalHeaders = <<<TXT
+Auth-Token: TOKEN
 TXT;
 
-		$this->InvokeNonPublicMethod(get_class($oRemoteApplication), 'LogHeaders', $oRemoteApplication, [$aHeaders, $aAdditionalHeaders, &$oLog]);
+		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
 		$sLoggedHeaders = $oLog->Get('headers');
 
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'Adm1nistrator++!!'), "Webhook password should not appear");
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='), "Webhook password should not appear even encrypted");
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear");
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'Adm1nistrator++!!'), "Webhook password should not appear: " . $sLoggedHeaders);
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='), "Webhook password should not appear even encrypted: " . $sLoggedHeaders);
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOKEN'), "No additional token should appear: " . $sLoggedHeaders);
 
 	}
 
@@ -104,23 +102,20 @@ TXT;
 		$oAction->Set('name', 'test2');
 		$oAction->DBWrite();
 
-		$oLog = new EventNotification();
+		$oLog = new \EventWebhook();
 
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 
-		$aAdditionalHeaders = <<<TXT
-Authorization: TOTO1
-Auth-Token:TOTO3
-Authorization: TOTO2
-Auth-Token:TOTO4
+		$sAdditionalHeaders = <<<TXT
+Authorization: ENCRYPTEDPWD
 TXT;
 
-		$this->InvokeNonPublicMethod(get_class($oRemoteApplicationToken), 'LogHeaders', $oRemoteApplicationToken, [$aHeaders, $aAdditionalHeaders, &$oLog]);
+		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
 		$sLoggedHeaders = $oLog->Get('headers');
 
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'HAhq2Zfyr24ge!/jqsdf)sCf45A'), "Webhook token should not appear");
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear");
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'HAhq2Zfyr24ge!/jqsdf)sCf45A'), "Webhook token should not appear: " . $sLoggedHeaders);
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'ENCRYPTEDPWD'), "No additional pwd should appear: " . $sLoggedHeaders);
 	}
 
 	/**
