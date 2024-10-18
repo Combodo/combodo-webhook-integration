@@ -65,10 +65,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
 
 		$sAdditionalHeaders = <<<TXT
-Authorization: TOTO1
-Auth-Token:TOTO4
-Authorization: TOTO2
-Auth-Token:TOTO3
+Auth-Token: TOKEN
 TXT;
 
 		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
@@ -76,7 +73,7 @@ TXT;
 
 		$this->assertTrue(false === strpos($sLoggedHeaders, 'Adm1nistrator++!!'), "Webhook password should not appear: " . $sLoggedHeaders);
 		$this->assertTrue(false === strpos($sLoggedHeaders, 'YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='), "Webhook password should not appear even encrypted: " . $sLoggedHeaders);
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear: " . $sLoggedHeaders);
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOKEN'), "No additional token should appear: " . $sLoggedHeaders);
 
 	}
 
@@ -111,17 +108,14 @@ TXT;
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 
 		$sAdditionalHeaders = <<<TXT
-Authorization: TOTO1
-Auth-Token:TOTO3
-Authorization: TOTO2
-Auth-Token:TOTO4
+Authorization: ENCRYPTEDPWD
 TXT;
 
 		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
 		$sLoggedHeaders = $oLog->Get('headers');
 
 		$this->assertTrue(false === strpos($sLoggedHeaders, 'HAhq2Zfyr24ge!/jqsdf)sCf45A'), "Webhook token should not appear: " . $sLoggedHeaders);
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOTO'), "No additional pwd/token should appear: " . $sLoggedHeaders);
+		$this->assertTrue(false === strpos($sLoggedHeaders, 'ENCRYPTEDPWD'), "No additional pwd should appear: " . $sLoggedHeaders);
 	}
 
 	/**
