@@ -84,11 +84,11 @@
 					<default_value>2-test</default_value>
 					<is_null_allowed>false</is_null_allowed>
 				</field>
-                <field id="url" xsi:type="AttributeString">
+        <field id="url" xsi:type="AttributeString">
 					<sql>url</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
-		        </field>
+        </field>
 				<field id="actions_list" xsi:type="AttributeLinkedSet">
 					<linked_class>ActionWebhook</linked_class>
 					<ext_key_to_me>remoteapplicationconnection_id</ext_key_to_me>
@@ -310,16 +310,16 @@
 				</reconciliation>
 			</properties>
 			<fields>
-                <field id="version" xsi:type="AttributeString">
+        <field id="version" xsi:type="AttributeString">
 					<sql>version</sql>
 					<default_value>1.3</default_value>
 					<is_null_allowed>false</is_null_allowed>
-		        </field>
-		        <field id="token" xsi:type="AttributeEncryptedString">
+        </field>
+        <field id="token" xsi:type="AttributeEncryptedPassword">
 					<sql>token</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
-		        </field>
+        </field>
 			</fields>
 			<methods>
 				<method id="PrepareHeaders">
@@ -335,8 +335,8 @@
 		$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
 
 		// Prepare Basic Auth header
-		$sToken = $this->Get('token');
-		$aHeaders[] = "Auth-Token: $sToken";
+		$oToken = $this->Get('token');
+		$aHeaders[] = "Auth-Token: " . $oToken->GetPassword();
 
 		return $aHeaders;
 	}

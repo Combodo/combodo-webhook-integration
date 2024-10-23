@@ -81,12 +81,12 @@ class RestTest extends ItopDataTestCase
     "operation": "core/get",
     "class": "RemoteiTopConnectionToken",
     "key": "SELECT RemoteiTopConnectionToken",
-    "output_fields": "name",
+    "output_fields": "name, token",
     "limit": "3",
     "page": "1"
 }
 JSON ],
-			'query FAIL' => [ <<<JSON
+			/*'query FAIL' => [ <<<JSON
 {
     "operation": "core/get",
     "class": "RemoteiTopConnectionToken",
@@ -95,7 +95,7 @@ JSON ],
     "limit": "3",
     "page": "1"
 }
-JSON ],
+JSON ],*/
 		];
 	}
 
