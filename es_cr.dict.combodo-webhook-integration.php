@@ -1,19 +1,17 @@
 <?php
 /**
- * Localized data
+ * Spanish Localized data
  *
  * @copyright Copyright (C) 2010-2024 Combodo SAS
  * @license    https://opensource.org/licenses/AGPL-3.0
- * 
- */
-/**
- *
+ * @author Miguel Turrubiates <miguel_tf@yahoo.com>
+ * @notas       Utilizar codificación UTF-8 para mostrar acentos y otros caracteres especiales 
  */
 Dict::Add('ES CR', 'Spanish', 'Español, Castellano', [
 	'ActionGoogleChatNotification:message' => 'Mensaje',
-	'ActionMicrosoftTeamsNotification:additionalelements' => 'Additional elements to include~~',
-	'ActionMicrosoftTeamsNotification:message' => 'Basis message~~',
-	'ActionMicrosoftTeamsNotification:theme' => 'Theme~~',
+	'ActionMicrosoftTeamsNotification:additionalelements' => 'Elementos adicionales a incluir',
+	'ActionMicrosoftTeamsNotification:message' => 'Mensaje base',
+	'ActionMicrosoftTeamsNotification:theme' => 'Tema',
 	'ActionRocketChatNotification:additionalelements' => 'Información Bot',
 	'ActionRocketChatNotification:message' => 'Mensaje base',
 	'ActionSlackNotification:Payload:BlockKit:UserInfo' => 'Notificación de <%2$s|%1$s> (%3$s)',
@@ -25,10 +23,10 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', [
 	'ActionWebhook:requestparameters' => 'Parámetros de Solicitud',
 	'ActionWebhook:webhookconnection' => 'Conexión Webhook',
 	'Class:ActionGoogleChatNotification' => 'Notificación Google Chat',
-	'Class:ActionGoogleChatNotification+' => 'Send a notification as a Google Chat message in a space~~',
+	'Class:ActionGoogleChatNotification+' => 'Enviar una notificación como mensaje de Google Chat en un espacio',
 	'Class:ActionGoogleChatNotification/Attribute:message' => 'Mensaje',
-	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Message that will be displayed in the chat, only plain text is supported for now.~~',
-	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+	'Class:ActionGoogleChatNotification/Attribute:message+' => 'Mensaje que se mostrará en el chat, por ahora solo se admite texto sin formato.',
+	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
@@ -36,28 +34,28 @@ Puede utilizar 2 tipos de métodos:
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' será ignorados.',
 	'Class:ActionMicrosoftTeamsNotification' => 'Notificación Microsoft Teams',
-	'Class:ActionMicrosoftTeamsNotification+' => 'Send a notification as a Microsoft Teams message in a channel~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Medallion picture~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL of the image to display as a medallion in the message card, it must be publicly accessible on the internet for Microsoft Teams to be able to display it~~',
+	'Class:ActionMicrosoftTeamsNotification+' => 'Enviar una notificación como mensaje de Microsoft Teams en un canal',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Imagen del medallón',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL de la imagen que se mostrará como un medallón en la tarjeta de mensaje; debe ser accesible públicamente en Internet para que Microsoft Teams pueda mostrarla',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button' => 'Botón Borrar',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button+' => 'Include a button below the message to delete the object in '.ITOP_APPLICATION_SHORT.'~~',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button+' => 'Incluya un botón debajo del mensaje para eliminar el objeto en '.ITOP_APPLICATION_SHORT,
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button/Value:no' => 'No',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button/Value:yes' => 'Si',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes' => 'Atributos de',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes+' => 'Desplegar atributos adicionales debajo del mensaje. They can be either from the usual \'list\' view or the custom \'msteams\' view of the object triggering the notification . Note that the \'msteams\' view must be defined in the datamodel first (zlist)',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:list' => 'the usual list view~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:msteams' => 'the custom "msteams" view~~',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:list' => 'la vista de lista habitual',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_list_attributes/Value:msteams' => 'la vista personalizada "msteams"',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button' => 'Botón Modificar',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button+' => 'Include a button below the message to edit the object in '.ITOP_APPLICATION_SHORT.'~~',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button+' => 'Incluir un botón debajo del mensaje para editar el objeto en '.ITOP_APPLICATION_SHORT,
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button/Value:no' => 'No',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_modify_button/Value:yes' => 'Si',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button' => 'Botones de otras acciones',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button+' => 'Include other actions (such as transitions available in the current state) below the message~~',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button+' => 'Incluir otras acciones (como transiciones disponibles en el estado actual) debajo del mensaje',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:no' => 'No',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:specify' => 'Especificar',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:yes' => 'Si',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Mensaje',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
@@ -65,21 +63,21 @@ Puede utilizar 2 tipos de métodos:
 	
 IMPORTANTE: Si se habilita, el \'title\', \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Códigos de otras acciones',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Highlight color~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight color of the message card in Microsoft Teams, must be a valid hexadecimal color (eg. FF0000)~~',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Title~~',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Especifique qué acciones incluir como botones debajo del mensaje. Debe ser una lista separada por comas de los códigos de acción (por ejemplo, \'ev_reopen, ev_close\')',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Color de resaltado',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'El color de resaltado de la tarjeta de mensaje en Microsoft Teams debe ser un color hexadecimal válido (p. ej., FF0000)',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Título',
 	'Class:ActionRocketChatNotification' => 'Notificaciones Rocket.Chat',
-	'Class:ActionRocketChatNotification+' => 'Send a notification as a Rocket.Chat message in a channel or to a user~~',
+	'Class:ActionRocketChatNotification+' => 'Enviar una notificación como mensaje Rocket.Chat en un canal o a un usuario',
 	'Class:ActionRocketChatNotification/Attribute:bot_alias' => 'Alias',
-	'Class:ActionRocketChatNotification/Attribute:bot_alias+' => 'Overrides the default bot alias, will appear before the username of the message~~',
+	'Class:ActionRocketChatNotification/Attribute:bot_alias+' => 'Anula el alias del bot predeterminado y aparecerá antes del nombre de usuario del mensaje',
 	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar' => 'Emoji avatar',
-	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar+' => 'Overrides the default bot avatar, can be any Rocket.Chat emojis (eg. :ghost:, :white_check_mark:, ...). Note that if an URL avatar is set, the emoji won\'t be displayed.~~',
+	'Class:ActionRocketChatNotification/Attribute:bot_emoji_avatar+' => 'Anula el avatar del bot predeterminado, puede ser cualquier emoji de Rocket.Chat (por ejemplo, :ghost:, :white_check_mark:, ...). Tenga en cuenta que si se configura un avatar de URL, el emoji no se mostrará.',
 	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar' => 'Imagen avatar',
-	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar+' => 'Overrides the default bot avatar, must be an absolute URL to the image to use~~',
+	'Class:ActionRocketChatNotification/Attribute:bot_url_avatar+' => 'Overrides the default bot avatar, must be an absolute URL to the image to useAnula el avatar del bot predeterminado; debe ser una URL absoluta para la imagen que se utilizará',
 	'Class:ActionRocketChatNotification/Attribute:message' => 'Mensaje',
-	'Class:ActionRocketChatNotification/Attribute:message+' => 'Message that will be displayed in the chat~~',
-	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+	'Class:ActionRocketChatNotification/Attribute:message+' => 'Mensaje que se mostrará en el chat',
+	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
@@ -89,19 +87,19 @@ IMPORTANTE: Si se habilita, el \'mensaje\' y toda la \'información bot\' serán
 	'Class:ActionSlackNotification' => 'Notificación Slack',
 	'Class:ActionSlackNotification+' => 'Envar una notificación como un mensaje Slack en un canal o a un usuario',
 	'Class:ActionSlackNotification/Attribute:include_delete_button' => 'Botón Borrar',
-	'Class:ActionSlackNotification/Attribute:include_delete_button+' => 'Include a button below the message to delete the object in '.ITOP_APPLICATION_SHORT.'~~',
+	'Class:ActionSlackNotification/Attribute:include_delete_button+' => 'Incluir un botón debajo del mensaje para eliminar el objeto en '.ITOP_APPLICATION_SHORT,
 	'Class:ActionSlackNotification/Attribute:include_delete_button/Value:no' => 'No',
 	'Class:ActionSlackNotification/Attribute:include_delete_button/Value:yes' => 'Si',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes' => 'Atributos de',
 	'Class:ActionSlackNotification/Attribute:include_list_attributes+' => 'Desplegar atributos adicionales debajo del mensaje. They can be either from the usual \'list\' view or the custom \'slack\' view of the object triggering the notification . Note that the \'slack\' view must be defined in the datamodel first (zlist)',
-	'Class:ActionSlackNotification/Attribute:include_list_attributes/Value:list' => 'the usual list view~~',
-	'Class:ActionSlackNotification/Attribute:include_list_attributes/Value:slack' => 'the custom "slack" view~~',
+	'Class:ActionSlackNotification/Attribute:include_list_attributes/Value:list' => 'la vista de lista habitual',
+	'Class:ActionSlackNotification/Attribute:include_list_attributes/Value:slack' => 'la vista suelta personalizada',
 	'Class:ActionSlackNotification/Attribute:include_modify_button' => 'Botón Modificar',
-	'Class:ActionSlackNotification/Attribute:include_modify_button+' => 'Include a button below the message to edit the object in '.ITOP_APPLICATION_SHORT.'~~',
+	'Class:ActionSlackNotification/Attribute:include_modify_button+' => 'Incluir un botón debajo del mensaje para editar el objeto en '.ITOP_APPLICATION_SHORT,
 	'Class:ActionSlackNotification/Attribute:include_modify_button/Value:no' => 'No',
 	'Class:ActionSlackNotification/Attribute:include_modify_button/Value:yes' => 'Si',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button' => 'Botones de otras acciones',
-	'Class:ActionSlackNotification/Attribute:include_other_actions_button+' => 'Include other actions (such as transitions available in the current state) below the message~~',
+	'Class:ActionSlackNotification/Attribute:include_other_actions_button+' => 'Incluir otras acciones (como transiciones disponibles en el estado actual) debajo del mensaje',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:no' => 'No',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:specify' => 'Especificar',
 	'Class:ActionSlackNotification/Attribute:include_other_actions_button/Value:yes' => 'Si',
@@ -110,7 +108,7 @@ IMPORTANTE: Si se habilita, el \'mensaje\' y toda la \'información bot\' serán
 	'Class:ActionSlackNotification/Attribute:include_user_info/Value:no' => 'No',
 	'Class:ActionSlackNotification/Attribute:include_user_info/Value:yes' => 'Si',
 	'Class:ActionSlackNotification/Attribute:message' => 'Mensaje',
-	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
+	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
 - Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
@@ -118,10 +116,10 @@ Puede utilizar 2 tipos de métodos:
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Códigos de otras acciones',
-	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')~~',
+	'Class:ActionSlackNotification/Attribute:specified_other_actions+' => 'Especifique qué acciones incluir como botones debajo del mensaje. Debe ser una lista separada por comas de los códigos de acción (por ejemplo, \'ev_reopen, ev_close\')',
 	'Class:ActionWebhook' => 'Llamada Webhook (genérica)',
 	'Class:ActionWebhook+' => 'Llamada Webhook para cualquier tipo de aplicación',
-	'Class:ActionWebhook/Attribute:asynchronous+' => 'Whether this action should be executed in background or not (mind that global setting for webhook actions is the "prefer_asynchronous" conf. parameter of the "combodo-webhook-action" module)~~',
+	'Class:ActionWebhook/Attribute:asynchronous+' => 'Si esta acción debe ejecutarse en segundo plano o no (tenga en cuenta que la configuración global para las acciones de webhook es el parámetro de configuración "prefer_asynchronous" del módulo "combodo-webhook-action")',
 	'Class:ActionWebhook/Attribute:headers' => 'Encabezados',
 	'Class:ActionWebhook/Attribute:headers+' => 'Encabezados de la solicitud HTTP, debe ser uno por línea (ejem. \'Content-type: application/json\')',
 	'Class:ActionWebhook/Attribute:language' => 'Idioma',
@@ -130,12 +128,12 @@ IMPORTANTE: Si se habilita, el \'mensaje\' y todos los \'elementos adicionales\'
 	'Class:ActionWebhook/Attribute:method+' => 'Método de la solicitud HTTP',
 	'Class:ActionWebhook/Attribute:method/Value:delete' => 'DELETE',
 	'Class:ActionWebhook/Attribute:method/Value:get' => 'GET',
-	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD~~',
+	'Class:ActionWebhook/Attribute:method/Value:head' => 'HEAD',
 	'Class:ActionWebhook/Attribute:method/Value:patch' => 'PATCH',
 	'Class:ActionWebhook/Attribute:method/Value:post' => 'POST',
 	'Class:ActionWebhook/Attribute:method/Value:put' => 'PUT',
-	'Class:ActionWebhook/Attribute:path' => 'Path~~',
-	'Class:ActionWebhook/Attribute:path+' => 'Additional path to append to the connection URL (eg. \'/some/specific-endpoint\')~~',
+	'Class:ActionWebhook/Attribute:path' => 'Ruta',
+	'Class:ActionWebhook/Attribute:path+' => 'Ruta adicional para agregar a la URL de conexión (por ejemplo, \'/some/specific-endpoint\')',
 	'Class:ActionWebhook/Attribute:payload' => 'Carga',
 	'Class:ActionWebhook/Attribute:payload+' => 'Datos enviados durante la llamada webhook, muchas de las veces es una cadena JSON. Uselo si su estructura de carga es estática.
 
@@ -209,8 +207,8 @@ IMPORTANTE: Si se habilita, el atributo \'JSON data\' será ignorado.',
 	'Class:RemoteiTopConnection/Attribute:auth_user+' => 'Inicio de sesión del usuario (en el iTop remoto) utilizado para la autenticación',
 	'Class:RemoteiTopConnection/Attribute:version' => 'Versión de API',
 	'Class:RemoteiTopConnection/Attribute:version+' => 'Versión de la API llamada (por ejemplo, 1.3)',
-	'Class:RemoteiTopConnectionToken' => 'Remote iTop connection using a Token~~',
-	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Token~~',
+	'Class:RemoteiTopConnectionToken' => 'Conexión iTop remota mediante un Token',
+	'Class:RemoteiTopConnectionToken/Attribute:token+' => 'Token',
 	'Dashboard:Integrations:ActionWebhookList:Title' => 'Acciones de tipo webhook',
 	'Dashboard:Integrations:Outgoing:Title' => 'Integraciones webhook salientes',
 	'Dashboard:Integrations:Title' => 'Integraciones con aplicacioens externas',
