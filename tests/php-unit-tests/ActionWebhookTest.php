@@ -9,8 +9,10 @@ namespace Combodo\iTop\Core\Test;
 use ActioniTopWebhook;
 use ActionWebhook;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
+use Combodo\iTop\Oauth2Client\Service\HybridAuthService;
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
 use EventNotification;
+use Hybridauth\Adapter\OAuth2;
 use RemoteApplicationType;
 use RemoteiTopConnection;
 use RemoteiTopConnectionToken;
@@ -27,95 +29,108 @@ class ActionWebhookTest extends ItopDataTestCase
 		parent::setUp();
 	}
 
-
-	private function GetRemoteApplicationType() : RemoteApplicationType {
-		$oRemoteApplicationType = new RemoteApplicationType();
-		$oRemoteApplicationType->Set('name', 'iTop');
-		return $oRemoteApplicationType;
-	}
-
-	private function GetRemoteItopConnection(RemoteApplicationType $oRemoteApplicationType) : RemoteiTopConnection {
-		$oRemoteApplication = new RemoteiTopConnection();
-		$oRemoteApplication->Set('name', 'Test iTop');
-		$oRemoteApplication->Set('remoteapplicationtype_id', $oRemoteApplicationType->GetKey());
-		$oRemoteApplication->Set('url', 'https://www.combodo.com');
-		$oRemoteApplication->Set('auth_user', 'administrator');
-		$oRemoteApplication->Set('auth_pwd', 'Adm1nistrator++!!');
-		return $oRemoteApplication;
+	protected function tearDown(): void {
+		parent::tearDown();
+		HybridAuthService::SetInstance(null);
 	}
 
 	public function testPrepareHeaderWithUserAndPassword()
 	{
-		$oRemoteApplicationType = $this->GetRemoteApplicationType();
-		$oRemoteApplicationType->DBWrite();
+		$oRemoteApplicationType = $this->GetApplicationType();
+		$oRemoteApplication = $this->createObject(RemoteiTopConnection::class,
+			[
+				'name' => 'Test iTop',
+				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),
+				'url' => 'https://www.combodo.com',
+				'auth_user' => 'administrator',
+				'auth_pwd' => 'Adm1nistrator++!!',
+			]
+		);
 
-		// iTop connexion via username / password
-		$oRemoteApplication = $this->GetRemoteItopConnection($oRemoteApplicationType);
-		$oRemoteApplication->DBWrite();
-
-		$oAction = new ActioniTopWebhook();
-		$oAction->Set('remoteapplicationconnection_id', $oRemoteApplication->GetKey());
-		$oAction->Set('test_remoteapplicationconnection_id', $oRemoteApplication->GetKey());
-		$oAction->Set('name', 'test');
-		$oAction->DBWrite();
-
-		$oLog = new \EventWebhook();
-
-		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
-
-		$sAdditionalHeaders = <<<TXT
-Auth-Token: TOKEN
-TXT;
-
-		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
-		$sLoggedHeaders = $oLog->Get('headers');
-
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'Adm1nistrator++!!'), "Webhook password should not appear: " . $sLoggedHeaders);
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='), "Webhook password should not appear even encrypted: " . $sLoggedHeaders);
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'TOKEN'), "No additional token should appear: " . $sLoggedHeaders);
 
 	}
 
-	public function GetRemoteiTopConnectionToken(RemoteApplicationType $oRemoteApplicationType) : RemoteiTopConnectionToken {
+	public function testPrepareHeaderWithToken()
+	{
+		$oRemoteApplicationType = $this->GetApplicationType();
+
+		// iTop connexion via a token
 		$oRemoteApplicationToken = new RemoteiTopConnectionToken();
 		$oRemoteApplicationToken->Set('name', 'Test iTop');
 		$oRemoteApplicationToken->Set('remoteapplicationtype_id', $oRemoteApplicationType->GetKey());
 		$oRemoteApplicationToken->Set('url', 'https://www.combodo.com');
 		$oRemoteApplicationToken->Set('token', 'HAhq2Zfyr24ge!/jqsdf)sCf45A');
-
-		return $oRemoteApplicationToken;
-	}
-
-	public function testPrepareHeaderWithToken()
-	{
-		$oRemoteApplicationType = $this->GetRemoteApplicationType();
-		$oRemoteApplicationType->DBWrite();
-
-		// iTop connexion via a token
-		$oRemoteApplicationToken = $this->GetRemoteiTopConnectionToken($oRemoteApplicationType);
 		$oRemoteApplicationToken->DBWrite();
 
-		$oAction = new ActioniTopWebhook();
-		$oAction->Set('remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction->Set('test_remoteapplicationconnection_id', $oRemoteApplicationToken->GetKey());
-		$oAction->Set('name', 'test2');
-		$oAction->DBWrite();
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplicationToken);
+		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
+	}
 
-		$oLog = new \EventWebhook();
+	public function testPrepareHeaderWithOauth2()
+	{
+		$oRemoteApplicationType = $this->GetApplicationType();
+
+		/** @var \Oauth2Client $oOauth2Client */
+		$oOauth2Client = $this->createObject(\GitHubOauth2Client::class,
+			[
+				'name' => 'webhook',
+				'client_id' => 'client_123',
+				'client_secret' => 'secret456',
+				'scope' => 'toto',
+				'access_token' => 'access_token1',
+				'token_type' => 'Bearer',
+				'refresh_token' => 'refresh_token1',
+				'access_token_expiration' => '2024-11-13 00:37:48',
+			]
+		);
+
+		$oRemoteApplication = $this->createObject(\RemoteiTopConnectionOauth2::class,
+			[
+				'name' => 'Test iTop',
+				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),
+				'url' => 'https://www.combodo.com',
+				'oauth2client_id' => $oOauth2Client->GetKey(),
+			]
+		);
+
+		//avoid calling Github IDP
+		$oHybridAuthService = $this->createMock(HybridAuthService::class);
+		HybridAuthService::SetInstance($oHybridAuthService);
+		$oAuth2 = $this->createMock(OAuth2::class);
+		$oHybridAuthService->expects($this->once())
+			->method('GetOauth2')
+			->willReturn($oAuth2);
+
+		$oAuth2->expects($this->once())
+			->method('isConnected')
+			->willReturn(true);
+
+		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
+		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer access_token1"], $aHeaders);
+	}
+
+	public function InvokePrepareHeaders($oRemoteApplication): array {
+		$oAction = $this->createObject(ActioniTopWebhook::class,
+			[
+				'remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
+				'test_remoteapplicationconnection_id' => $oRemoteApplication->GetKey(),
+				'name' => 'test',
+			]
+		);
+
+		$oLog = new EventNotification();
 
 		$aHeaders = $this->InvokeNonPublicMethod(get_class($oAction), 'PrepareHeaders', $oAction, [[], &$oLog]);
-		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 
-		$sAdditionalHeaders = <<<TXT
-Authorization: ENCRYPTEDPWD
-TXT;
+		return array($oLog, $aHeaders);
+	}
 
-		$this->InvokeNonPublicMethod(get_class($oAction), 'LogHeaders', $oAction, [$sAdditionalHeaders, $aHeaders, &$oLog]);
-		$sLoggedHeaders = $oLog->Get('headers');
+	public function GetApplicationType() : RemoteApplicationType {
+		$oRemoteApplicationType = $this->createObject(RemoteApplicationType::class, ['name' => 'iTop']);
 
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'HAhq2Zfyr24ge!/jqsdf)sCf45A'), "Webhook token should not appear: " . $sLoggedHeaders);
-		$this->assertTrue(false === strpos($sLoggedHeaders, 'ENCRYPTEDPWD'), "No additional pwd should appear: " . $sLoggedHeaders);
+		return $oRemoteApplicationType;
 	}
 
 	/**

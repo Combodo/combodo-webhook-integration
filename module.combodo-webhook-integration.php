@@ -16,6 +16,7 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 		'dependencies' => array(
 			'itop-structure/3.2.0',
 			'itop-attribute-encrypted-password/1.0.0',
+			'combodo-oauth2-client/1.0.0',
 		),
 		'mandatory' => false,
 		'visible' => true,

@@ -2,6 +2,10 @@
 
 namespace Combodo\iTop\Service;
 
+use Combodo\iTop\Oauth2Client\API\Oauth2ClientAPI;
+use OAuth2Client;
+use RemoteiTopConnectionOauth2;
+
 class WebRequestService {
 	private static WebRequestService $oInstance;
 
@@ -47,6 +51,16 @@ class WebRequestService {
 		}
 
 		return $sObfuscatedRawHeaders;
+	}
+
+	public function EnrichHeader(RemoteiTopConnectionOauth2 $oRemoteiTopConnectionOauth2, &$aHeaders) : void {
+		/** @var OAuth2Client $oOauth2Client */
+		$oOauth2Client = \MetaModel::GetObject(\Oauth2Client::class, $oRemoteiTopConnectionOauth2->Get('oauth2client_id'));
+
+		$aHeaders[] = sprintf("Authorization: %s %s",
+			$oOauth2Client->Get('token_type'),
+			Oauth2ClientAPI::GetInstance()->GetToken($oOauth2Client)
+		);
 	}
 
 }
