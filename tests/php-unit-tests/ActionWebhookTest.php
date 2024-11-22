@@ -9,10 +9,9 @@ namespace Combodo\iTop\Core\Test;
 use ActioniTopWebhook;
 use ActionWebhook;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
-use Combodo\iTop\Oauth2Client\Service\HybridAuthService;
+use Combodo\iTop\Oauth2Client\Service\Oauth2Service;
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
 use EventNotification;
-use Hybridauth\Adapter\OAuth2;
 use RemoteApplicationType;
 use RemoteiTopConnection;
 use RemoteiTopConnectionToken;
@@ -31,7 +30,6 @@ class ActionWebhookTest extends ItopDataTestCase
 
 	protected function tearDown(): void {
 		parent::tearDown();
-		HybridAuthService::SetInstance(null);
 	}
 
 	public function testPrepareHeaderWithUserAndPassword()
@@ -96,19 +94,14 @@ class ActionWebhookTest extends ItopDataTestCase
 		);
 
 		//avoid calling Github IDP
-		$oHybridAuthService = $this->createMock(HybridAuthService::class);
-		HybridAuthService::SetInstance($oHybridAuthService);
-		$oAuth2 = $this->createMock(OAuth2::class);
-		$oHybridAuthService->expects($this->once())
-			->method('GetOauth2')
-			->willReturn($oAuth2);
-
-		$oAuth2->expects($this->once())
-			->method('isConnected')
-			->willReturn(true);
+		$oOauth2Service = $this->createMock(Oauth2Service::class);
+		Oauth2Service::SetInstance($oOauth2Service);
+		$oOauth2Service->expects($this->once())
+			->method('GetAccessTokenByOauth2Client')
+			->willReturn('GABUZOMEU');
 
 		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
-		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer access_token1"], $aHeaders);
+		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer GABUZOMEU"], $aHeaders);
 	}
 
 	public function InvokePrepareHeaders($oRemoteApplication): array {
