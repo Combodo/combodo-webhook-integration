@@ -56,7 +56,8 @@ class WebRequestService {
 		/** @var \OAuth2Client $oOauth2Client */
 		$oOauth2Client = \MetaModel::GetObject(\Oauth2Client::class, $oRemoteiTopConnectionOauth2->Get('oauth2client_id'));
 
-		$sAccessToken = Oauth2Service::GetInstance()->GetAccessTokenByOauth2Client($oOauth2Client);
+		Oauth2Service::GetInstance()->InitByOauth2Client($oOauth2Client);
+		$sAccessToken = Oauth2Service::GetInstance()->GetAccessToken();
 		$aHeaders[] = sprintf("Authorization: %s %s",
 			$oOauth2Client->Get('token_type'), $sAccessToken
 		);

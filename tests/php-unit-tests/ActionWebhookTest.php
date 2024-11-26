@@ -96,8 +96,15 @@ class ActionWebhookTest extends ItopDataTestCase
 		//avoid calling Github IDP
 		$oOauth2Service = $this->createMock(Oauth2Service::class);
 		Oauth2Service::SetInstance($oOauth2Service);
+
+		Oauth2Service::GetInstance()->InitByOauth2Client($oOauth2Client);
+		$sAccessToken = Oauth2Service::GetInstance()->GetAccessToken();
+
 		$oOauth2Service->expects($this->once())
-			->method('GetAccessTokenByOauth2Client')
+			->method('InitByOauth2Client');
+
+		$oOauth2Service->expects($this->once())
+			->method('GetAccessToken')
 			->willReturn('GABUZOMEU');
 
 		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
