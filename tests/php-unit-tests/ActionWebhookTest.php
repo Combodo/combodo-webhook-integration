@@ -8,12 +8,20 @@ namespace Combodo\iTop\Core\Test;
 
 use ActioniTopWebhook;
 use ActionWebhook;
+use Closure;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
+use Combodo\iTop\Core\WebResponse;
+use Combodo\iTop\Service\WebRequestSender;
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
+use DBObject;
 use EventNotification;
+use MetaModel;
 use RemoteApplicationType;
 use RemoteiTopConnection;
 use RemoteiTopConnectionToken;
+use TriggerOnObjectCreate;
+use TriggerOnObjectUpdate;
+use utils;
 
 
 /**
@@ -23,8 +31,55 @@ use RemoteiTopConnectionToken;
  */
 class ActionWebhookTest extends ItopDataTestCase
 {
+	const CREATE_TEST_ORG = true;
+	static Closure $oCallBackWebhook;
 	protected function setUp(): void {
 		parent::setUp();
+	}
+
+	protected function tearDown(): void {
+		parent::tearDown();
+	}
+
+	public function testOnObjectUpdateCallbackShouldBeAllowedToModifyTriggeringObject()
+	{
+		WebRequestSender::SetMockDoPostRequest(true);
+		$iPerson = $this->GivenObjectInDB('Person', ['first_name' => 'John', 'name' => 'Doe']);
+		$oObject = MetaModel::GetObject('Person', $iPerson);
+
+		$iTrigger = $this->GivenTriggerOnObjectUpdate($oObject);
+
+
+		$this->GivenWebhookActionInvokingCallbackOnResponse($iTrigger, function (DBObject $oTriggeringObject, WebResponse $oWebReponse, ActionWebhook $oActionWebhook): void
+		{
+			$oTriggeringObject->Set('name', 'NameByCallBack');
+		});
+
+		$this->WhenObjectIsUpdatedOnOtherFieldThanName($oObject);
+
+		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object in memory');
+		$oObject->Reload();
+		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object on the database');
+	}
+
+	public function testOnObjectCreateCallbackShouldBeAllowedToModifyTriggeringObject()
+	{
+		WebRequestSender::SetMockDoPostRequest(true);
+		$oObject = MetaModel::NewObject('Person', ['first_name' => 'John', 'name' => 'Doe', ]);
+
+		$iTrigger = $this->GivenTriggerOnObjectCreate($oObject);
+
+		$this->GivenWebhookActionInvokingCallbackOnResponse($iTrigger, function (DBObject $oTriggeringObject, WebResponse $oWebReponse, ActionWebhook $oActionWebhook): void
+		{
+			$oTriggeringObject->Set('name', 'NameByCallBack');
+			$oTriggeringObject->DBUpdate();
+		});
+
+		$this->WhenObjectIsInsertedWithoutNameChange($oObject);
+
+		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object in memory');
+		$oObject->Reload();
+		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object on the database');
 	}
 
 	public function testPrepareHeaderWithUserAndPassword()
@@ -144,5 +199,63 @@ class ActionWebhookTest extends ItopDataTestCase
 			'header no value' => ['Content-type:', null],
 			'header value only spaces and tab' => ['Content-type:   	    ', null],
 		];
+	}
+
+	public static function CallBackWebhook(DBObject $oTriggeringObject, WebResponse $oWebReponse, ActionWebhook $oActionWebhook): void
+	{
+		call_user_func(static::$oCallBackWebhook, $oTriggeringObject, $oWebReponse, $oActionWebhook);
+	}
+
+	public function GivenWebhookActionInvokingCallbackOnResponse(int $iTrigger, Closure $oCallBack): void
+	{
+		static::$oCallBackWebhook = $oCallBack;
+		$iRemoteApplicationType = $this->GivenObjectInDB('RemoteApplicationType', [
+			'name' => 'My connection type',
+		]);
+
+		$iRemoteApplicationConnection= $this->GivenObjectInDB('RemoteApplicationConnection', [
+			'name' => 'Test localhost',
+			'remoteapplicationtype_id' => $iRemoteApplicationType,
+			'url' => utils::GetAbsoluteUrlAppRoot(),
+		]);
+
+		$this->GivenObjectInDB('ActionWebhook', [
+			'asynchronous' => 'no',
+			'name' => 'Test',
+			'status' => 'test',
+			'remoteapplicationconnection_id' => $iRemoteApplicationConnection,
+			'test_remoteapplicationconnection_id' => $iRemoteApplicationConnection,
+			'process_response_callback' => __CLASS__.'::CallBackWebhook',
+			'payload' => '{}',
+			'trigger_list' => ['trigger_id:' . $iTrigger],
+		]);
+	}
+
+	public function GivenTriggerOnObjectUpdate(DBObject $object): int
+	{
+		return $this->GivenObjectInDB(TriggerOnObjectUpdate::class, [
+			'description'  => 'My description',
+			'target_class' => get_class($object)
+		]);
+	}
+
+	public function GivenTriggerOnObjectCreate(DBObject $object): int
+	{
+		return $this->GivenObjectInDB(TriggerOnObjectCreate::class, [
+			'description'  => 'My description',
+			'target_class' => get_class($object)
+		]);
+	}
+
+	public function WhenObjectIsUpdatedOnOtherFieldThanName(DBObject $oDBObject)
+	{
+		$oDBObject->Set('first_name', 'François');
+		$oDBObject->DBUpdate();
+	}
+
+	public function WhenObjectIsInsertedWithoutNameChange(DBObject $oDBObject)
+	{
+		$oDBObject->Set('org_id', $this->GetTestOrgId());
+		$oDBObject->DBInsert();
 	}
 }
