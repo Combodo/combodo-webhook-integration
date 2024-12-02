@@ -163,18 +163,21 @@ abstract class _ActionWebhook extends ActionNotification
 			// Set default response handler if not already defined (this also custom ActionWebhook classes to define their own)
 			if ($oRequest->HasResponseHandler() === false) {
                 $aHandlerParams = [
-                    'oTriggeringObject' => [
-                        'class' => get_class($oTriggeringObject),
-                        'id' => $oTriggeringObject->GetKey(),
-                    ],
                     'oActionWebhook' => [
                         'class' => $sActionClass,
                         'id' => $this->GetKey(),
                     ],
                 ];
-                if (!$this->IsAsynchronous()) {
-                    $aHandlerParams['oObject'] =$oTriggeringObject;
+                
+                if ($this->IsAsynchronous()) {
+                    $aHandlerParams['oTriggeringObject'] = [
+                        'class' => get_class($oTriggeringObject),
+                        'id' => $oTriggeringObject->GetKey(),
+                    ];
+                } else {
+                    $aHandlerParams['oObject'] = $oTriggeringObject;
                 }
+                
 				$oRequest->SetResponseHandlerName($sActionClass.'::ExecuteResponseHandler')
 				->SetResponseHandlerParams($aHandlerParams);
 			}
