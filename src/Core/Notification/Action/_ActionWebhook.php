@@ -172,7 +172,7 @@ abstract class _ActionWebhook extends ActionNotification
                         'id' => $oTriggeringObject->GetKey(),
                     ];
                 } else {
-                    $aHandlerParams['oObject'] = $oTriggeringObject;
+                    $aHandlerParams['oTriggeringObject'] = $oTriggeringObject;
                 }
                 
 				$oRequest->SetResponseHandlerName($sActionClass.'::ExecuteResponseHandler')
