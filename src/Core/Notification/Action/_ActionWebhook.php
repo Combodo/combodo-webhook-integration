@@ -42,12 +42,9 @@ abstract class _ActionWebhook extends ActionNotification
 			]);
 			throw new Exception('Missing parameters in response handler. See error log for details.');
 		}
-        $oTriggeringObject = null;
-        if (isset($aParams['oObject'])) {
-            $oTriggeringObject=  $aParams['oObject'] ;
-        } else {
-            $oTriggeringObject = MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
-        }
+        $oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
+                            $aParams['oTriggeringObject'] :
+                            MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
 		$oActionWebhook = MetaModel::GetObject($aParams['oActionWebhook']['class'], $aParams['oActionWebhook']['id'], true, true);
 
 		// Check if callback is on the object itself
