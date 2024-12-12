@@ -315,7 +315,7 @@
 				<default_value>1.3</default_value>
 				<is_null_allowed>false</is_null_allowed>
       </field>
-      <field id="token" xsi:type="AttributeEncryptedPassword">
+      <field id="token" xsi:type="AttributeString">
 				<sql>token</sql>
 				<default_value/>
 				<is_null_allowed>false</is_null_allowed>
@@ -335,8 +335,8 @@
 	$aHeaders = parent::PrepareHeaders($aContextArgs, $oLog);
 
 	// Prepare Basic Auth header
-	$oToken = $this->Get('token');
-	$aHeaders[] = "Auth-Token: " . $oToken->GetPassword();
+	$sToken = $this->Get('token');
+	$aHeaders[] = "Auth-Token: " . $sToken;
 
 	return $aHeaders;
 }
