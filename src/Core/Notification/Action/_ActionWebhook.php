@@ -42,8 +42,9 @@ abstract class _ActionWebhook extends ActionNotification
 			]);
 			throw new Exception('Missing parameters in response handler. See error log for details.');
 		}
-
-		$oTriggeringObject = MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
+        $oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
+                            $aParams['oTriggeringObject'] :
+                            MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
 		$oActionWebhook = MetaModel::GetObject($aParams['oActionWebhook']['class'], $aParams['oActionWebhook']['id'], true, true);
 
 		// Check if callback is on the object itself
@@ -158,17 +159,24 @@ abstract class _ActionWebhook extends ActionNotification
 
 			// Set default response handler if not already defined (this also custom ActionWebhook classes to define their own)
 			if ($oRequest->HasResponseHandler() === false) {
+                $aHandlerParams = [
+                    'oActionWebhook' => [
+                        'class' => $sActionClass,
+                        'id' => $this->GetKey(),
+                    ],
+                ];
+                
+                if ($this->IsAsynchronous()) {
+                    $aHandlerParams['oTriggeringObject'] = [
+                        'class' => get_class($oTriggeringObject),
+                        'id' => $oTriggeringObject->GetKey(),
+                    ];
+                } else {
+                    $aHandlerParams['oTriggeringObject'] = $oTriggeringObject;
+                }
+                
 				$oRequest->SetResponseHandlerName($sActionClass.'::ExecuteResponseHandler')
-				->SetResponseHandlerParams([
-					'oTriggeringObject' => [
-						'class' => get_class($oTriggeringObject),
-						'id' => $oTriggeringObject->GetKey(),
-					],
-					'oActionWebhook' => [
-						'class' => $sActionClass,
-						'id' => $this->GetKey(),
-					],
-				]);
+				->SetResponseHandlerParams($aHandlerParams);
 			}
 
 			// Errors during preparation
