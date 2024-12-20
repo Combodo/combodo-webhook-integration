@@ -297,7 +297,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oDBObject->DBUpdate();
 	}
 
-	public function WhenObjectIsCreatedWithoutName(DBObject $oDBObject)
+	public function WhenObjectIsInsertedWithoutNameChange(DBObject $oDBObject)
 	{
 		$oDBObject->Set('org_id', $this->GetTestOrgId());
 		$oDBObject->DBInsert();
