@@ -21,6 +21,7 @@ use RemoteiTopConnection;
 use RemoteiTopConnectionToken;
 use TriggerOnObjectCreate;
 use TriggerOnObjectUpdate;
+use utils;
 
 
 /**
@@ -51,10 +52,9 @@ class ActionWebhookTest extends ItopDataTestCase
 		$this->GivenWebhookActionInvokingCallbackOnResponse($iTrigger, function (DBObject $oTriggeringObject, WebResponse $oWebReponse, ActionWebhook $oActionWebhook): void
 		{
 			$oTriggeringObject->Set('name', 'NameByCallBack');
-			$oTriggeringObject->DBUpdate();
 		});
 
-		$this->WhenObjectIsUpdated($oObject);
+		$this->WhenObjectIsUpdatedOnOtherFieldThanName($oObject);
 
 		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object in memory');
 		$oObject->Reload();
@@ -73,7 +73,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			$oTriggeringObject->DBUpdate();
 		});
 
-		$this->WhenObjectIsCreated($oObject);
+		$this->WhenObjectIsCreatedWithoutName($oObject);
 
 		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object in memory');
 		$oObject->Reload();
@@ -260,7 +260,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		$iRemoteApplicationConnection= $this->GivenObjectInDB('RemoteApplicationConnection', [
 			'name' => 'Test localhost',
 			'remoteapplicationtype_id' => $iRemoteApplicationType,
-			'url' => 'http://localhost',
+			'url' => '127.0.0.1',
 		]);
 
 		$this->GivenObjectInDB('ActionWebhook', [
@@ -291,13 +291,13 @@ class ActionWebhookTest extends ItopDataTestCase
 		]);
 	}
 
-	public function WhenObjectIsUpdated(DBObject $oDBObject)
+	public function WhenObjectIsUpdatedOnOtherFieldThanName(DBObject $oDBObject)
 	{
 		$oDBObject->Set('first_name', 'François');
 		$oDBObject->DBUpdate();
 	}
 
-	public function WhenObjectIsCreated(DBObject $oDBObject)
+	public function WhenObjectIsCreatedWithoutName(DBObject $oDBObject)
 	{
 		$oDBObject->Set('org_id', $this->GetTestOrgId());
 		$oDBObject->DBInsert();
