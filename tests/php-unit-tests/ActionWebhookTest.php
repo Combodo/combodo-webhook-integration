@@ -260,7 +260,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		$iRemoteApplicationConnection= $this->GivenObjectInDB('RemoteApplicationConnection', [
 			'name' => 'Test localhost',
 			'remoteapplicationtype_id' => $iRemoteApplicationType,
-			'url' => '127.0.0.1',
+			'url' => utils::GetAbsoluteUrlAppRoot(),
 		]);
 
 		$this->GivenObjectInDB('ActionWebhook', [
