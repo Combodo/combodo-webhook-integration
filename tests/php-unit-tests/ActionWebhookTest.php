@@ -12,6 +12,7 @@ use Closure;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
 use Combodo\iTop\Core\WebResponse;
 use Combodo\iTop\Oauth2Client\Service\Oauth2Service;
+use Combodo\iTop\Service\WebRequestSender;
 use Combodo\iTop\Test\UnitTest\ItopDataTestCase;
 use DBObject;
 use EventNotification;
@@ -43,6 +44,7 @@ class ActionWebhookTest extends ItopDataTestCase
 
 	public function testOnObjectUpdateCallbackShouldBeAllowedToModifyTriggeringObject()
 	{
+		WebRequestSender::SetMockDoPostRequest(true);
 		$iPerson = $this->GivenObjectInDB('Person', ['first_name' => 'John', 'name' => 'Doe']);
 		$oObject = MetaModel::GetObject('Person', $iPerson);
 
@@ -73,7 +75,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			$oTriggeringObject->DBUpdate();
 		});
 
-		$this->WhenObjectIsCreatedWithoutName($oObject);
+		$this->WhenObjectIsInsertedWithoutNameChange($oObject);
 
 		$this->assertEquals('NameByCallBack', $oObject->Get('name'), 'The callback should have modified the object in memory');
 		$oObject->Reload();

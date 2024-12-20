@@ -58,7 +58,12 @@ class WebRequestSender
 
 	/** @var null|\Combodo\iTop\Service\WebRequestSender $oInstance */
 	public static $oInstance = null;
+	private static bool $mockDoPostRequest = false;
 
+	public static function SetMockDoPostRequest(bool $mockDoPostRequest): void
+	{
+		static::$mockDoPostRequest = $mockDoPostRequest;
+	}
 	/**
 	 * Return the singleton instance for this class
 	 *
@@ -120,7 +125,7 @@ class WebRequestSender
 		try
 		{
 			$aResponseHeaders = array();
-			$sResponse = utils::DoPostRequest($oRequest->GetURL(), array(), null, $aResponseHeaders, $oRequest->GetOptions());
+			$sResponse = $this->DoPostRequest($oRequest->GetURL(), array(), null, $aResponseHeaders, $oRequest->GetOptions());
 
 			$oResponse = new WebResponse();
 			$oResponse->SetHeaders($aResponseHeaders)
@@ -190,5 +195,14 @@ class WebRequestSender
 			'sender_status' => static::ENUM_SEND_STATE_PENDING,
 			'response' => null,
 		);
+	}
+
+	private function DoPostRequest($sUrl, $aData, $sOptionnalHeaders = null, &$aResponseHeaders = null, $aCurlOptions = array())
+	{
+		if (static::$mockDoPostRequest) {
+			return '';
+		} else {
+			return utils::DoPostRequest($sUrl, $aData, $sOptionnalHeaders, $aResponseHeaders, $aCurlOptions);
+		}
 	}
 }
