@@ -65,6 +65,7 @@ class ActionWebhookTest extends ItopDataTestCase
 
 	public function testOnObjectCreateCallbackShouldBeAllowedToModifyTriggeringObject()
 	{
+		WebRequestSender::SetMockDoPostRequest(true);
 		$oObject = MetaModel::NewObject('Person', ['first_name' => 'John', 'name' => 'Doe', ]);
 
 		$iTrigger = $this->GivenTriggerOnObjectCreate($oObject);
