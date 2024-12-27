@@ -2263,6 +2263,15 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<is_null_allowed>true</is_null_allowed>
 					<display_style>list</display_style>
 				</field>
+				<field id="json_format" xsi:type="AttributeEnum">
+					<values>
+						<value id="message_card">message_card</value>
+						<value id="adaptive_card">adaptive_card</value>
+					</values>
+					<sql>json_format</sql>
+					<default_value>message_card</default_value>
+					<is_null_allowed>false</is_null_allowed>
+				</field>
 				<field id="include_modify_button" xsi:type="AttributeEnum">
 					<values>
 						<value id="yes">yes</value>
@@ -2309,6 +2318,31 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 * @inheritDoc
 	 */]]></comment>
 					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
+	{
+	  $sJsonFormat = $this->Get('json_format');
+		return match ($sJsonFormat) {
+			'message_card' => $this->PreparePayloadMessageCard($aContextArgs),
+			'adaptive_card' => $this->PreparePayloadAdaptiveCard($aContextArgs),
+			default => throw new Exception('Unknown json_format ($sJsonFormat)'),
+		};
+	}
+]]>
+					</code>
+				</method>
+				<method id="PreparePayloadMessageCard">
+					<static>false</static>
+					<access>protected</access>
+					<type>Custom</type>
+					<comment><![CDATA[/**
+	 * Prepares and returns a JSON-encoded MessageCard payload for Microsoft Teams with the given context arguments.
+	 *
+	 * @param array $aContextArgs Context arguments used to prepare the message card.
+	 *
+	 * @return string JSON-encoded MessageCard payload.
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayloadMessageCard(array $aContextArgs)
 	{
 		$aData = array(
 			'@type' => 'MessageCard',
@@ -2372,18 +2406,165 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 ]]>
 					</code>
 				</method>
+				<method id="PreparePayloadAdaptiveCard">
+					<static>false</static>
+					<access>protected</access>
+					<type>Custom</type>
+					<comment><![CDATA[/**
+	 * Prepare the payload for an Adaptive Card message for Microsoft Teams.
+	 *
+	 * @param array $aContextArgs Array of context arguments used to populate the Adaptive Card.
+	 *
+	 * @return string JSON encoded payload for the Adaptive Card message.
+	 * @throws \ArchivedObjectException
+	 * @throws \CoreException
+	 * @throws \DictExceptionMissingString
+	 */]]></comment>
+					<code><![CDATA[	protected function PreparePayloadAdaptiveCard(array $aContextArgs)
+	{
+		$aData = [
+			'type' => 'message',
+		];
+
+		// Prepare theme
+		// - Color
+		// TODO: Not possible with adaptive card, you only could use accents
+		// "default", "emphasis", "good", "attention",	"warning","accent"
+		$sContainerStyle = null;
+		$sThemeColor = MetaModel::ApplyParams($this->Get('theme_color'), $aContextArgs);
+		if (in_array($sThemeColor, ["default", "emphasis", "good", "attention",	"warning","accent"])) {
+			$sContainerStyle = $sThemeColor;
+		}
+
+		// - Image
+		$aImageBlock = null;
+		$sImageUrl = MetaModel::ApplyParams($this->Get('image_url'), $aContextArgs);
+		if (strlen($sImageUrl) > 0) {
+			$aImageBlock = [
+				"type" => "Image",
+                "style" => "person",
+                "url" => $sImageUrl,
+                "size" => "small"
+			];
+		}
+
+		// Prepare title
+		$aTitleBlock = null;
+		$sTitle = MetaModel::ApplyParams($this->Get('title'), $aContextArgs);
+		if (strlen($sTitle) > 0) {
+			// For summary
+			$aData['summary'] = $sTitle;
+			$aTitleBlock = [
+	            "type" => "TextBlock",
+	            "size" => "Medium",
+	            "weight" => "Bolder",
+	            "text" => $sTitle
+            ];
+		}
+
+		// Prepare message
+		$aMessageBlock = null;
+		$sMessage = MetaModel::ApplyParams($this->Get('message'), $aContextArgs);
+		if (strlen($sMessage) > 0) {
+			$aMessageBlock = [
+				"type" => "TextBlock",
+	            "text" => static::TransformHTMLToMSTeamsMarkup($sMessage),
+	            "wrap" => true
+			];
+		}
+
+		// Prepare extra attributes
+		$aFactsBlock = null;
+		$aFacts = $this->PrepareExtraAttributesForMSTeamsAPI($aContextArgs, 'adaptive_card');
+		if(!empty($aFacts))
+		{
+			$aFactsBlock = [
+				"type" => "FactSet",
+                "facts" => $aFacts
+			];
+		}
+
+		// Prepare items
+		$aItems = [];
+
+		// Add Header to items
+		if($aImageBlock)
+		{
+			$aItems[] = [
+				"type" => "ColumnSet",
+                "columns" => [
+	                [
+						"type" => "Column",
+						"items" => [
+							$aImageBlock
+						]
+	                ],
+	                [
+		                "type" => "Column",
+		                "items" => [
+			                $aTitleBlock
+		                ]
+	                ]
+                ]
+			];
+		}
+		else
+		{
+			$aItems[] = $aTitleBlock;
+		}
+
+		// Add Message to items
+		if($aMessageBlock)
+		{
+			$aItems[] = $aMessageBlock;
+		}
+		// Add Facts to items
+		if($aFactsBlock)
+		{
+			$aItems[] = $aFactsBlock;
+		}
+
+		// Prepare action buttons
+		$aActions = $this->PrepareActionsForMSTeamsAPI($aContextArgs, 'adaptive_card');
+
+		// Add attachments to data
+		$aData['attachments'] = [
+			[
+				'contentType' => 'application/vnd.microsoft.card.adaptive',
+				'content' => [
+					'type' => 'AdaptiveCard',
+					'$schema'=> 'https://adaptivecards.io/schemas/adaptive-card.json',
+					'version' => '1.6',
+					'body' => [
+						[
+							'type' => 'Container',
+							'items' => $aItems,
+							'style' => $sContainerStyle ?? 'default'
+						]
+					],
+					'actions' => $aActions
+				]
+			]
+		];
+
+		return json_encode($aData);
+	}
+]]>
+					</code>
+				</method>
 				<method id="PrepareExtraAttributesForMSTeamsAPI">
 					<static>false</static>
 					<access>protected</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[/**
-	 * Return a "block" array of attributes formatted for Slack "block kit" system
+	 * Return a "block" array of attributes formatted for MS Teams
 	 *
 	 * @param array $aContextArgs
+	 * @param string $sJsonFormat
 	 *
 	 * @return array
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareExtraAttributesForMSTeamsAPI(array $aContextArgs)
+					<code><![CDATA[	protected function PrepareExtraAttributesForMSTeamsAPI(array $aContextArgs, string $sJsonFormat = 'message_card')
 	{
 		/** @var \DBObject $oObject */
 		$oObject = $aContextArgs['this->object()'];
@@ -2401,13 +2582,20 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		// Prepare facts structure
 		$aFacts = array();
 
+		// Check format in oder to build the appropriate structure
+		$sLabelKey = match ($sJsonFormat) {
+			'message_card' => 'name',
+			'adaptive_card' => 'title',
+			default => throw new Exception('Extra Attributes only supported for format "message_card" or "adaptive_card"'),
+		};
+
 		foreach($aListItems as $sAttCode)
 		{
 			$oAttDef = MetaModel::GetAttributeDef($sObjClass, $sAttCode);
 			// We have to decode HTML entities as they are added on the value by \AttributeDefinition::GetAsHtml()
 			$sValueAsHtml = utils::HtmlEntityDecode($oObject->GetAsHtml($sAttCode));
 			$aFacts[] = array(
-				'name' => $oAttDef->GetLabel(),
+				$sLabelKey => $oAttDef->GetLabel(),
 				'value' => static::TransformHTMLToMSTeamsMarkup($sValueAsHtml),
 			);
 		}
@@ -2425,10 +2613,11 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 * Return an array of actions formatted for Microsoft Teams "potential actions" system
 	 *
 	 * @param array $aContextArgs
+	 * @param string $sJsonFormat
 	 *
 	 * @return array
 	 */]]></comment>
-					<code><![CDATA[	protected function PrepareActionsForMSTeamsAPI(array $aContextArgs)
+					<code><![CDATA[	protected function PrepareActionsForMSTeamsAPI(array $aContextArgs, string $sJsonFormat = 'message_card')
 	{
 		$aActionElements = array();
 
@@ -2442,15 +2631,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		// Modify button
 		if($this->Get('include_modify_button') === 'yes')
 		{
-			$aActionElements[] = array(
-				'@type' => 'OpenUri',
-				'name' => Dict::S('UI:Menu:Modify'),
-				'targets' => array(
-					array(
-						'os' => 'default',
-						'uri' => sprintf('%spages/UI.php?operation=modify&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
-					),
-				),
+			$aActionElements[] = $this->PrepareActionElementForMSTeamsAPI(
+				Dict::S('UI:Menu:Modify'),
+				sprintf('%spages/UI.php?operation=modify&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
+				$sJsonFormat
 			);
 		}
 
@@ -2475,15 +2659,10 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			{
 				if (isset($aTransitions[$sStimulusCode]) && is_a($aStimuli[$sStimulusCode], StimulusUserAction::class))
 				{
-					$aActionElements[] = array(
-						'@type' => 'OpenUri',
-						'name' => $aStimuli[$sStimulusCode]->GetLabel(),
-						'targets' => array(
-							array(
-								'os' => 'default',
-								'uri' => sprintf('%spages/UI.php?operation=stimulus&stimulus=%s&class=%s&id=%d', $sBaseURL, $sStimulusCode, $sObjClass, $iObjID),
-							),
-						),
+					$aActionElements[] = $this->PrepareActionElementForMSTeamsAPI(
+						$aStimuli[$sStimulusCode]->GetLabel(),
+						sprintf('%spages/UI.php?operation=stimulus&stimulus=%s&class=%s&id=%d', $sBaseURL, $sStimulusCode, $sObjClass, $iObjID),
+						$sJsonFormat
 					);
 				}
 			}
@@ -2492,19 +2671,52 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		// Delete button
 		if($this->Get('include_delete_button') === 'yes')
 		{
-			$aActionElements[] = array(
-				'@type' => 'OpenUri',
-				'name' => Dict::S('UI:Menu:Delete'),
-				'targets' => array(
-					array(
-						'os' => 'default',
-						'uri' => sprintf('%spages/UI.php?operation=delete&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
-					),
-				),
+			$aActionElements[] = $this->PrepareActionElementForMSTeamsAPI(
+				Dict::S('UI:Menu:Delete'),
+				sprintf('%spages/UI.php?operation=delete&class=%s&id=%d', $sBaseURL, $sObjClass, $iObjID),
+				$sJsonFormat
 			);
 		}
 
 		return $aActionElements;
+	}
+]]>
+					</code>
+				</method>
+				<method id="PrepareActionElementForMSTeamsAPI">
+					<static>false</static>
+					<access>protected</access>
+					<type>Custom</type>
+					<comment><![CDATA[/**
+	 * Prepares an action element formatted for Microsoft Teams API based on the specified JSON format.
+	 *
+	 * @param string $sLabel The label or title for the action element.
+	 * @param string $sUrl The URL to be used in the action element.
+	 * @param string $sJsonFormat The JSON format, either 'message_card' or 'adaptive_card'.
+	 *
+	 * @return array The formatted action element as an array.
+	 * @throws Exception If the provided format is not 'message_card' or 'adaptive_card'.
+	 */]]></comment>
+					<code><![CDATA[	protected function PrepareActionElementForMSTeamsAPI(string $sLabel, string $sUrl, string $sJsonFormat)
+	{
+		return match ($sJsonFormat) {
+			'message_card' => [
+				'@type'   => 'OpenUri',
+				'name'    => $sLabel,
+				'targets' => [
+					[
+						'os'  => 'default',
+						'uri' => $sUrl,
+					],
+				],
+			],
+			'adaptive_card' => [
+				"type"  => "Action.OpenUrl",
+				"title" => $sLabel,
+				"url"   => $sUrl
+			],
+			default => throw new Exception('Action Elements only supported for format "message_card" or "adaptive_card"'),
+		};
 	}
 ]]>
 					</code>
@@ -2603,6 +2815,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 										</item>
 										<item id="message">
 											<rank>20</rank>
+										</item>
+										<item id="json_format">
+											<rank>30</rank>
 										</item>
 									</items>
 								</item>

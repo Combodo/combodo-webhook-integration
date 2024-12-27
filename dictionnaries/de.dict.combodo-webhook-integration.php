@@ -4,7 +4,7 @@
  *
  * @copyright Copyright (C) 2010-2024 Combodo SAS
  * @license    https://opensource.org/licenses/AGPL-3.0
- * 
+ *
  */
 /**
  *
@@ -56,6 +56,10 @@ WICHTIG: Wenn dies gesetzt ist, wird das Attribut \'Nachricht\' ignoriert.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:no' => 'Nein',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:specify' => 'Spezifisch',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_other_actions_button/Value:yes' => 'Ja',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format' => 'JSON-Format',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format+' => 'Festlegung welches Format zur Übertragung verwendet werden soll.',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:message_card' => 'Message Card',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:adaptive_card' => 'Adaptive Card',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:message' => 'Nachricht',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Wählen Sie diese Option, wenn die Standardoptionen nicht flexibel genug sind oder wenn Ihre Nutzlaststruktur dynamisch aufgebaut werden muss.
 

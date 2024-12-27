@@ -260,6 +260,10 @@ You can use 2 types of methods:
 IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' will be ignored.',
 	// - Fieldsets
 	'ActionMicrosoftTeamsNotification:message' => 'Basis message',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format' => 'JSON format',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format+' => 'Determines which format should be used for transmission.',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:message_card' => 'Message Card',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:adaptive_card' => 'Adaptive Card',
 	'ActionMicrosoftTeamsNotification:additionalelements' => 'Additional elements to include',
 	'ActionMicrosoftTeamsNotification:theme' => 'Theme',
 ));
