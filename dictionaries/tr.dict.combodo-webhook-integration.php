@@ -31,8 +31,8 @@ Dict::Add('TR TR', 'Turkish', 'Türkçe', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'message\' will be ignored.~~',
 	'Class:ActionMicrosoftTeamsNotification' => 'Notification by Microsoft Teams',
@@ -60,8 +60,8 @@ IMPORTANT: If set, the \'message\' will be ignored.~~',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' will be ignored.~~',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Other actions codes~~',
@@ -82,8 +82,8 @@ IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' wi
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.~~',
 	'Class:ActionSlackNotification' => 'Notification by Slack',
@@ -113,8 +113,8 @@ IMPORTANT: If set, the \'message\' and all \'bot information\' will be ignored.~
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'message\' and all \'additional elements\' will be ignored.~~',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Other actions codes~~',
@@ -144,8 +144,8 @@ IMPORTANT: Will be ignored if \'Prepare payload callback\' is set~~',
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'Payload\' attribute will be ignored.~~',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Process response callback~~',
@@ -171,8 +171,8 @@ IMPORTANT:
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
 
 You can use 2 types of methods:
-- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX($aContextArgs, $oLog, $oAction)
-- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- From the triggering object itself (eg. UserRequest), must be public. Example: $this->XXX
+- From any PHP class, must be static AND public. Name must be name fully qualified. Example: \SomeClass::XXX
 
 IMPORTANT: If set, the \'JSON data\' attribute will be ignored.~~',
 	'Class:EventWebhook' => 'Webhook triggered',

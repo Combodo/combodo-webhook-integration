@@ -31,8 +31,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Wählen Sie diese Option, wenn die Standardoptionen nicht flexibel genug sind oder wenn Ihre Nutzlaststruktur dynamisch aufgebaut werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn dies gesetzt ist, wird das Attribut \'Nachricht\' ignoriert.',
 	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams-Benachrichtigung',
@@ -60,8 +60,8 @@ WICHTIG: Wenn dies gesetzt ist, wird das Attribut \'Nachricht\' ignoriert.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Wählen Sie diese Option, wenn die Standardoptionen nicht flexibel genug sind oder wenn Ihre Nutzlaststruktur dynamisch aufgebaut werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Titel\', \'Nachricht\' sowie alle \'zusätzlichen Elemente\' ignoriert.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Codes der anderen Aktionen',
@@ -82,8 +82,8 @@ WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Titel\', \'Nachricht\' sow
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Wählen Sie diese Option, wenn die Standardoptionen nicht flexibel genug sind oder wenn Ihre Nutzlaststruktur dynamisch aufgebaut werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Nachricht\' sowie alle \'Bot-Informationen\' ignoriert.',
 	'Class:ActionSlackNotification' => 'Slack-Benachrichtigung',
@@ -113,8 +113,8 @@ WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Nachricht\' sowie alle \'B
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Wählen Sie diese Option, wenn die Standardoptionen nicht flexibel genug sind oder wenn Ihre Nutzlaststruktur dynamisch aufgebaut werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Nachricht\' sowie alle \'zusätzlichen Elemente\' ignoriert.',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Codes der anderen Aktionen',
@@ -144,8 +144,8 @@ WICHTIG: Wird ignoriert, wenn \'Callback zur Vorbereitung des Payloads\' gesetzt
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Verwenden Sie diese Methode, wenn Ihre Payload-Struktur dynamisch erstellt werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Callback zur Verarbeitung der Antwort',
@@ -171,8 +171,8 @@ WICHTIG:
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP-Methode zur Vorbereitung des Payloads, der während des Webhook-Aufrufs gesendet werden sollen. Verwenden Sie diese Methode, wenn Ihre Payload-Struktur dynamisch erstellt werden muss.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($aContextArgs, $oLog, $oAction)
-- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 
 WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 	'Class:EventWebhook' => 'Gesendeter Webhook-Aufruf',

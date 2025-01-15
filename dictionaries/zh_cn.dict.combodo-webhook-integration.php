@@ -31,8 +31,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在标准选项不够灵活，或者所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了此参数，则会忽略“消息”参数。',
 	'Class:ActionMicrosoftTeamsNotification' => '微软Teams通知',
@@ -60,8 +60,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在标准选项不够灵活，或者所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了此参数，则会忽略“标题”、“消息”和所有的“附加元素”参数。',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => '其他操作编码',
@@ -82,8 +82,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在标准选项不够灵活，或者所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了此参数，则会忽略“消息”和所有的“自动程序信息”参数。',
 	'Class:ActionSlackNotification' => 'Slack通知',
@@ -113,8 +113,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在标准选项不够灵活，或者所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了此参数，则会忽略“消息”和所有的“附加元素”参数。',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => '其他操作编码',
@@ -144,8 +144,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了，则会忽略“载荷”属性。',
 	'Class:ActionWebhook/Attribute:process_response_callback' => '处理响应回调',
@@ -171,8 +171,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => '筹备载荷数据的PHP方法，以用于此webhook调用时发送。请在所发送数据必须动态生成时使用。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($aContextArgs, $oLog, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 
 请注意：如果设置了此参数，则会忽略“JSON数据”参数。',
 	'Class:EventWebhook' => 'Webhook发行事件',

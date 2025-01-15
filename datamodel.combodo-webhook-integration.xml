@@ -387,13 +387,13 @@
 			</details>
 		</presentation>
 	</class>
-      <class id="RemoteiTopConnectionOauth2" _delta="define">
+      <class id="RemoteOauthConnection" _delta="define">
 			<parent>RemoteApplicationConnection</parent>
 			<properties>
 				<category>grant_by_profile,bizmodel,searchable</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
-				<db_table>remoteitopconnectionoauth2</db_table>
+				<db_table>remoteoauthconnection</db_table>
 				<db_key_field>id</db_key_field>
 				<db_final_class_field/>
 				<naming>

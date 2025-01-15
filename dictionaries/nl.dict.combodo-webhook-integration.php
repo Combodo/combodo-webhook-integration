@@ -32,8 +32,8 @@ Dict::Add('NL NL', 'Dutch', 'Nederlands', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de standaardopties niet volstaan of als de payload-structuur dynamisch opgebouwd moet worden.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zal \'bericht\' genegeerd worden.',
 	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams notification',
@@ -61,8 +61,8 @@ BELANGRIJK: Indien geconfigureerd, zal \'bericht\' genegeerd worden.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de standaardopties niet volstaan of als de payload-structuur dynamisch opgebouwd moet worden.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'titel\', \'bericht\' en alle \'extra elementen\' genegeerd worden.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Andere actiecodes',
@@ -83,8 +83,8 @@ BELANGRIJK: Indien geconfigureerd, zullen \'titel\', \'bericht\' en alle \'extra
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de standaardopties niet volstaan of als de payload-structuur dynamisch opgebouwd moet worden.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'bericht\' en alle \'bot-informatie\' genegeerd worden.',
 	'Class:ActionSlackNotification' => 'Slack-notificatie',
@@ -114,8 +114,8 @@ BELANGRIJK: Indien geconfigureerd, zullen \'bericht\' en alle \'bot-informatie\'
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de standaardopties niet volstaan of als de payload-structuur dynamisch opgebouwd moet worden.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zullen \'bericht\' en \'Extra elementen\' genegeerd worden.',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Andere acties',
@@ -145,8 +145,8 @@ BELANGRIJK: Dit wordt genegeerd als er een \'"Bericht opmaak"-functie\' geconfig
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de payload een dynamische structuur heeft.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zal het \'Payload\'-veld genegeerd worden.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => '"Verwerk antwoord"-functie',
@@ -172,8 +172,8 @@ BELANGRIJK:
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP-methode om de payload klaar te zetten die verstuurd wordt via de webhook. Gebruik dit als de payload een dynamische structuur heeft.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). De methode moet publiek zijn. Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX($aContextArgs, $oLog, $oAction)"
-- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX($oObject, $aContextArgs, $oLog, $oAction)"
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). De methode moet publiek zijn. Bv: "$this->XXX" voor een functie die binnen de PHP-klasse van het object gedefinieerd is als "public function XXX"
+- Via eender welke PHP-klasse. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass::XXX" voor een functie die in de PHP-klasse "\SomeClass" gedefinieerd is "public static function XXX"
 
 BELANGRIJK: Indien geconfigureerd, zal het \'JSON-data\'-veld genegeerd worden.',
 	'Class:EventWebhook' => 'Webhook verzendgebeurtenis',

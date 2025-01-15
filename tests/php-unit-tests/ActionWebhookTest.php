@@ -135,7 +135,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			]
 		);
 
-		$oRemoteApplication = $this->createObject(\RemoteiTopConnectionOauth2::class,
+		$oRemoteApplication = $this->createObject(\RemoteOauthConnection::class,
 			[
 				'name' => 'Test iTop',
 				'remoteapplicationtype_id' => $oRemoteApplicationType->GetKey(),

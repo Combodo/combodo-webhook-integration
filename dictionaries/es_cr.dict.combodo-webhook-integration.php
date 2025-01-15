@@ -29,7 +29,7 @@ Dict::Add('ES CR', 'Spanish', 'Español, Castellano', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' será ignorados.',
@@ -58,7 +58,7 @@ IMPORTANTE: Si se habilita, el \'mensaje\' será ignorados.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'title\', \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
@@ -80,7 +80,7 @@ IMPORTANTE: Si se habilita, el \'title\', \'mensaje\' y todos los \'elementos ad
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' y toda la \'información bot\' serán ignorados.',
@@ -111,7 +111,7 @@ IMPORTANTE: Si se habilita, el \'mensaje\' y toda la \'información bot\' serán
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga útil que se enviarán durante la llamada del Webhook. Úselo si las opciones estándar no son lo suficientemente flexibles o si su estructura de carga útil debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 	
 IMPORTANTE: Si se habilita, el \'mensaje\' y todos los \'elementos adicionales\' serán ignorados.',
@@ -142,7 +142,7 @@ IMPORTANTE: Si se habilita, el \'mensaje\' y todos los \'elementos adicionales\'
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga que se enviarán durante la llamada del webhook. Use esto si su estructura de carga debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 
 IMPORTANTE: Si se habilita, se ignorará el atributo \'Carga\'.',
@@ -150,7 +150,7 @@ IMPORTANTE: Si se habilita, se ignorará el atributo \'Carga\'.',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'Método PHP para procesar la respuesta de llamada de webhook.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 - $oResponse puede ser nulo en algunos casos (ejem. request failed to send)',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Conexión',
@@ -171,7 +171,7 @@ IMPORTANTE:
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'Método PHP para preparar los datos de carga que se enviarán durante la llamada webhook. Use esto si su estructura de carga debe construirse dinámicamente.
 
 Puede utilizar 2 tipos de métodos:
-- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX($aContextArgs, $oLog, $oAction)
+- Desde el propio objeto disparador (por ejemplo, UserRequest), debe ser público. Ejemplo: $this->XXX
 - Desde cualquier clase PHP, debe ser estático Y público. El nombre debe ser un nombre completamente calificado. Ejemplo: \AlgunaClase::XXX($oObjeto, $aContextArgs, $oLog, $oAcción)
 
 IMPORTANTE: Si se habilita, el atributo \'JSON data\' será ignorado.',

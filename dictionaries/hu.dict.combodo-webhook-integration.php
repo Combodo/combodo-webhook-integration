@@ -31,8 +31,8 @@ Dict::Add('HU HU', 'Hungarian', 'Magyar', [
 	'Class:ActionGoogleChatNotification/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt akkor használja, ha a standard opciók nem elég rugalmasak, vagy ha az adatfolyam struktúráját dinamikusan kell felépíteni.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, az \'Üzenet\' figyelmen kívül marad.',
 	'Class:ActionMicrosoftTeamsNotification' => 'Microsoft Teams értesítés',
@@ -60,8 +60,8 @@ FONTOS: Ha be van állítva, az \'Üzenet\' figyelmen kívül marad.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt akkor használja, ha a standard opciók nem elég rugalmasak, vagy ha a hasznos teher struktúráját dinamikusan kell felépíteni.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, a \'Cím\', \'Üzenet\' és minden \'További elemek\' figyelmen kívül marad.',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Egyéb műveletkódok',
@@ -82,8 +82,8 @@ FONTOS: Ha be van állítva, a \'Cím\', \'Üzenet\' és minden \'További eleme
 	'Class:ActionRocketChatNotification/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt akkor használja, ha a standard opciók nem elég rugalmasak, vagy ha az adatfolyam struktúráját dinamikusan kell felépíteni.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, a \'Üzenet\' és az összes \'Bot információ\' figyelmen kívül marad.',
 	'Class:ActionSlackNotification' => 'Slack értesítés',
@@ -113,8 +113,8 @@ FONTOS: Ha be van állítva, a \'Üzenet\' és az összes \'Bot információ\' f
 	'Class:ActionSlackNotification/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt akkor használja, ha a standard opciók nem elég rugalmasak, vagy ha az adatfolyam struktúráját dinamikusan kell felépíteni.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, az \'Üzenet\' és az összes \'További elemek\' figyelmen kívül marad.',
 	'Class:ActionSlackNotification/Attribute:specified_other_actions' => 'Egyéb műveletkódok',
@@ -144,8 +144,8 @@ FONTOS: A rendszer figyelmen kívül hagyja, ha a \'Adatfolyam visszahívás el�
 	'Class:ActionWebhook/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt használja, ha az adatfolyam struktúráját dinamikusan kell felépíteni.
 
 2 féle módszert használhat:
-- A kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- A kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, az \'Adatfolyam\' attribútumot figyelmen kívül hagyjuk.',
 	'Class:ActionWebhook/Attribute:process_response_callback' => 'Folyamat válasz visszahívás',
@@ -171,8 +171,8 @@ IFONTOS:
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP-módszer a webhook-hívás során elküldendő hasznos adatok előkészítésére. Ezt használja, ha az adatfolyam struktúráját dinamikusan kell felépíteni.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($aContextArgs, $oLog, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $aContextArgs, $oLog, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 
 FONTOS: Ha be van állítva, a \'JSON adat\' attribútum figyelmen kívül marad.',
 	'Class:EventWebhook' => 'Webhook kibocsátási esemény',
