@@ -152,8 +152,8 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP方法用以处理此webhook调用的响应。
 
 可以使用2种类型的方法：
-——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX($oResponse, $oAction)
-——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX($oObject, $oResponse, $oAction)
+——来自触发对象自身（如用户请求），必须是公开的。例如：$this->XXX
+——来自任何PHP类，必须是静态的且公开的。名称必须是合法的全名。例如：\SomeClass::XXX
 ——在某些情况下$oResponse可以为空（例如发送请求失败）',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => '连接',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => '状态为“线上”时使用的连接信息',

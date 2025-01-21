@@ -151,8 +151,8 @@ IMPORTANT : Si renseigné, le champ \'Charge utile\' sera ignoré. Vous pouvez u
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'Méthode PHP pour traiter la réponse de reçue lors de l\'appel webhook.
 
 IMPORTANT : Vous pouvez utiliser 2 types de méthodes :
-- Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Example : $this->XXX($oResponse, $oAction)
-- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \UneClass::XXX($oObject, $oResponse, $oAction)
+- Méthode de l\'objet déclenchant l\'action (ex : Demande utilisateur), doit être publique. Example : $this->XXX
+- Méthode de n\'importe quelle classe PHP, doit être statique ET publique. Le nom doit être entièrement qualifié (inclure le namespace). Exemple : \UneClass::XXX
 - $oResponse peut être null dans certains cas (ex : échec de l\'envoi de la requête)',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Connexion',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'Informations de connexion à utiliser quand le statut est à \'en production\'',

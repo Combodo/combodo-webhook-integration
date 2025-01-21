@@ -153,7 +153,7 @@ BELANGRIJK: Indien geconfigureerd, zal het \'Payload\'-veld genegeerd worden.',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP-methode om het antwoord te verwerken.
 
 Je kan 2 soorten methodes gebruiken:
-- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: $this->XXX($oResponse, $oAction)
+- Gedefinieerd op het object zelf (bv. Gebruikersverzoek). Bv: $this->XXX
 - Via eender welke PHP-klasse. De methode moet static en public zijn. De naam moet fully qualified opgegeven worden. Bv: "\SomeClass:XXX" waarbij deze functie gedefinieerd is in de PHP-klasse "\SomeClass" als "public static function XXX($oObject, $oResponse, $oAction)"
 - $oResponse kan null zijn in sommige gevallen (bv. de HTTP-aanvraag is mislukt)',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Connectie',

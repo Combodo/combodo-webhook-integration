@@ -152,8 +152,8 @@ WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP-Methode zur Verarbeitung der Antwort auf den Webhook-Aufruf.
 
 Sie können 2 Arten von Methoden verwenden:
-- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX($oResponse, $oAction)
-- - Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX($oObject, $oResponse, $oAction)
+- Vom auslösenden Objekt selbst (z.B. UserRequest), muss \'public\' sein. Beispiel: $this->XXX
+- - Von jeder PHP-Klasse, muss \'static\' UND \'public\' sein. Der Name muss ein voll qualifizierter Name sein. Beispiel: \SomeClass::XXX
 - $oResponse kann in einigen Fällen null sein (bspw. wenn der Request fehlgeschlagen ist)',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Verbindung',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'Verbindungsinformationen, die zu verwenden sind, wenn der Status \'Im Einsatz\' ist',

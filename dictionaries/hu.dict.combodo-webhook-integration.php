@@ -152,8 +152,8 @@ FONTOS: Ha be van állítva, az \'Adatfolyam\' attribútumot figyelmen kívül h
 	'Class:ActionWebhook/Attribute:process_response_callback+' => 'PHP-módszer a webhook-hívás válaszának feldolgozására.
 
 2 típusú metódust használhat:
-- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX($oResponse, $oAction)
-- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX($oObject, $oResponse, $oAction)
+- Magából a kiváltó objektumból (pl. UserRequest), nyilvánosnak kell lennie. Példa: $this->XXX
+- Bármely PHP osztályból, statikusnak ÉS nyilvánosnak kell lennie. A névnek teljesen minősített névnek kell lennie. Példa: \SomeClass::XXX
 - $oResponse bizonyos esetekben (pl. a kérés elküldése sikertelen) null lehet.',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id' => 'Kapcsolat',
 	'Class:ActionWebhook/Attribute:remoteapplicationconnection_id+' => 'A \'Bevezetve\' állapot esetén használandó kapcsolati információ',
