@@ -23,4 +23,8 @@ We would like to give a special thank you 🤗 to the people from the community 
 
 ### Names
 
+- Kaltefleiter, Lars (a.k.a [@larhip](https://github.com/larhip))
+- [@peckpeck](https://github.com/peckpeck)
+- Casteleyn, Thomas (a.k.a [@Hipska](https://github.com/Hipska))
+- Bostoen, Jeffrey (a.k.a [@jbostoen](https://github.com/jbostoen))
 - Bie, Dejin (a.k.a [@bdejin](https://www.github.com/bdejin))
