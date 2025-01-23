@@ -38,7 +38,7 @@ Vous pouvez utiliser 2 types de méthodes :
 IMPORTANT : Si ce champ est renseigné, le champ \'message\' sera ignoré.',
 	'Class:ActionMicrosoftTeamsNotification' => 'Notification par Microsoft Teams',
 	'Class:ActionMicrosoftTeamsNotification+' => 'Envoi une notification sous forme de message dans un canal Microsoft Teams',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Image en médallion',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Image en médaillon',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL de l\'image à afficher comme médaillon du message, elle doit être accessible publiquement sur Internet pour que Microsoft Teams puisse l\'afficher',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button' => 'Bouton supprimer',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:include_delete_button+' => 'Ajoute un bouton sous le message pour supprimer l\'objet correspondant dans '.ITOP_APPLICATION_SHORT,
