@@ -84,7 +84,7 @@
 					<default_value>2-test</default_value>
 					<is_null_allowed>false</is_null_allowed>
 				</field>
-        <field id="url" xsi:type="AttributeString">
+        <field id="url" xsi:type="AttributeText">
 					<sql>url</sql>
 					<default_value/>
 					<is_null_allowed>false</is_null_allowed>
