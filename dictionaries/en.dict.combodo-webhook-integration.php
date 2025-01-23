@@ -250,7 +250,7 @@ Dict::Add('EN US', 'English', 'English', array(
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Other actions codes',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Specify which actions to include as buttons below the message. Should be a comma separated list of the actions codes (eg. \'ev_reopen, ev_close\')',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Highlight color',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight color of the message card in Microsoft Teams, must be a valid hexadecimal color (eg. FF0000)',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight color in Microsoft Teams, must be a valid hexadecimal color (eg. FF0000) for Message Cards and one of the following values: "default", "emphasis", "good", "attention", "warning" or "accent" for Adaptive Cards',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url' => 'Medallion picture',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:image_url+' => 'URL of the image to display as a medallion in the message card, it must be publicly accessible on the internet for Microsoft Teams to be able to display it',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if the standard options are not flexible enough or if your payload structure must be dynamically built.

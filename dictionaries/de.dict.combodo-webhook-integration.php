@@ -71,7 +71,7 @@ WICHTIG: Wenn dies gesetzt ist, werden das Attribut \'Titel\', \'Nachricht\' sow
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions' => 'Codes der anderen Aktionen',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:specified_other_actions+' => 'Geben Sie an, welche Aktionen als Buttons unter der Nachricht angezeigt werden sollen. Es sollte eine durch Kommata getrennte Liste der Aktionscodes sein (bspw. \'ev_reopen, ev_close\')',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color' => 'Highlight-Farbe',
-	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight-Farbe  der Nachrichtenkarte in Microsoft Teams, muss eine gültige hexadezimale Farbe sein (bspw. FF0000)',
+	'Class:ActionMicrosoftTeamsNotification/Attribute:theme_color+' => 'Highlight-Farbe der Nachrichtenkarte in Microsoft Teams, für Message Card muss eine gültige hexadezimale Farbe sein (bspw. FF0000) und für Adaptive Card einer der folgenden Werte sein: "default", "emphasis", "good", "attention", "warning" oder "accent".',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:title' => 'Titel',
 	'Class:ActionRocketChatNotification' => 'Rocket.Chat-Benachrichtigung',
 	'Class:ActionRocketChatNotification+' => 'Senden einer Benachrichtigung als Rocket.Chat-Nachricht in einem Kanal oder an einen Benutzer',
