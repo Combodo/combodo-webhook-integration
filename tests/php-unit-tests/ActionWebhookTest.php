@@ -96,7 +96,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			]
 		);
 
-		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
+		[$oLog, $aHeaders] = $this->InvokePrepareHeaders($oRemoteApplication);
 		$this->assertEquals(['Content-type: application/json', 'Authorization: Basic YWRtaW5pc3RyYXRvcjpBZG0xbmlzdHJhdG9yKyshIQ=='], $aHeaders);
 
 	}
@@ -113,7 +113,7 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oRemoteApplicationToken->Set('token', 'HAhq2Zfyr24ge!/jqsdf)sCf45A');
 		$oRemoteApplicationToken->DBWrite();
 
-		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplicationToken);
+		[$oLog, $aHeaders] = $this->InvokePrepareHeaders($oRemoteApplicationToken);
 		$this->assertEquals(['Content-type: application/json', 'Auth-Token: HAhq2Zfyr24ge!/jqsdf)sCf45A'], $aHeaders);
 	}
 
@@ -158,7 +158,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			->method('GetAccessToken')
 			->willReturn('GABUZOMEU');
 
-		list($oLog, $aHeaders) = $this->InvokePrepareHeaders($oRemoteApplication);
+		[$oLog, $aHeaders] = $this->InvokePrepareHeaders($oRemoteApplication);
 		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer GABUZOMEU"], $aHeaders);
 	}
 
@@ -211,6 +211,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			'Array value without quotes Param not replaced' => ['{"value":$this->value$}', true],
 			'Array value without quotes Param replaced with not quoted string' => ['{"value":$this->value$}', true, null, ['this->value' => 'toto']],
 			'Array value without quotes Param replaced with quoted string' => ['{"value":$this->value$}', false, '{"value":"toto"}', ['this->value' => '"toto"']],
+			'Array value without quotes Param replaced with HTML' => ['{"value":"toto : $this->value$"}', false, '{"value":"toto : <div class=\\"HTML ibo-is-html-content\\" ><p>Unit test description<\\/p><\\/div>"}', ['this->value' => '<div class="HTML ibo-is-html-content" ><p>Unit test description</p></div>']],
 			'Array value without quotes Param replaced with numeric value' => ['{"value":$this->value$}', false, '{"value":2}', ['this->value' => 2]],
 
 			'Array value with quotes Param not replaced' => ['{"value":"$this->value$"}', false, '{"value":"$this->value$"}', []],
