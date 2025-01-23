@@ -2534,7 +2534,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				'content' => [
 					'type' => 'AdaptiveCard',
 					'$schema'=> 'https://adaptivecards.io/schemas/adaptive-card.json',
-					'version' => '1.6',
+					'version' => '1.5',
 					'body' => [
 						[
 							'type' => 'Container',
