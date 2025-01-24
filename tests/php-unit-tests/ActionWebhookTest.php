@@ -212,10 +212,17 @@ class ActionWebhookTest extends ItopDataTestCase
                 'exception' => false
             ],
 
-            'Quotes inside a string should be escaped' => [
+            'Quotes inside a string should be allowed' => [
                 "payload" => '"$this->name$"',
                 "context" => ['this->name' => 'to"to'],
                 'expected' => '"to\\"to"',
+                'exception' => false
+            ],
+
+            'New line inside a string should be allowed' => [
+                "payload" => '"$this->name$"',
+                "context" => ['this->name' => "to\nto"],
+                'expected' => '"to\\nto"',
                 'exception' => false
             ],
 
@@ -280,7 +287,7 @@ class ActionWebhookTest extends ItopDataTestCase
                 "context" => ['this->count' => 2],
                 'expected' => '',
                 'exception' => true
-            ]
+            ],
         ];
 	}
 
