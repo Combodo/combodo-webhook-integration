@@ -1138,6 +1138,25 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					</code>
 				</method>
 			</methods>
+			<event_listeners>
+				<event_listener id="CheckJSONSyntax">
+					<event>EVENT_DB_CHECK_TO_WRITE</event>
+					<code>
+						function(Combodo\iTop\Service\Events\EventData $oEventData)
+						{
+							if (trim($this->Get('payload')) === '') {
+								return ;
+							}
+							try {
+								Combodo\iTop\Core\Notification\Action\_ActionWebhook::JsonDecodeWithError($this->Get('payload'));
+							} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
+								$this->AddCheckIssue(Dict::S('Class:ActionWebhook/Error:InvalidJSONFormatForPayload'));
+							}
+						}
+					</code>
+					<rank>10</rank>
+				</event_listener>
+			</event_listeners>
 			<presentation>
 				<details>
 					<items>

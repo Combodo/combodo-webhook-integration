@@ -94,6 +94,7 @@ You can use 2 types of methods:
 	// Note: This one is used by derivated classes
 	'ActionWebhook:requestparameters' => 'Request parameters',
 	'ActionWebhook:advancedparameters' => 'Advanced parameters',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload',
 ));
 
 // iTop

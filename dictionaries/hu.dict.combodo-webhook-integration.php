@@ -211,4 +211,5 @@ FONTOS: Ha be van állítva, a \'JSON adat\' attribútum figyelmen kívül marad
 	'RemoteApplicationConnection:authinfo' => 'Azonosítás',
 	'RemoteApplicationConnection:baseinfo' => 'Általános információ',
 	'RemoteApplicationConnection:moreinfo' => 'További információ',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);

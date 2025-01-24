@@ -212,4 +212,5 @@ BELANGRIJK: Indien geconfigureerd, zal het \'JSON-data\'-veld genegeerd worden.'
 	'RemoteApplicationConnection:authinfo' => 'Authenticatie',
 	'RemoteApplicationConnection:baseinfo' => 'Algemene info',
 	'RemoteApplicationConnection:moreinfo' => 'Meer info',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);

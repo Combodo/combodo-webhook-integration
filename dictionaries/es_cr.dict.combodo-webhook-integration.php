@@ -218,4 +218,5 @@ IMPORTANTE: Si se habilita, el atributo \'JSON data\' será ignorado.',
 	'RemoteApplicationConnection:moreinfo' => 'Más information',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:message_card' => 'Message Card~~',
 	'Class:ActionMicrosoftTeamsNotification/Attribute:json_format/Value:adaptive_card' => 'Adaptive Card~~',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);

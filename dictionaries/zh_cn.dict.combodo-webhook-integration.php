@@ -211,4 +211,5 @@ Dict::Add('ZH CN', 'Chinese', '简体中文', [
 	'RemoteApplicationConnection:authinfo' => '认证',
 	'RemoteApplicationConnection:baseinfo' => '常规信息',
 	'RemoteApplicationConnection:moreinfo' => '更多信息',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);

@@ -229,4 +229,5 @@ IMPORTANT : Si ce champ est renseigné, le champ \'Charge utile\' sera ignoré.'
 	'RemoteApplicationConnection:authinfo' => 'Authentification',
 	'RemoteApplicationConnection:baseinfo' => 'Informations générales',
 	'RemoteApplicationConnection:moreinfo' => 'Autres informations',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Format JSON incorrect pour la Charge utile',
 ]);

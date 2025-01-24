@@ -215,4 +215,5 @@ WICHTIG: Wenn es gesetzt ist, wird das Attribut "Payload" ignoriert.',
 	'RemoteApplicationConnection:authinfo' => 'Authentifizierung',
 	'RemoteApplicationConnection:baseinfo' => 'Allgemeine Informationen',
 	'RemoteApplicationConnection:moreinfo' => 'Weitere Informationen',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);

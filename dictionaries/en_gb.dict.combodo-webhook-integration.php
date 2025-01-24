@@ -264,4 +264,5 @@ IMPORTANT: If set, the \'title\', \'message\' and all \'additional elements\' wi
 	'ActionMicrosoftTeamsNotification:message' => 'Basis message',
 	'ActionMicrosoftTeamsNotification:additionalelements' => 'Additional elements to include',
 	'ActionMicrosoftTeamsNotification:theme' => 'Theme',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload',
 ));

@@ -211,4 +211,5 @@ IMPORTANT: If set, the \'JSON data\' attribute will be ignored.~~',
 	'RemoteApplicationConnection:authinfo' => 'Authentication~~',
 	'RemoteApplicationConnection:baseinfo' => 'General information~~',
 	'RemoteApplicationConnection:moreinfo' => 'More information~~',
+	'Class:ActionWebhook/Error:InvalidJSONFormatForPayload' => 'Invalid JSON format for Payload~~',
 ]);
