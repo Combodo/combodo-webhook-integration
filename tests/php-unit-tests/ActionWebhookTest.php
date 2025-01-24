@@ -187,7 +187,7 @@ class ActionWebhookTest extends ItopDataTestCase
 	/**
 	 * @dataProvider ApplyParamsToJsonProvider
 	 */
-	public function testApplyParamsToJson($json, bool $bExpectException, $expected = null, array $aContextArgs = [])
+	public function testApplyParamsToJson($json, array $aContextArgs, $expected, bool $bExpectException)
 	{
 		if ($bExpectException) {
 			$this->expectException(WebhookInvalidJsonValueException::class);
@@ -198,25 +198,90 @@ class ActionWebhookTest extends ItopDataTestCase
 			[$aContextArgs, $json]);
 
 		if (false === $bExpectException) {
-			$this->assertSame($expected, $result);
+            $this->AssertJSONEquals($expected, $result, $this->getName());
 		}
 	}
 
 	public function ApplyParamsToJsonProvider(): array
 	{
 		return [
-			'String Param not replaced' => ['$this->value$', true],
-			'String Param replaced' => ['$this->value$', false, '"toto"', ['this->value' => '"toto"']],
+            'Simple string should be handled correctly' => [
+                "payload" => '"toto"',
+                "context" => [],
+                'expected' => '"toto"',
+                'exception' => false
+            ],
 
-			'Array value without quotes Param not replaced' => ['{"value":$this->value$}', true],
-			'Array value without quotes Param replaced with not quoted string' => ['{"value":$this->value$}', true, null, ['this->value' => 'toto']],
-			'Array value without quotes Param replaced with quoted string' => ['{"value":$this->value$}', false, '{"value":"toto"}', ['this->value' => '"toto"']],
-			'Array value without quotes Param replaced with HTML' => ['{"value":"toto : $this->value$"}', false, '{"value":"toto : <div class=\\"HTML ibo-is-html-content\\" ><p>Unit test description<\\/p><\\/div>"}', ['this->value' => '<div class="HTML ibo-is-html-content" ><p>Unit test description</p></div>']],
-			'Array value without quotes Param replaced with numeric value' => ['{"value":$this->value$}', false, '{"value":2}', ['this->value' => 2]],
+            'Quotes inside a string should be escaped' => [
+                "payload" => '"$this->name$"',
+                "context" => ['this->name' => 'to"to'],
+                'expected' => '"to\\"to"',
+                'exception' => false
+            ],
 
-			'Array value with quotes Param not replaced' => ['{"value":"$this->value$"}', false, '{"value":"$this->value$"}', []],
-			'Array value with quotes Param replaced' => ['{"value":"$this->value$"}', false, '{"value":"toto"}', ['this->value' => 'toto']],
-		];
+            'Replacement should occur in object array' => [
+                "payload" => '{
+					"name": "$this->name$"
+					}',
+                "context" => ['this->name' => 'toto'],
+                'expected' => '{
+					"name": "toto"
+					}',
+                'exception' => false
+            ],
+
+            'Replacement should occur in object array with multiple depths' => [
+                "payload" => '{
+					"depth1": {
+						"depth2" : {
+							"name": "$this->name$"
+							}
+						}
+					}',
+                "context" => ['this->name' => 'toto'],
+                'expected' => '{
+					"depth1": {
+						"depth2" : {
+							"name": "toto"
+							}
+						}
+					}',
+                'exception' => false
+            ],
+
+            'Replacement should occur in array' => [
+                "payload" => '["$this->name$"]',
+                "context" => ['this->name' => 'toto'],
+                'expected' => '["toto"]',
+                'exception' => false
+            ],
+
+            'Replacement should occur in complex structure' => [
+                "payload" => '{
+			        "depth1": [
+					    {
+					      "name": "$this->name$"
+					    }
+					]
+				}',
+                "context" => ['this->name' => 'toto'],
+                'expected' => '{
+			        "depth1": [
+					    {
+					      "name": "toto"
+					    }
+					]
+				}',
+                'exception' => false
+            ],
+
+            'Pure integer JSON syntax is not supported' => [
+                "payload" => '$this->count$',
+                "context" => ['this->count' => 2],
+                'expected' => '',
+                'exception' => true
+            ]
+        ];
 	}
 
 	/**
@@ -306,4 +371,18 @@ class ActionWebhookTest extends ItopDataTestCase
 		$oDBObject->Set('org_id', $this->GetTestOrgId());
 		$oDBObject->DBInsert();
 	}
+
+    public static function AssertJSONEquals($sExpected, $sActual, $sMessage = '')
+    {
+        $aExpected = json_decode($sExpected);
+        $aActual = json_decode($sActual);
+        if(is_null($aExpected)) {
+            throw new Exception($sExpected.' is not a valid JSON');
+        }
+        if(is_null($aActual)) {
+            throw new Exception($sActual.' is not a valid JSON');
+        }
+
+        static::assertEquals(json_encode($aExpected, JSON_PRETTY_PRINT), json_encode($aActual, JSON_PRETTY_PRINT), $sMessage);
+    }
 }

@@ -1005,36 +1005,26 @@
 					<code><![CDATA[
 protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	{
-		// replacing placeholders...
-		$sJsonWithReplacedPlaceholders = $this->ApplyParamsToValue($aContextArgs, $sInputAsJson);
-
-		// and now checking JSON validity !
 		try {
-			static::JsonDecodeWithError($sJsonWithReplacedPlaceholders);
+			// checking JSON validity !
+			$aJsonInputAsArray = static::JsonDecodeWithError($sInputAsJson);
 		} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
-			try {
-				// The resulting JSON is not correct, try decoding the source before resolving placeholders
-				// checking JSON validity !
-				$aJsonInputAsArray = static::JsonDecodeWithError($sInputAsJson);
-				// replacing placeholders...
-				$aJsonInputAsArray = $this->ApplyParamsToArray($aContextArgs, $aJsonInputAsArray);
-				$sJsonWithReplacedPlaceholders = json_encode($aJsonInputAsArray);
-			} catch(Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException $e) {
-				// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
-				$sLogChannel = 'notifications';
-				$aLogContext = [
-					'action_class'        => get_class($this),
-					'action_id'           => $this->GetKey(),
-					'action_name'         => $this->Get('name'),
-					'payload'             => $sInputAsJson,
-					'json_last_error'     => json_last_error(),
-					'json_last_error_msg' => json_last_error_msg(),
-				];
-				IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
+			// LogChannels class and NOTIFICATIONS constant were introduced recently, we can't use it with a 2.7.0 compatibility
+			$sLogChannel = 'notifications';
+			$aLogContext = [
+				'action_class'        => get_class($this),
+				'action_id'           => $this->GetKey(),
+				'action_name'         => $this->Get('name'),
+				'payload'             => $sInputAsJson,
+				'json_last_error'     => json_last_error(),
+				'json_last_error_msg' => json_last_error_msg(),
+			];
+			IssueLog::Error('Webhook Action failed: Wrong JSON format for input', $sLogChannel, $aLogContext);
 
-				throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
-			}
+			throw new Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException('Wrong JSON format for input, see error log for more information.');
 		}
+		$aJsonInputAsArray = $this->ApplyParamsToValue($aContextArgs, $aJsonInputAsArray);
+		$sJsonWithReplacedPlaceholders = json_encode($aJsonInputAsArray);
 
 		return $sJsonWithReplacedPlaceholders;
 	}
