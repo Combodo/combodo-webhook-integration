@@ -288,6 +288,13 @@ class ActionWebhookTest extends ItopDataTestCase
                 'expected' => '',
                 'exception' => true
             ],
+
+            'Emoji should be handled correctly' => [
+                "payload" => '"😁"',
+                "context" => [],
+                'expected' => '"😁"',
+                'exception' => false
+            ],
         ];
 	}
 
@@ -384,10 +391,10 @@ class ActionWebhookTest extends ItopDataTestCase
         $aExpected = json_decode($sExpected);
         $aActual = json_decode($sActual);
         if(is_null($aExpected)) {
-            throw new Exception($sExpected.' is not a valid JSON');
+            throw new \Exception('Expected "'.$sExpected.'" is not a valid JSON');
         }
         if(is_null($aActual)) {
-            throw new Exception($sActual.' is not a valid JSON');
+            throw new \Exception('Actual "'.$sActual.'" is not a valid JSON');
         }
 
         static::assertEquals(json_encode($aExpected, JSON_PRETTY_PRINT), json_encode($aActual, JSON_PRETTY_PRINT), $sMessage);
