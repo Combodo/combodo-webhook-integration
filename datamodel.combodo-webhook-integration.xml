@@ -2478,7 +2478,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		if (strlen($sMessage) > 0) {
 			$aMessageBlock = [
 				"type" => "TextBlock",
-	            "text" => static::TransformHTMLToMSTeamsMarkup($sMessage),
+	            "text" => static::TransformHTMLToMSTeamsMarkup($sMessage, 'adaptive_card'),
 	            "wrap" => true
 			];
 		}
@@ -2606,7 +2606,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 			$sValueAsHtml = utils::HtmlEntityDecode($oObject->GetAsHtml($sAttCode));
 			$aFacts[] = array(
 				$sLabelKey => $oAttDef->GetLabel(),
-				'value' => static::TransformHTMLToMSTeamsMarkup($sValueAsHtml),
+				'value' => static::TransformHTMLToMSTeamsMarkup($sValueAsHtml, $sJsonFormat),
 			);
 		}
 
@@ -2739,38 +2739,50 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 * Return $sContent HTML transformed into Microsoft Teams proper markup
 	 *
 	 * @param string $sContent
+	 * @param string $sJsonFormat
 	 *
 	 * @link https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/cards-format?tabs=adaptive-md%2Cconnector-html#format-cards-with-markdown
 	 * @return string
 	 */]]></comment>
-					<code><![CDATA[	public static function TransformHTMLToMSTeamsMarkup($sContent)
+					<code><![CDATA[	public static function TransformHTMLToMSTeamsMarkup(string $sContent, string $sJsonFormat)
 	{
-		if(empty($sContent))
-		{
+		if (empty($sContent)) {
 			return $sContent;
 		}
 
 		$aReplacementsMatrix = array(
-			array( array('<br />', '<br/>', '<br>'), "\n" ),
-			array( array('<strong>', '</strong>'), array('**', '**') ),
-			array( array('<b>', '</b>'), array('**', '**') ),
-			array( array('<em>', '</em>'), array('_', '_') ),
-			array( array('<i>', '</i>'), array('_', '_') ),
-			array( array('<del>', '</del>'), array('~', '~') ),
-			array( array('<s>', '</s>'), array('~', '~') ),
-			array( array('<li>', '</li>'), array('-', '') ),
+			array(array('<br />', '<br/>', '<br>'), "\n\n"),
+			array(array('<strong>', '</strong>'), array('**', '**')),
+			array(array('<b>', '</b>'), array('**', '**')),
+			array(array('<em>', '</em>'), array('_', '_')),
+			array(array('<i>', '</i>'), array('_', '_')),
+			array(array('<del>', '</del>'), array('~', '~')),
+			array(array('<s>', '</s>'), array('~', '~')),
+			array(array('<li>', '</li>'), array('-', '')),
 		);
 
-		// Replace HTML tags (list must contain at least tags from the $aReplacementsMatrix)
-		$sContent = strip_tags($sContent, '<h1><h2><h3><br><strong><b><em><i><del><s><li><code><pre><a>');
-		foreach($aReplacementsMatrix as $aReplacements)
-		{
+		if ($sJsonFormat === 'adaptive_card') {
+			$aReplacementsMatrix[] = array(array('<h1>', '</h1>'), array('**', "** \n\n"));
+			$aReplacementsMatrix[] = array(array('<h2>', '</h2>'), array('**', "** \n\n"));
+			$aReplacementsMatrix[] = array(array('<h3>', '</h3>'), array('**', "** \n\n"));
+			$aReplacementsMatrix[] = array(array('</p>'), "\n\n"); // new line instead of carriage return (which does not seem to be supported)
+			$aReplacementsMatrix[] = array(array('<p>'), '');
+		}
+
+			// Replace HTML tags (list must contain at least tags from the $aReplacementsMatrix)
+		$sAllowedTags = $sJsonFormat === 'message_card' ?
+			'<br><strong><b><em><i><del><s><li><a><code><pre>'
+			:
+			'<br><strong><b><em><i><del><s><li><a><p><h1><h2><h3>'; // code/pre blocs not supported in adaptive_card
+		$sContent = strip_tags($sContent, $sAllowedTags); // what about unkown tags ?
+
+		foreach ($aReplacementsMatrix as $aReplacements) {
 			$sContent = str_replace($aReplacements[0], $aReplacements[1], $sContent);
 		}
 
 		// Replace hyperlinks
 		preg_match_all('/<\s*a.*?href\s*=\s*(?:\"|\')(.*?)(?:\"|\')[^>]*>(.*?)<\s*?\/\s*?a\s*?>/i', $sContent, $aResult);
-		for($iIdx = 0; $iIdx < count($aResult[0]); $iIdx++) {
+		for ($iIdx = 0; $iIdx < count($aResult[0]); $iIdx++) {
 			$sContent = str_replace($aResult[0][$iIdx], '['.$aResult[2][$iIdx].']('.$aResult[1][$iIdx].')', $sContent);
 		}
 
