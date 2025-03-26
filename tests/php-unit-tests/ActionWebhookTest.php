@@ -167,22 +167,7 @@ class ActionWebhookTest extends ItopDataTestCase
 	 */
 	public function testTransformHTMLToMSTeamsMarkup(string $stringToTransform, string $type, string $expected): void
 	{
-		$iRemoteApplicationType = $this->GivenObjectInDB('RemoteApplicationType', [
-			'name' => 'My connection type',
-		]);
-
-		$iRemoteApplicationConnection = $this->GivenObjectInDB('RemoteApplicationConnection', [
-			'name'                     => 'Test localhost',
-			'remoteapplicationtype_id' => $iRemoteApplicationType,
-			'url'                      => utils::GetAbsoluteUrlAppRoot(),
-		]);
-
-		$oActionMicrosoftTeamsNotification = $this->createObject(\ActionMicrosoftTeamsNotification::class, [
-			'name'                           => 'Test ActionMicrosoftTeams',
-			'remoteapplicationconnection_id' => $iRemoteApplicationConnection,
-		]);
-
-		$this->assertEquals($expected, $oActionMicrosoftTeamsNotification->TransformHTMLToMSTeamsMarkup($stringToTransform, $type));
+		$this->assertEquals($expected, \ActionMicrosoftTeamsNotification::TransformHTMLToMSTeamsMarkup($stringToTransform, $type));
 	}
 
 	public function TransformHTMLToMSTeamsMarkupProvider()
