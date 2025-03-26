@@ -162,6 +162,217 @@ class ActionWebhookTest extends ItopDataTestCase
 		$this->assertEquals(['Content-type: application/json', "Authorization: Bearer GABUZOMEU"], $aHeaders);
 	}
 
+	/**
+	 * @dataProvider TransformHTMLToMSTeamsMarkupProvider
+	 */
+	public function testTransformHTMLToMSTeamsMarkup(string $stringToTransform, string $type, string $expected): void
+	{
+		$iRemoteApplicationType = $this->GivenObjectInDB('RemoteApplicationType', [
+			'name' => 'My connection type',
+		]);
+
+		$iRemoteApplicationConnection = $this->GivenObjectInDB('RemoteApplicationConnection', [
+			'name'                     => 'Test localhost',
+			'remoteapplicationtype_id' => $iRemoteApplicationType,
+			'url'                      => utils::GetAbsoluteUrlAppRoot(),
+		]);
+
+		$oActionMicrosoftTeamsNotification = $this->createObject(\ActionMicrosoftTeamsNotification::class, [
+			'name'                           => 'Test ActionMicrosoftTeams',
+			'remoteapplicationconnection_id' => $iRemoteApplicationConnection,
+		]);
+
+		$this->assertEquals($expected, $oActionMicrosoftTeamsNotification->TransformHTMLToMSTeamsMarkup($stringToTransform, $type));
+	}
+
+	public function TransformHTMLToMSTeamsMarkupProvider()
+	{
+		return [
+			'Empty string'                                                                 => [
+				'stringToTransform'       => '',
+				'type'                    => 'adpative_card',
+				'expectedFormattedResult' => '',
+			],
+			'Empty string with type'                                                       => [
+				'stringToTransform'       => '',
+				'type'                    => 'message_card',
+				'expectedFormattedResult' => '',
+			],
+			'Simple p tag in message card'                                                 => [
+				'stringToTransform'       => '<p>Hello !</p>',
+				'type'                    => 'message_card',
+				'expectedFormattedResult' => 'Hello !',
+			],
+			'Simple p tag in adaptive card'                                                => [
+				'stringToTransform'       => '<p>Hello !</p>',
+				'type'                    => 'adaptive_card',
+				'expectedFormattedResult' => "Hello !\n\n",
+			],
+			'Simple a tag in message card'                                                 => [
+				'stringToTransform'       => '<a href="https://combodo.com">Combodo</a>',
+				'type'                    => 'message_card',
+				'expectedFormattedResult' => "[Combodo](https://combodo.com)",
+			],
+			'Simple a tag in adaptive card'                                                => [
+				'stringToTransform'       => '<a href="https://combodo.com">Combodo</a>',
+				'type'                    => 'adaptive_card',
+				'expectedFormattedResult' => "[Combodo](https://combodo.com)",
+			],
+			'List of headers in message card'                                              => [
+				'stringToTransform'       => '<h1>H1</h1><h2>H2</h2>',
+				'type'                    => 'message_card',
+				'expectedFormattedResult' => "<h1>H1</h1><h2>H2</h2>",
+			],
+			'List of headers in adaptive card'                                             => [
+				'stringToTransform'       => '<h1>H1</h1><h2>H2</h2>',
+				'type'                    => 'adaptive_card',
+				'expectedFormattedResult' => "**H1** \n\n**H2** \n\n",
+			],
+			'Complete message from CKEditor with code, header, links ... in adaptive_card' => [
+				'stringToTransform'       => <<<HTML
+<h2>
+    debut
+</h2>
+<p>
+    <a href="https://combodo.com">Combodo</a>
+</p>
+<pre><code class="language-plaintext">code normal
+var a=1;</code></pre>
+<p>
+     
+</p>
+<p>
+     
+</p>
+<p>
+     
+</p>
+<p>
+    <code class="language-javascript">code javascript var a=1;</code>
+</p>
+<pre>    pre tag var a=1;
+</pre>
+<p>
+     
+</p>
+<p>
+    signature
+</p>
+<p>
+    ok
+</p>
+HTML,
+				'type'                    => 'adaptive_card',
+				'expectedFormattedResult' => <<<HTML
+**
+    debut
+** 
+
+
+
+    [Combodo](https://combodo.com)
+
+
+
+code normal
+var a=1;
+
+     
+
+
+
+
+     \n
+
+
+
+     \n
+
+
+
+    code javascript var a=1;\n
+
+
+    pre tag var a=1;\n
+
+     \n
+
+
+
+    signature\n
+
+
+
+    ok\n
+
+
+HTML,
+
+			],
+			'Complete message from CKEditor with code, header, links ... in message_card'  => [
+				'stringToTransform'       => <<<HTML
+<h2>
+    debut
+</h2>
+<p>
+    <a href="https://combodo.com">Combodo</a>
+</p>
+<pre><code class="language-plaintext">code normal
+var a=1;</code></pre>
+<p>
+     
+</p>
+<p>
+     
+</p>
+<p>
+     
+</p>
+<p>
+    <code class="language-javascript">code javascript var a=1;</code>
+</p>
+<pre>    pre tag var a=1;
+</pre>
+<p>
+     
+</p>
+<p>
+    signature
+</p>
+<p>
+    ok
+</p>
+HTML,
+				'type'                    => 'message_card',
+				'expectedFormattedResult' => <<<HTML
+<h2>
+    debut
+</h2>\n
+    [Combodo](https://combodo.com)\n
+<pre><code class="language-plaintext">code normal
+var a=1;</code></pre>\n
+     
+\n
+     
+\n
+     
+\n
+    <code class="language-javascript">code javascript var a=1;</code>
+
+<pre>    pre tag var a=1;
+</pre>\n
+     \n
+
+    signature
+
+
+    ok\n
+HTML,
+
+			],
+		];
+	}
+
 	public function InvokePrepareHeaders($oRemoteApplication): array {
 		$oAction = $this->createObject(ActioniTopWebhook::class,
 			[
