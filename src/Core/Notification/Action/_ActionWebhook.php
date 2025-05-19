@@ -23,11 +23,10 @@ abstract class _ActionWebhook extends ActionNotification
 	 * Default WebResponse handler for a WebRequest made by an _ActionWebhook
 	 *
 	 * @param \Combodo\iTop\Core\WebResponse $oResponse
-	 * @param array                          $aParams Parameters of the handler, must contain at least the triggering object and activated webhook action information:
-	 *                                                [
-	 *                                                  'oTriggeringObject' => ['class' => <CLASS>, 'id' => <ID>],
-	 *                                                  'oActionWebhook' => ['class' => <CLASS>, 'id' => <ID>],
-	 *                                                ]
+	 * @param array{
+	 *     oActionWebhook: array{class: string, id: int},
+	 *     oTriggeringObject: \DBObject|array{class: string, id: int},
+	 * } $aParams Parameters of the handler, must contain at least the triggering object and activated webhook action information
 	 *
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
@@ -42,6 +41,7 @@ abstract class _ActionWebhook extends ActionNotification
 			]);
 			throw new Exception('Missing parameters in response handler. See error log for details.');
 		}
+		/** @var \DBObject $oTriggeringObject */
         $oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
                             $aParams['oTriggeringObject'] :
                             MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
