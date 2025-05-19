@@ -211,7 +211,7 @@ class ActionWebhookTest extends ItopDataTestCase
 			'List of headers in adaptive card'                                             => [
 				'stringToTransform'       => '<h1>H1</h1><h2>H2</h2>',
 				'type'                    => 'adaptive_card',
-				'expectedFormattedResult' => "**H1** \n\n**H2** \n\n",
+				'expectedFormattedResult' => "**H1**\n\n**H2**\n\n",
 			],
 			'Complete message from CKEditor with code, header, links ... in adaptive_card' => [
 				'stringToTransform'       => <<<HTML

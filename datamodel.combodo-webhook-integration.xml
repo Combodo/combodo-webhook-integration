@@ -2762,9 +2762,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		);
 
 		if ($sJsonFormat === 'adaptive_card') {
-			$aReplacementsMatrix[] = array(array('<h1>', '</h1>'), array('**', "** \n\n"));
-			$aReplacementsMatrix[] = array(array('<h2>', '</h2>'), array('**', "** \n\n"));
-			$aReplacementsMatrix[] = array(array('<h3>', '</h3>'), array('**', "** \n\n"));
+			$aReplacementsMatrix[] = array(array('<h1>', '</h1>'), array('**', "**\n\n"));
+			$aReplacementsMatrix[] = array(array('<h2>', '</h2>'), array('**', "**\n\n"));
+			$aReplacementsMatrix[] = array(array('<h3>', '</h3>'), array('**', "**\n\n"));
 			$aReplacementsMatrix[] = array(array('</p>'), "\n\n"); // new line instead of carriage return (which does not seem to be supported)
 			$aReplacementsMatrix[] = array(array('<p>'), '');
 		}
