@@ -215,80 +215,31 @@ class ActionWebhookTest extends ItopDataTestCase
 			],
 			'Complete message from CKEditor with code, header, links ... in adaptive_card' => [
 				'stringToTransform'       => <<<HTML
-<h2>
-    debut
-</h2>
-<p>
-    <a href="https://combodo.com">Combodo</a>
-</p>
-<pre><code class="language-plaintext">code normal
-var a=1;</code></pre>
-<p>
-     
-</p>
-<p>
-     
-</p>
-<p>
-     
-</p>
-<p>
-    <code class="language-javascript">code javascript var a=1;</code>
-</p>
-<pre>    pre tag var a=1;
-</pre>
-<p>
-     
-</p>
-<p>
-    signature
-</p>
-<p>
-    ok
-</p>
+<h2>debut</h2><p><a href="https://combodo.com">Combodo</a></p><pre><code class="language-plaintext">code normal
+var a=1;</code></pre><p> </p><p> </p><p> </p><p><code class="language-javascript">code javascript var a=1;</code></p><pre>    pre tag var a=1;
+</pre><p> </p><p>signature</p><p>ok</p>
 HTML,
 				'type'                    => 'adaptive_card',
 				'expectedFormattedResult' => <<<HTML
-**
-    debut
-** 
+**debut**
 
-
-
-    [Combodo](https://combodo.com)
-
-
+[Combodo](https://combodo.com)
 
 code normal
-var a=1;
+var a=1; 
 
-     
+ 
 
+ 
 
+code javascript var a=1;
 
+    pre tag var a=1;
+ 
 
-     \n
+signature
 
-
-
-     \n
-
-
-
-    code javascript var a=1;\n
-
-
-    pre tag var a=1;\n
-
-     \n
-
-
-
-    signature\n
-
-
-
-    ok\n
+ok
 
 
 HTML,
