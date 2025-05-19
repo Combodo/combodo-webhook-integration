@@ -1749,26 +1749,22 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		}
 
 		$aReplacementsMatrix = array(
-			array( array('<br />', '<br/>', '<br>'), "\n" ),
-			array( array('<h1>', '</h1>'), array('*', '*') ),
-			array( array('<h2>', '</h2>'), array('*', '*') ),
-			array( array('<h3>', '</h3>'), array('*', '*') ),
-			array( array('<strong>', '</strong>'), array('*', '*') ),
-			array( array('<b>', '</b>'), array('*', '*') ),
-			array( array('<em>', '</em>'), array('_', '_') ),
-			array( array('<i>', '</i>'), array('_', '_') ),
-			array( array('<del>', '</del>'), array('~', '~') ),
-			array( array('<s>', '</s>'), array('~', '~') ),
-			array( array('<li>', '</li>'), array('• ', '') ),
-			array( array('<code>', '</code>'), array('`', '`') ),
-			array( array('<pre>', '</pre>'), array('```', '```') ),
+			[ '#<br(\s*/)?>#i', "\n" ],
+			[ ['#<p>#i', '#</p>#i'], ['', "\n"] ],
+			[ ['#<h[1,2,3]>#i', '#</h[1,2,3]>#i'], ['*', "*\n"] ],
+			[ ['#<(strong|b)>#i', '#</(strong|b)>#i'], '*' ],
+			[ ['#<(em|i)>#i', '#</(em|i)>#i'], '_' ],
+			[ ['#<(del|s)>#i', '#</(del|s)>#i'], '~' ],
+			[ ['#<li>#i', '#</li>#i'], ['• ', "\n"] ],
+			[ ['#<pre>(<code[^>]*>)?#i', '#(</code>)?</pre>#i'], ['```', "```\n"] ],
+			[ ['#<(mark[^>]*|code)>#i', '#</(mark|code)>#i'], '`' ],
 		);
 
 		// Replace HTML tags (list must contain at least tags from the $aReplacementsMatrix)
-		$sContent = strip_tags($sContent, '<h1><h2><h3><br><strong><b><em><i><del><s><li><code><pre><a>');
+		$sContent = strip_tags($sContent, '<br><p><h1><h2><h3><strong><b><em><i><del><s><li><pre><code><mark><a>');
 		foreach($aReplacementsMatrix as $aReplacements)
 		{
-			$sContent = str_replace($aReplacements[0], $aReplacements[1], $sContent);
+			$sContent = preg_replace($aReplacements[0], $aReplacements[1], $sContent);
 		}
 
 		// Replace hyperlinks
