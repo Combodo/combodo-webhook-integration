@@ -5,7 +5,7 @@
 //
 //
 SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'combodo-webhook-integration/1.4.2', 
+	'combodo-webhook-integration/1.4.3', 
 	array(
 		// Identification
 		//
