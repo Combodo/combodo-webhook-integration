@@ -878,8 +878,8 @@
 					</code>
 				</method>
 				<method>
-					<static>false</static>
-					<access>private</access>
+					<static>true</static>
+					<access>public</access>
 					<type>Overload-DBObject</type>
 					<comment><![CDATA[
 						/**
@@ -890,7 +890,7 @@
 	 </comment>
 					<code>
 						<![CDATA[
-							private function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
+							public static function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
 	{
 		$iParamCount = 0;
 		if (stripos($sResponseCallback, '$this->') !== false) {

@@ -77,7 +77,7 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @throws ReflectionException
 	 * @throws SecurityException
 	 */
-	private static function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
+	public static function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
 	{
 		$iParamCount = 0;
 		if (stripos($sResponseCallback, '$this->') !== false) {
