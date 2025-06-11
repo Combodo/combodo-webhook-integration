@@ -953,11 +953,11 @@
 					IssueLog::Error($sErrorMessage);
 					throw new SecurityException($sErrorMessage);
 				} elseif ($iParamCount === 1 && $param->getType()->getName() !== 'array') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a first parameter of type 'array', but it has {$param->getType()->getName()} instead.";
+					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'array', but it has {$param->getType()->getName()} instead.";
 					IssueLog::Error($sErrorMessage);
 					throw new SecurityException($sErrorMessage);
 				} elseif ($iParamCount === 2 && $param->getType()->getName() !== 'EventNotification') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'EventNotification', but it has {$param->getType()->getName()}  instead.";
+					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a third parameter of type 'EventNotification', but it has {$param->getType()->getName()}  instead.";
 					IssueLog::Error($sErrorMessage);
 					throw new SecurityException($sErrorMessage);
 				}
