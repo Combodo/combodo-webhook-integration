@@ -2,6 +2,7 @@
 
 namespace Combodo\iTop\Service;
 
+use DBObject;
 use Exception;
 use IssueLog;
 use ReflectionClass;
@@ -9,11 +10,15 @@ use ReflectionException;
 use SecurityException;
 
 /**
- * A service that will perform checks on the callback signature of a webhook action.
+ * A service that will perform checks on the signature of a method.
+ * Usage:
+ * $callbackService = new CallbackService('ClassName::methodName');
+ * $callbackService->CheckCallbackSignature(get_class($oTriggeringObject), [DBObject::class, 'string', 'int']);
+ * $callbackService->Invoke($oTriggeringObject, ['stringValue', 42]);
+ *
  */
 class CallbackService
 {
-	private string $sCallBackDefinition;
 	private string $sCallBackClassName;
 	private string $sCallBackMethodName;
 	private bool $bIsStatic;
@@ -23,7 +28,6 @@ class CallbackService
 	 */
 	public function __construct(string $sCallBackDefinition)
 	{
-		$this->sCallBackDefinition = $sCallBackDefinition;
 		if (stripos($sCallBackDefinition, '$this->') !== false) {
 			$this->sCallBackMethodName = str_ireplace('$this->', '', $sCallBackDefinition);
 			$this->bIsStatic = false;
@@ -51,17 +55,18 @@ class CallbackService
 	{
 		return $this->bIsStatic;
 	}
+
 	/**
 	 * @throws ReflectionException
 	 * @throws SecurityException
 	 */
-	public function CheckCallbackSignature(string $sTriggeringObjectType, array $aParamsType): void
+	public function CheckCallbackSignature(string $sTriggeringObjectClass, array $aParamsType): void
 	{
 		$iParamCount = 0;
 		if ($this->bIsStatic) { // If the callback is static, we expect the first parameter to be the triggering object type
-			array_unshift($aParamsType, $sTriggeringObjectType);
+			array_unshift($aParamsType, DBObject::class);
 		} else {
-			$this->sCallBackClassName = $sTriggeringObjectType;
+			$this->sCallBackClassName = $sTriggeringObjectClass;
 		}
 		$oReflector = new ReflectionClass($this->sCallBackClassName);
 		$aCallbackParameters = $oReflector->getMethod($this->sCallBackMethodName)->getParameters();
@@ -71,18 +76,18 @@ class CallbackService
 			IssueLog::Error($sErrorMessage);
 			throw new SecurityException($sErrorMessage);
 		}
-		foreach ($aCallbackParameters as $oParam) {
+		foreach ($aParamsType as $iParamOrder => $sParamType) {
+			$oParam = $aCallbackParameters[$iParamOrder];
 			if ($oParam->getType() === null) {
 				$sErrorMessage = "The callback method '$this->sCallBackMethodName' of class '$this->sCallBackClassName' must have type-hinted parameters, but parameter {$oParam->getName()} is not type-hinted.";
 				IssueLog::Error($sErrorMessage);
 				throw new SecurityException($sErrorMessage);
 			}
-			if ($oParam->getType()->getName() !== $aParamsType[$iParamCount]) {
-				$sErrorMessage = "The callback method '$this->sCallBackMethodName' of class '$this->sCallBackClassName' must have a first parameter of type '$aParamsType[$iParamCount]', but it has {$oParam->getType()->getName()} instead.";
+			if ($oParam->getType()->getName() !== $sParamType) {
+				$sErrorMessage = "The callback method '$this->sCallBackMethodName' of class '$this->sCallBackClassName' must have a parameter of type '$sParamType', but it has {$oParam->getType()->getName()} instead.";
 				IssueLog::Error($sErrorMessage);
 				throw new SecurityException($sErrorMessage);
 			}
-			$iParamCount++;
 		}
 	}
 

@@ -54,7 +54,7 @@ abstract class _ActionWebhook extends ActionNotification
         $sResponseCallback = $oActionWebhook->Get('process_response_callback');
 
         $oCallBack = new CallbackService($sResponseCallback);
-        $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), [Combodo\iTop\Core\WebResponse::class, ActionWebhook::class]);
+        $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), [WebResponse::class, \ActionWebhook::class]);
         $oCallBack->Invoke($oTriggeringObject, [$oResponse, $oActionWebhook]);
 	}
 

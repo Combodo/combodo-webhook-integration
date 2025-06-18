@@ -122,22 +122,22 @@ class _ActionWebhookTest extends ItopTestCase
 			'Check callback signature with wrong type'                                 => [
 				'sResponseCallback' => _ActionWebhookTest::class.'::CallBackWebhookThreeParamsWithWrongType',
 				'expectedException' => true,
-				'sErrorMessage'     => "The callback method 'CallBackWebhookThreeParamsWithWrongType' of class 'Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a first parameter of type 'DBObject', but it has int instead.",
+				'sErrorMessage'     => "The callback method 'CallBackWebhookThreeParamsWithWrongType' of class 'Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a parameter of type 'DBObject', but it has int instead.",
 			],
 			'Check callback signature with wrong type on object'                       => [
 				'sResponseCallback' => '$this->CallBackWebhookTwoParamsWithWrongTypeOnObject',
 				'expectedException' => true,
-				'sErrorMessage'     => "The callback method 'CallBackWebhookTwoParamsWithWrongTypeOnObject' of class 'Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a first parameter of type 'Combodo\iTop\Core\WebResponse', but it has int instead.",
+				'sErrorMessage'     => "The callback method 'CallBackWebhookTwoParamsWithWrongTypeOnObject' of class 'Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a parameter of type 'Combodo\iTop\Core\WebResponse', but it has int instead.",
 			],
 			'Check callback signature with correct type but incorrect order'           => [
 				'sResponseCallback' => _ActionWebhookTest::class.'::CallBackWebhookThreeParamsCorrectButWrongOrder',
 				'expectedException' => true,
-				'sErrorMessage'     => "Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a first parameter of type 'DBObject', but it has Combodo\iTop\Core\WebResponse instead.",
+				'sErrorMessage'     => "Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a parameter of type 'DBObject', but it has Combodo\iTop\Core\WebResponse instead.",
 			],
 			'Check callback signature with correct type but incorrect order on object' => [
 				'sResponseCallback' => '$this->CallBackWebhookTwoParamsCorrectButWrongOrderOnObject',
 				'expectedException' => true,
-				'sErrorMessage'     => "Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a first parameter of type 'Combodo\iTop\Core\WebResponse', but it has ActionWebhook instead.",
+				'sErrorMessage'     => "Combodo\iTop\Test\UnitTest\Core\_ActionWebhookTest' must have a parameter of type 'Combodo\iTop\Core\WebResponse', but it has ActionWebhook instead.",
 			],
 			'Check callback signature with correct type'                               => [
 				'sResponseCallback' => _ActionWebhookTest::class.'::CallBackWebhookThreeParamsCorrect',
