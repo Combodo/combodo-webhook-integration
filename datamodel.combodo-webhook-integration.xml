@@ -852,125 +852,14 @@
 			/** @var \DBObject $oTriggeringObject */
 			$oTriggeringObject = $aContextArgs['this->object()'];
 
-			// Check if callback is on the object itself
-			if(stripos($sCallbackFQCN, '$this->') !== false)
-			{
-				$sMethodName = str_ireplace('$this->', '', $sCallbackFQCN);
-				$this->CheckCallbackSignature($sCallbackFQCN, $oTriggeringObject);
-				$payload = $oTriggeringObject->$sMethodName($aContextArgs, $oLog, $this);
-			}
-			// Otherwise, check if callback is callable as a static method
-			elseif(is_callable($sCallbackFQCN))
-			{
-				$this->CheckCallbackSignature($sCallbackFQCN);
-				$payload = call_user_func($sCallbackFQCN, $oTriggeringObject, $aContextArgs, $oLog, $this);
-			}
-			// Otherwise, there is a problem
-			else
-			{
-				throw new Exception('Prepare payload callback is not callable ('.$sCallbackFQCN.')');
-			}
+			$oCallBack = new CallbackService($sCallbackFQCN);
+			$oCallBack->CheckCallbackSignature('DBObject', ['array', 'EventNotification', 'ActionWebhook']);
+			$oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
 		}
 
 		return $payload;
 	}
 ]]>
-					</code>
-				</method>
-				<method>
-					<static>true</static>
-					<access>public</access>
-					<type>Overload-DBObject</type>
-					<comment><![CDATA[
-						/**
-	 * @throws ReflectionException
-	 * @throws SecurityException
-	 */
-	 ]]>
-	 </comment>
-					<code>
-						<![CDATA[
-							public static function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
-	{
-		$iParamCount = 0;
-		if (stripos($sResponseCallback, '$this->') !== false) {
-			$sCallbackMethodName = str_ireplace('$this->', '', $sResponseCallback);
-			$sCallBackClassName = get_class($oTriggeringObject);
-			$oReflector = new ReflectionClass($sCallBackClassName);
-			$aCallbackParameters = $oReflector->getMethod($sCallbackMethodName)->getParameters();
-			if (count($aCallbackParameters) !== 3) {
-				$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have exactly 3 parameters: the ContextArgs array, the EventNotification object and the ActionWebhook object.";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			foreach ($aCallbackParameters as $param) {
-				if ($param->getType() === null) {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have type-hinted parameters, but parameter {$param->getName()} is not type-hinted.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				if ($iParamCount === 0 && $param->getType()->getName() !== 'array') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a first parameter of type 'array', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 1 && $param->getType()->getName() !== 'EventNotification') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'EventNotification', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				elseif ($iParamCount === 2 && $param->getType()->getName() !== 'ActionWebhook') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a third parameter of type 'ActionWebhook', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				$iParamCount++;
-			}
-		} else {
-			$pos = strrpos($sResponseCallback, '::');
-			if ($pos !== false) {
-				$sCallBackClassName = substr($sResponseCallback, 0, $pos);
-				$sCallbackMethodName = substr($sResponseCallback, $pos + 2);
-			} else {
-				$sErrorMessage = "The callback '$sResponseCallback' is not a valid static method (missing '::' separator).";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			$oReflector = new ReflectionClass($sCallBackClassName);
-			$aCallbackParameters = $oReflector->getMethod($sCallbackMethodName)->getParameters();
-			if (count($aCallbackParameters) !== 4) {
-				$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have exactly 4 parameters: the DBObject, the ContextArgs array, the EventNotification object and the ActionWebhook object.";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			foreach ($aCallbackParameters as $param) {
-				if ($param->getType() === null) {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have type-hinted parameters, but parameter {$param->getName()} is not type-hinted.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				if ($iParamCount === 0 && $param->getType()->getName() !== 'DBObject') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a first parameter of type 'DBObject', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 1 && $param->getType()->getName() !== 'array') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'array', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 2 && $param->getType()->getName() !== 'EventNotification') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a third parameter of type 'EventNotification', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				elseif ($iParamCount === 3 && $param->getType()->getName() !== 'ActionWebhook') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a third parameter of type 'ActionWebhook', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				$iParamCount++;
-			}
-		}
-	}
-						]]>
 					</code>
 				</method>
 				<method id="LogHeaders">

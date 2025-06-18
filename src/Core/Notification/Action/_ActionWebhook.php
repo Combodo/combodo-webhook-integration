@@ -6,15 +6,14 @@ use ActionNotification;
 use ApplicationContext;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
 use Combodo\iTop\Core\WebResponse;
+use Combodo\iTop\Service\CallbackService;
 use Combodo\iTop\Service\WebRequestSender;
+use DBObject;
 use EventWebhook;
 use Exception;
 use IssueLog;
 use MetaModel;
-use ReflectionClass;
 use ReflectionException;
-use ReflectionMethod;
-use SecurityException;
 use UserRights;
 use utils;
 
@@ -35,117 +34,28 @@ abstract class _ActionWebhook extends ActionNotification
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
 	 * @throws ReflectionException
+	 * @throws \Exception
 	 */
 	public static function ExecuteResponseHandler(WebResponse $oResponse, array $aParams)
 	{
 		// Retrieve objects from params
-		if (! array_key_exists('oTriggeringObject', $aParams) || ! array_key_exists('oActionWebhook', $aParams)) {
+		if (!array_key_exists('oTriggeringObject', $aParams) || !array_key_exists('oActionWebhook', $aParams)) {
 			IssueLog::Error('Missing parameters in response handler. Expecting at least oTriggeringObject and oActionWebhook', 'console', [
 				'oResponse' => $oResponse,
 				'aParams' => $aParams,
 			]);
 			throw new Exception('Missing parameters in response handler. See error log for details.');
 		}
-		/** @var \DBObject $oTriggeringObject */
-        $oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
-                            $aParams['oTriggeringObject'] :
-                            MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
+		/** @var DBObject $oTriggeringObject */
+		$oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
+			$aParams['oTriggeringObject'] :
+			MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
 		$oActionWebhook = MetaModel::GetObject($aParams['oActionWebhook']['class'], $aParams['oActionWebhook']['id'], true, true);
+        $sResponseCallback = $oActionWebhook->Get('process_response_callback');
 
-		// Check if callback is on the object itself
-		$sResponseCallback = $oActionWebhook->Get('process_response_callback');
-		if(stripos($sResponseCallback, '$this->') !== false)
-		{
-			$sMethodName = str_ireplace('$this->', '', $sResponseCallback);
-			self::CheckCallbackSignature($sResponseCallback, $oTriggeringObject);
-			$oTriggeringObject->$sMethodName($oResponse, $oActionWebhook);
-		}
-		// Otherwise, check if callback is callable as a static method
-		elseif(is_callable($sResponseCallback))
-		{
-			self::CheckCallbackSignature($sResponseCallback);
-			call_user_func($sResponseCallback, $oTriggeringObject, $oResponse, $oActionWebhook);
-		}
-		// Otherwise, there is a problem, we cannot call the callback
-		elseif(empty($sResponseCallback) === false)
-		{
-			throw new Exception('Process response callback is not callable ('.$sResponseCallback.')');
-		}
-	}
-
-	/**
-	 * @throws ReflectionException
-	 * @throws SecurityException
-	 */
-	public static function CheckCallbackSignature(string $sResponseCallback, $oTriggeringObject = null): void
-	{
-		$iParamCount = 0;
-		if (stripos($sResponseCallback, '$this->') !== false) {
-			$sCallbackMethodName = str_ireplace('$this->', '', $sResponseCallback);
-			$sCallBackClassName = get_class($oTriggeringObject);
-			$oReflector = new ReflectionClass($sCallBackClassName);
-			$aCallbackParameters = $oReflector->getMethod($sCallbackMethodName)->getParameters();
-			if (count($aCallbackParameters) !== 2) {
-				$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have exactly 2 parameters: the WebResponse and the ActionWebhook object.";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			foreach ($aCallbackParameters as $param) {
-				if ($param->getType() === null) {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have type-hinted parameters, but parameter {$param->getName()} is not type-hinted.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				if ($iParamCount === 0 && $param->getType()->getName() !== 'Combodo\iTop\Core\WebResponse') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a first parameter of type 'Combodo\iTop\Core\WebResponse', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 1 && $param->getType()->getName() !== 'ActionWebhook') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'ActionWebhook', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				$iParamCount++;
-			}
-		} else {
-			$pos = strrpos($sResponseCallback, '::');
-			if ($pos !== false) {
-				$sCallBackClassName = substr($sResponseCallback, 0, $pos);
-				$sCallbackMethodName = substr($sResponseCallback, $pos + 2);
-			} else {
-				$sErrorMessage = "The callback '$sResponseCallback' is not a valid static method (missing '::' separator).";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			$oReflector = new ReflectionClass($sCallBackClassName);
-			$aCallbackParameters = $oReflector->getMethod($sCallbackMethodName)->getParameters();
-			if (count($aCallbackParameters) !== 3) {
-				$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have exactly 3 parameters: the DBObject, the WebResponse and the ActionWebhook object.";
-				IssueLog::Error($sErrorMessage);
-				throw new SecurityException($sErrorMessage);
-			}
-			foreach ($aCallbackParameters as $param) {
-				if ($param->getType() === null) {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have type-hinted parameters, but parameter {$param->getName()} is not type-hinted.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				if ($iParamCount === 0 && $param->getType()->getName() !== 'DBObject') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a first parameter of type 'DBObject', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 1 && $param->getType()->getName() !== 'Combodo\iTop\Core\WebResponse') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a second parameter of type 'Combodo\iTop\Core\WebResponse', but it has {$param->getType()->getName()} instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				} elseif ($iParamCount === 2 && $param->getType()->getName() !== 'ActionWebhook') {
-					$sErrorMessage = "The callback method '$sCallbackMethodName' of class '$sCallBackClassName' must have a third parameter of type 'ActionWebhook', but it has {$param->getType()->getName()}  instead.";
-					IssueLog::Error($sErrorMessage);
-					throw new SecurityException($sErrorMessage);
-				}
-				$iParamCount++;
-			}
-		}
+        $oCallBack = new CallbackService($sResponseCallback);
+        $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), ['Combodo\iTop\Core\WebResponse', 'ActionWebhook']);
+        $oCallBack->Invoke($oTriggeringObject, [$oResponse, $oActionWebhook]);
 	}
 
 	/**
