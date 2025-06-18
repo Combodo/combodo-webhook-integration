@@ -853,7 +853,7 @@
 			$oTriggeringObject = $aContextArgs['this->object()'];
 
 			$oCallBack = new CallbackService($sCallbackFQCN);
-			$oCallBack->CheckCallbackSignature('DBObject', ['array', 'EventNotification', 'ActionWebhook']);
+			$oCallBack->CheckCallbackSignature(DBObject::class, ['array', EventNotification::class, ActionWebhook::class]);
 			$oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
 		}
 
