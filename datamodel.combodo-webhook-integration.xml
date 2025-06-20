@@ -852,22 +852,9 @@
 			/** @var \DBObject $oTriggeringObject */
 			$oTriggeringObject = $aContextArgs['this->object()'];
 
-			// Check if callback is on the object itself
-			if(stripos($sCallbackFQCN, '$this->') !== false)
-			{
-				$sMethodName = str_ireplace('$this->', '', $sCallbackFQCN);
-				$payload = $oTriggeringObject->$sMethodName($aContextArgs, $oLog, $this);
-			}
-			// Otherwise, check if callback is callable as a static method
-			elseif(is_callable($sCallbackFQCN))
-			{
-				$payload = call_user_func($sCallbackFQCN, $oTriggeringObject, $aContextArgs, $oLog, $this);
-			}
-			// Otherwise, there is a problem
-			else
-			{
-				throw new Exception('Prepare payload callback is not callable ('.$sCallbackFQCN.')');
-			}
+			$oCallBack = new CallbackService($sCallbackFQCN);
+			$oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), ['array', EventNotification::class, ActionWebhook::class]);
+			$oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
 		}
 
 		return $payload;

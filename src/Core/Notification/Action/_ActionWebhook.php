@@ -6,11 +6,14 @@ use ActionNotification;
 use ApplicationContext;
 use Combodo\iTop\Core\Notification\Action\Webhook\Exception\WebhookInvalidJsonValueException;
 use Combodo\iTop\Core\WebResponse;
+use Combodo\iTop\Service\CallbackService;
 use Combodo\iTop\Service\WebRequestSender;
+use DBObject;
 use EventWebhook;
 use Exception;
 use IssueLog;
 use MetaModel;
+use ReflectionException;
 use UserRights;
 use utils;
 
@@ -30,40 +33,29 @@ abstract class _ActionWebhook extends ActionNotification
 	 *
 	 * @throws \ArchivedObjectException
 	 * @throws \CoreException
+	 * @throws ReflectionException
+	 * @throws \Exception
 	 */
 	public static function ExecuteResponseHandler(WebResponse $oResponse, array $aParams)
 	{
 		// Retrieve objects from params
-		if (! array_key_exists('oTriggeringObject', $aParams) || ! array_key_exists('oActionWebhook', $aParams)) {
+		if (!array_key_exists('oTriggeringObject', $aParams) || !array_key_exists('oActionWebhook', $aParams)) {
 			IssueLog::Error('Missing parameters in response handler. Expecting at least oTriggeringObject and oActionWebhook', 'console', [
 				'oResponse' => $oResponse,
 				'aParams' => $aParams,
 			]);
 			throw new Exception('Missing parameters in response handler. See error log for details.');
 		}
-		/** @var \DBObject $oTriggeringObject */
-        $oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
-                            $aParams['oTriggeringObject'] :
-                            MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
+		/** @var DBObject $oTriggeringObject */
+		$oTriggeringObject = is_object($aParams['oTriggeringObject']) ?
+			$aParams['oTriggeringObject'] :
+			MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
 		$oActionWebhook = MetaModel::GetObject($aParams['oActionWebhook']['class'], $aParams['oActionWebhook']['id'], true, true);
+        $sResponseCallback = $oActionWebhook->Get('process_response_callback');
 
-		// Check if callback is on the object itself
-		$sResponseCallback = $oActionWebhook->Get('process_response_callback');
-		if(stripos($sResponseCallback, '$this->') !== false)
-		{
-			$sMethodName = str_ireplace('$this->', '', $sResponseCallback);
-			$oTriggeringObject->$sMethodName($oResponse, $oActionWebhook);
-		}
-		// Otherwise, check if callback is callable as a static method
-		elseif(is_callable($sResponseCallback))
-		{
-			call_user_func($sResponseCallback, $oTriggeringObject, $oResponse, $oActionWebhook);
-		}
-		// Otherwise, there is a problem, we cannot call the callback
-		elseif(empty($sResponseCallback) === false)
-		{
-			throw new Exception('Process response callback is not callable ('.$sResponseCallback.')');
-		}
+        $oCallBack = new CallbackService($sResponseCallback);
+        $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), [WebResponse::class, \ActionWebhook::class]);
+        $oCallBack->Invoke($oTriggeringObject, [$oResponse, $oActionWebhook]);
 	}
 
 	/**
