@@ -852,7 +852,7 @@
 			/** @var \DBObject $oTriggeringObject */
 			$oTriggeringObject = $aContextArgs['this->object()'];
 
-			$oCallBack = new CallbackService($sCallbackFQCN);
+			$oCallBack = new Combodo\iTop\Service\CallbackService($sCallbackFQCN);
 			$oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), ['array', EventNotification::class, ActionWebhook::class]);
 			$oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
 		}
