@@ -52,10 +52,11 @@ abstract class _ActionWebhook extends ActionNotification
 			MetaModel::GetObject($aParams['oTriggeringObject']['class'], $aParams['oTriggeringObject']['id'], true, true);
 		$oActionWebhook = MetaModel::GetObject($aParams['oActionWebhook']['class'], $aParams['oActionWebhook']['id'], true, true);
         $sResponseCallback = $oActionWebhook->Get('process_response_callback');
-
-        $oCallBack = new CallbackService($sResponseCallback);
-        $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), [WebResponse::class, \ActionWebhook::class]);
-        $oCallBack->Invoke($oTriggeringObject, [$oResponse, $oActionWebhook]);
+        if (!empty($sResponseCallback)) {
+            $oCallBack = new CallbackService($sResponseCallback);
+            $oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), [WebResponse::class, \ActionWebhook::class]);
+            $oCallBack->Invoke($oTriggeringObject, [$oResponse, $oActionWebhook]);
+        }
 	}
 
 	/**
