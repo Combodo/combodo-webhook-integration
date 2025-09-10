@@ -854,7 +854,7 @@
 
 			$oCallBack = new Combodo\iTop\Service\CallbackService($sCallbackFQCN);
 			$oCallBack->CheckCallbackSignature(get_class($oTriggeringObject), ['array', EventNotification::class, ActionWebhook::class]);
-			$oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
+			$payload = $oCallBack->Invoke($oTriggeringObject, [$aContextArgs, $oLog, $this]);
 		}
 
 		return $payload;
