@@ -2910,7 +2910,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		          <default_value/>
 		          <is_null_allowed>true</is_null_allowed>
 		        </field>
-				<field id="webhook_url" xsi:type="AttributeString">
+				<field id="webhook_url" xsi:type="AttributeText">
 		          <sql>webhook_url</sql>
 		          <default_value/>
 		          <is_null_allowed>true</is_null_allowed>
