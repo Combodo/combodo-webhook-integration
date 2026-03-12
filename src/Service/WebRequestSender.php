@@ -124,6 +124,37 @@ class WebRequestSender
 	{
 		try
 		{
+			// ============================
+			//  Inyectar opciones de proxy
+			// ============================
+			$oConfig    = MetaModel::GetConfig();
+			$aProxyConf = $oConfig->GetModuleSetting('combodo-webhook-integration', 'proxy', null);
+
+			if (is_array($aProxyConf) && !empty($aProxyConf['host'])) {
+				// Recuperar opciones actuales del request (si no hay, iniciamos array vacío)
+				$aCurlOptions = $oRequest->GetOptions();
+				if (!is_array($aCurlOptions)) {
+					$aCurlOptions = array();
+				}
+
+				// Host:puerto del proxy
+				$aCurlOptions[CURLOPT_PROXY]     = $aProxyConf['host'];
+				$aCurlOptions[CURLOPT_PROXYTYPE] = CURLPROXY_HTTP;
+
+				// Auth opcional si el proxy la requiere
+				if (!empty($aProxyConf['user'])) {
+					$sAuth = $aProxyConf['user'];
+					if (!empty($aProxyConf['password'])) {
+						$sAuth .= ':'.$aProxyConf['password'];
+					}
+					$aCurlOptions[CURLOPT_PROXYUSERPWD] = $sAuth;
+				}
+
+				// Guardar las opciones de vuelta en el request
+				$oRequest->SetOptions($aCurlOptions);
+			}
+			// ============================
+
 			$aResponseHeaders = array();
 			$sResponse = $this->DoPostRequest($oRequest->GetURL(), array(), null, $aResponseHeaders, $oRequest->GetOptions());
 
@@ -163,6 +194,7 @@ class WebRequestSender
 			);
 		}
 	}
+
 
 	/**
 	 * Add the $oRequest to the queue in order to be send later

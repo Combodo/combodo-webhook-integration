@@ -5,7 +5,7 @@
 //
 //
 SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-	'combodo-webhook-integration/1.4.5',
+	'combodo-webhook-integration/1.4.4',
 	array(
 		//
 		'label' => 'Webhook integrations',
@@ -44,7 +44,14 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 
 		// Default settings
 		//
-		'settings' => array(),
+		'settings' => array(
+		// Configuración de proxy para las llamadas salientes de los webhooks
+			'proxy' => array(
+				'host'     => 'ip.roxy:3128', // IP:PUERTO de tu proxy
+				'user'     => '',                 // si no requiere auth, dejalo vacío
+				'password' => '',
+			)
+		)
 	)
 );
 
