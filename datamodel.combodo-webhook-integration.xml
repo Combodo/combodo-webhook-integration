@@ -2888,7 +2888,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 				<name>EventNotification</name>
 			</php_parent>
 			<properties>
-				<category>core/cmdb,view_in_gui</category>
+				<category>core/cmdb,grant_by_profile,silo</category>
 				<abstract>false</abstract>
 				<key_type>autoincrement</key_type>
 				<db_table>priv_event_webhook</db_table>
