@@ -173,9 +173,9 @@ abstract class _ActionWebhook extends ActionNotification
 			}
 
 			// Errors during preparation
-			if (!empty($this->m_aWebrequestErrors))
+			if (!empty($this->aRequestErrors))
 			{
-				return 'Errors: '.implode(', ', $this->m_aWebrequestErrors);
+				return 'Errors: '.implode(', ', $this->aRequestErrors);
 			}
 
 			if ($this->IsBeingTested() && empty($oRequest->GetURL()))
@@ -197,7 +197,7 @@ abstract class _ActionWebhook extends ActionNotification
 				case WebRequestSender::ENUM_SEND_STATE_PENDING:
 					return 'Pending';
 
-				case WebRequestSender::ENUM_SEND_STATE_ERROR;
+				case WebRequestSender::ENUM_SEND_STATE_ERROR:
 					return 'Errors: '.implode(', ', $this->aRequestErrors);
 			}
 		}
