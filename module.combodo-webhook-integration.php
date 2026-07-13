@@ -72,6 +72,91 @@ if (!class_exists('WebhookIntegrationInstaller'))
 				self::MoveColumnInDB($sTableToRead, 'language', $sTableToSet, 'language', true);
 				SetupLog::Info("|  ActionWebhook migration done.");
 			}
+
+            // In combodo-webhook-integration v1.4.2, bug N°7875 led to token format change
+            if (version_compare($sPreviousVersion, '1.4.2', '<')) {
+                SetupLog::Info("|  Migrate RemoteiTopConnectionToken token format.");
+                self::MigrateTokenFromEncryptedBlobToString();
+                SetupLog::Info("|  RemoteiTopConnectionToken migration done.");
+            }
+		}
+
+		/**
+         * Convert token encrypted binary format into clear token strings to prevent new column format from rejecting the data.
+		 *
+		 * @throws Exception When at least one token cannot be migrated safely.
+		 */
+		private static function MigrateTokenFromEncryptedBlobToString()
+		{
+			if (!MetaModel::DBExists(false)) {
+				return;
+			}
+
+            // Note: There is an issue when upgrading, encryption values cannot be retrieved from the passed configuration, we have to read it from the disk
+            $oDiskConfig = utils::GetConfig(true);
+
+            $sClass = 'RemoteiTopConnectionToken';
+			$sTable = MetaModel::DBGetTable($sClass);
+			$sColumn = MetaModel::GetAttributeDef($sClass, 'token')->Get('sql');
+
+			if (!CMDBSource::IsTable($sTable) || !CMDBSource::IsField($sTable, $sColumn)) {
+				SetupLog::Info("|  Token migration skipped: table/column not found.");
+				return;
+			}
+
+			$sFieldType = strtolower((string) CMDBSource::GetFieldType($sTable, $sColumn));
+            // Check if we're dealing with a *blob (tinyblob is expected from the AttibuteEncryptedString definition)
+			if (strpos($sFieldType, 'blob') === false) {
+				SetupLog::Info("|  Token migration skipped: column already non-binary ({$sFieldType}).");
+				return;
+			}
+
+			SetupLog::Info("|  Migrating encrypted token payloads from binary column {$sTable}.{$sColumn}.");
+			$aRows = CMDBSource::QueryToArray("SELECT `id`, `{$sColumn}` FROM `{$sTable}` WHERE `{$sColumn}` IS NOT NULL AND LENGTH(`{$sColumn}`) > 0");
+			if (empty($aRows)) {
+				SetupLog::Info("|  Token migration skipped: no non-empty values found.");
+				return;
+			}
+
+            // Load SimpleCrypt object to decrypt values
+			$oSimpleCrypt = new SimpleCrypt($oDiskConfig->GetEncryptionLibrary());
+			$sEncryptionKey = $oDiskConfig->GetEncryptionKey();
+
+			$sDecryptError = Dict::S('Core:AttributeEncryptFailedToDecrypt');
+			$iMigrated = 0;
+			$aFailedIds = [];
+
+			foreach ($aRows as $aRow) {
+				$iId = (int) $aRow['id'];
+				$sEncryptedValue = $aRow['token'];
+
+                // Try to decrypt token raw value
+				try {
+					$sDecryptedValue = $oSimpleCrypt->Decrypt($sEncryptionKey, $sEncryptedValue);
+				} catch (Exception $e) {
+					$aFailedIds[] = $iId;
+					SetupLog::Error("|  Token migration failed for id={$iId}: {$e->getMessage()}");
+					continue;
+				}
+
+                // If the decrypted value equals common error message, consider something went wrong and skip this line
+				if ($sDecryptedValue === $sDecryptError) {
+					$aFailedIds[] = $iId;
+					SetupLog::Error("|  Token migration failed for id={$iId}: decryption error.");
+					continue;
+				}
+
+				$sUpdateQuery = "UPDATE `{$sTable}` SET `{$sColumn}` = ".CMDBSource::Quote($sDecryptedValue)." WHERE `id` = {$iId}";
+				CMDBSource::Query($sUpdateQuery);
+				$iMigrated++;
+			}
+
+            // Throw an exception before trying to go forward with the database if we couldn't decipher all values, avoiding MySQL errors
+			if (!empty($aFailedIds)) {
+				throw new Exception('|  Token migration aborted: unable to decrypt token values for ids '.implode(', ', $aFailedIds).'.');
+			}
+
+			SetupLog::Info("|  Token migration done: {$iMigrated} row(s) decrypted to clear string.");
 		}
 	}
 }
