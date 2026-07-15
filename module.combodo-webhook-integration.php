@@ -1,41 +1,43 @@
 <?php
+
 //
 // iTop module definition file
 //
 //
 //
-SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
+SetupWebPage::AddModule(
+	__FILE__, // Path to the current file, all other file names are relative to the directory containing this file
 	'combodo-webhook-integration/1.4.6',
-	array(
+	[
 		//
 		'label' => 'Webhook integrations',
 		'category' => 'business',
 
 		// Setup
 		//
-		'dependencies' => array(
+		'dependencies' => [
 			'itop-structure/3.2.0',
 			'itop-attribute-encrypted-password/1.0.0',
 			'combodo-oauth2-client/1.0.0',
-		),
+		],
 		'mandatory' => false,
 		'visible' => true,
 		'installer' => 'WebhookIntegrationInstaller',
 
 		// Components
 		//
-		'datamodel' => array(
+		'datamodel' => [
 			// Extension autoloader
 			'vendor/autoload.php',
 			// Explicitly load DM classes
 			'SendWebRequest.php',
 			'model.combodo-webhook-integration.php',
-		),
-		'webservice' => array(),
-		'data.struct' => array(
+		],
+		'webservice' => [],
+		'data.struct' => [
 			'data.struct.remote_application_type.xml',
-		),
-		'data.sample' => array(),
+		],
+		'data.sample' => [],
 
 		// Documentation
 		//
@@ -44,12 +46,11 @@ SetupWebPage::AddModule(__FILE__, // Path to the current file, all other file na
 
 		// Default settings
 		//
-		'settings' => array(),
-	)
+		'settings' => [],
+	]
 );
 
-if (!class_exists('WebhookIntegrationInstaller'))
-{
+if (!class_exists('WebhookIntegrationInstaller')) {
 	// Module installation handler
 	//
 	class WebhookIntegrationInstaller extends ModuleInstallerAPI
@@ -73,16 +74,16 @@ if (!class_exists('WebhookIntegrationInstaller'))
 				SetupLog::Info("|  ActionWebhook migration done.");
 			}
 
-            // In combodo-webhook-integration v1.4.2, bug N°7875 led to token format change
-            if (version_compare($sPreviousVersion, '1.4.2', '<')) {
-                SetupLog::Info("|  Migrate RemoteiTopConnectionToken token format.");
-                self::MigrateTokenFromEncryptedBlobToString();
-                SetupLog::Info("|  RemoteiTopConnectionToken migration done.");
-            }
+			// In combodo-webhook-integration v1.4.2, bug N°7875 led to token format change
+			if (version_compare($sPreviousVersion, '1.4.2', '<')) {
+				SetupLog::Info("|  Migrate RemoteiTopConnectionToken token format.");
+				self::MigrateTokenFromEncryptedBlobToString();
+				SetupLog::Info("|  RemoteiTopConnectionToken migration done.");
+			}
 		}
 
 		/**
-         * Convert token encrypted binary format into clear token strings to prevent new column format from rejecting the data.
+		 * Convert token encrypted binary format into clear token strings to prevent new column format from rejecting the data.
 		 *
 		 * @throws Exception When at least one token cannot be migrated safely.
 		 */
@@ -92,10 +93,10 @@ if (!class_exists('WebhookIntegrationInstaller'))
 				return;
 			}
 
-            // Note: There is an issue when upgrading, encryption values cannot be retrieved from the passed configuration, we have to read it from the disk
-            $oDiskConfig = utils::GetConfig(true);
+			// Note: There is an issue when upgrading, encryption values cannot be retrieved from the passed configuration, we have to read it from the disk
+			$oDiskConfig = utils::GetConfig(true);
 
-            $sClass = 'RemoteiTopConnectionToken';
+			$sClass = 'RemoteiTopConnectionToken';
 			$sTable = MetaModel::DBGetTable($sClass);
 			$sColumn = MetaModel::GetAttributeDef($sClass, 'token')->Get('sql');
 
@@ -105,7 +106,7 @@ if (!class_exists('WebhookIntegrationInstaller'))
 			}
 
 			$sFieldType = strtolower((string) CMDBSource::GetFieldType($sTable, $sColumn));
-            // Check if we're dealing with a *blob (tinyblob is expected from the AttributeEncryptedString definition)
+			// Check if we're dealing with a *blob (tinyblob is expected from the AttributeEncryptedString definition)
 			if (strpos($sFieldType, 'blob') === false) {
 				SetupLog::Info("|  Token migration skipped: column already non-binary ({$sFieldType}).");
 				return;
@@ -118,19 +119,20 @@ if (!class_exists('WebhookIntegrationInstaller'))
 				return;
 			}
 
-            // Load SimpleCrypt object to decrypt values
+			// Load SimpleCrypt object to decrypt values
 			$oSimpleCrypt = new SimpleCrypt($oDiskConfig->GetEncryptionLibrary());
 			$sEncryptionKey = $oDiskConfig->GetEncryptionKey();
 
 			$sDecryptError = Dict::S('Core:AttributeEncryptFailedToDecrypt');
 			$iMigrated = 0;
+			$aUpdatedValues = [];
 			$aFailedIds = [];
 
 			foreach ($aRows as $aRow) {
 				$iId = (int) $aRow['id'];
 				$sEncryptedValue = $aRow['token'];
 
-                // Try to decrypt token raw value
+				// Try to decrypt token raw value
 				try {
 					$sDecryptedValue = $oSimpleCrypt->Decrypt($sEncryptionKey, $sEncryptedValue);
 				} catch (Exception $e) {
@@ -139,21 +141,33 @@ if (!class_exists('WebhookIntegrationInstaller'))
 					continue;
 				}
 
-                // If the decrypted value equals common error message, consider something went wrong and skip this line
+				// If the decrypted value equals common error message, consider something went wrong and skip this line
 				if ($sDecryptedValue === $sDecryptError) {
 					$aFailedIds[] = $iId;
 					SetupLog::Error("|  Token migration failed for id={$iId}: decryption error.");
 					continue;
 				}
 
-				$sUpdateQuery = "UPDATE `{$sTable}` SET `{$sColumn}` = ".CMDBSource::Quote($sDecryptedValue)." WHERE `id` = {$iId}";
-				CMDBSource::Query($sUpdateQuery);
-				$iMigrated++;
+				$aUpdatedValues[$iId] = $sDecryptedValue;
 			}
 
-            // Throw an exception before trying to go forward with the database if we couldn't decipher all values, avoiding MySQL errors
+			// Throw an exception before trying to go forward with the database if we couldn't decipher all values, avoiding MySQL errors
 			if (!empty($aFailedIds)) {
 				throw new Exception('|  Token migration aborted: unable to decrypt token values for ids '.implode(', ', $aFailedIds).'.');
+			}
+
+			CMDBSource::Query('START TRANSACTION');
+			try {
+				foreach ($aUpdatedValues as $iId => $sDecryptedValue) {
+					CMDBSource::Query(
+						"UPDATE `{$sTable}` SET `{$sColumn}` = ".CMDBSource::Quote($sDecryptedValue)." WHERE `id` = {$iId}"
+					);
+					$iMigrated++;
+				}
+				CMDBSource::Query('COMMIT');
+			} catch (Exception $e) {
+				CMDBSource::Query('ROLLBACK');
+				throw new Exception('|  Token migration aborted: unable to insert updated data into database column: '.$e->getMessage().'.');
 			}
 
 			SetupLog::Info("|  Token migration done: {$iMigrated} row(s) decrypted to clear string.");
