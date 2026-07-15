@@ -105,7 +105,7 @@ if (!class_exists('WebhookIntegrationInstaller'))
 			}
 
 			$sFieldType = strtolower((string) CMDBSource::GetFieldType($sTable, $sColumn));
-            // Check if we're dealing with a *blob (tinyblob is expected from the AttibuteEncryptedString definition)
+            // Check if we're dealing with a *blob (tinyblob is expected from the AttributeEncryptedString definition)
 			if (strpos($sFieldType, 'blob') === false) {
 				SetupLog::Info("|  Token migration skipped: column already non-binary ({$sFieldType}).");
 				return;
