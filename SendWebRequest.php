@@ -77,7 +77,7 @@ class SendWebRequest extends AsyncTask
 	 */
 	public static function AddToQueue(WebRequest $oWebRequest, $oLog = null)
 	{
-		$oNew = new self();
+		$oNew = new SendWebRequest();
 		if ($oLog)
 		{
 			$oNew->Set('event_id', $oLog->GetKey());
@@ -112,10 +112,10 @@ class SendWebRequest extends AsyncTask
 				return 'Whoops! Seems like a bug occurred, the request should be sent in synchronous mode';
 
 			case WebRequestSender::ENUM_SEND_STATE_ERROR:
-				return throw new Exception('Failed: '.implode(', ', $aIssues));
+				throw new Exception('Failed: '.implode(', ', $aIssues));
 
 			default:
-				return "Whoops! unexpected behaviour (sender_status: $iStatus)";
+				return "Whoops! unexpected behavior (sender_status: $iStatus)";
 		}
 	}
 }
