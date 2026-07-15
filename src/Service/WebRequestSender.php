@@ -62,7 +62,7 @@ class WebRequestSender
 
 	public static function SetMockDoPostRequest(bool $mockDoPostRequest): void
 	{
-		static::$mockDoPostRequest = $mockDoPostRequest;
+		self::$mockDoPostRequest = $mockDoPostRequest;
 	}
 	/**
 	 * Return the singleton instance for this class
@@ -71,12 +71,16 @@ class WebRequestSender
 	 */
 	public static function GetInstance()
 	{
-		if(static::$oInstance === null)
+		if(self::$oInstance === null)
 		{
-			static::$oInstance = new static();
+			self::$oInstance = new WebRequestSender();
 		}
 
-		return static::$oInstance;
+		return self::$oInstance;
+	}
+
+	public static function SetInstance(?WebRequestSender $oInstance) : void {
+		self::$oInstance = $oInstance;
 	}
 
 	/**
@@ -93,22 +97,20 @@ class WebRequestSender
 	{
 		if($sForcedSendMode === static::ENUM_SEND_MODE_SYNC)
 		{
-			$aResult = $this->SendSynchronously($oRequest, $aIssues, $oLog);
-		}
-		elseif($sForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
-		{
-			$aResult = $this->SendAsynchronously($oRequest, $aIssues, $oLog);
-		}
-		elseif(MetaModel::GetModuleSetting('combodo-webhook-integration', 'prefer_asynchronous', (static::DEFAULT_SEND_MODE === static::ENUM_SEND_MODE_ASYNC)))
-		{
-			$aResult = $this->SendAsynchronously($oRequest, $aIssues, $oLog);
-		}
-		else
-		{
-			$aResult = $this->SendSynchronously($oRequest, $aIssues, $oLog);
+			return $this->SendSynchronously($oRequest, $aIssues, $oLog);
 		}
 
-		return $aResult;
+		if($sForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
+		{
+			return $this->SendAsynchronously($oRequest, $aIssues, $oLog);
+		}
+
+		if(MetaModel::GetModuleSetting('combodo-webhook-integration', 'prefer_asynchronous', (static::DEFAULT_SEND_MODE === static::ENUM_SEND_MODE_ASYNC)))
+		{
+			return $this->SendAsynchronously($oRequest, $aIssues, $oLog);
+		}
+
+		return $this->SendSynchronously($oRequest, $aIssues, $oLog);
 	}
 
 	/**
