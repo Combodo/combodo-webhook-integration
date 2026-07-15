@@ -62,7 +62,7 @@ class WebRequestSender
 
 	public static function SetMockDoPostRequest(bool $mockDoPostRequest): void
 	{
-		static::$mockDoPostRequest = $mockDoPostRequest;
+		self::$mockDoPostRequest = $mockDoPostRequest;
 	}
 	/**
 	 * Return the singleton instance for this class
@@ -71,16 +71,16 @@ class WebRequestSender
 	 */
 	public static function GetInstance()
 	{
-		if(static::$oInstance === null)
+		if(self::$oInstance === null)
 		{
-			static::$oInstance = new static();
+			self::$oInstance = new self();
 		}
 
-		return static::$oInstance;
+		return self::$oInstance;
 	}
 
 	public static function SetInstance(?WebRequestSender $oInstance) : void {
-		static::$oInstance = $oInstance;
+		self::$oInstance = $oInstance;
 	}
 
 	/**

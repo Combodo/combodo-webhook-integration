@@ -14,11 +14,11 @@ class WebRequestService {
 
 	final public static function GetInstance(): WebRequestService
 	{
-		if (!isset(static::$oInstance)) {
-			static::$oInstance = new static();
+		if (!isset(self::$oInstance)) {
+			self::$oInstance = new self();
 		}
 
-		return static::$oInstance;
+		return self::$oInstance;
 	}
 
 	/**
@@ -34,7 +34,7 @@ class WebRequestService {
 	 */
 	final public static function ResetInstance()
 	{
-		self::$oInstance = new static();
+		self::$oInstance = new self();
 	}
 
 	public function ObfuscateRawHeader(string $sRawHeaders) : string {
