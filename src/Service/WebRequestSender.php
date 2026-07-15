@@ -73,7 +73,7 @@ class WebRequestSender
 	{
 		if(self::$oInstance === null)
 		{
-			self::$oInstance = new self();
+			self::$oInstance = new WebRequestSender();
 		}
 
 		return self::$oInstance;
