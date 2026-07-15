@@ -111,7 +111,7 @@ class SendWebRequest extends AsyncTask
 				return 'Whoops! Seems like a bug occurred, the request should be sent in synchronous mode';
 
 			case WebRequestSender::ENUM_SEND_STATE_ERROR:
-				return 'Failed: '.implode(', ', $aIssues);
+				return throw new Exception('Failed: '.implode(', ', $aIssues));
 		}
 	}
 }

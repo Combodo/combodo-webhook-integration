@@ -79,6 +79,10 @@ class WebRequestSender
 		return static::$oInstance;
 	}
 
+	public static function SetInstance(?WebRequestSender $oInstance) : void {
+		static::$oInstance = $oInstance;
+	}
+
 	/**
 	 * Send the $oRequest synchronously or asynchronously depending on the $bForcedSendMode parameter and the 'prefer_asynchronous' module parameter.
 	 *
@@ -93,22 +97,20 @@ class WebRequestSender
 	{
 		if($sForcedSendMode === static::ENUM_SEND_MODE_SYNC)
 		{
-			$aResult = $this->SendSynchronously($oRequest, $aIssues, $oLog);
-		}
-		elseif($sForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
-		{
-			$aResult = $this->SendAsynchronously($oRequest, $aIssues, $oLog);
-		}
-		elseif(MetaModel::GetModuleSetting('combodo-webhook-integration', 'prefer_asynchronous', (static::DEFAULT_SEND_MODE === static::ENUM_SEND_MODE_ASYNC)))
-		{
-			$aResult = $this->SendAsynchronously($oRequest, $aIssues, $oLog);
-		}
-		else
-		{
-			$aResult = $this->SendSynchronously($oRequest, $aIssues, $oLog);
+			return $this->SendSynchronously($oRequest, $aIssues, $oLog);
 		}
 
-		return $aResult;
+		if($sForcedSendMode === static::ENUM_SEND_MODE_ASYNC)
+		{
+			return $this->SendAsynchronously($oRequest, $aIssues, $oLog);
+		}
+
+		if(MetaModel::GetModuleSetting('combodo-webhook-integration', 'prefer_asynchronous', (static::DEFAULT_SEND_MODE === static::ENUM_SEND_MODE_ASYNC)))
+		{
+			return $this->SendAsynchronously($oRequest, $aIssues, $oLog);
+		}
+
+		return $this->SendSynchronously($oRequest, $aIssues, $oLog);
 	}
 
 	/**
