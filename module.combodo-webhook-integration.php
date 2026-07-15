@@ -130,7 +130,7 @@ if (!class_exists('WebhookIntegrationInstaller')) {
 
 			foreach ($aRows as $aRow) {
 				$iId = (int) $aRow['id'];
-				$sEncryptedValue = $aRow['token'];
+				$sEncryptedValue = $aRow[$sColumn];
 
 				// Try to decrypt token raw value
 				try {
