@@ -28,3 +28,4 @@ We would like to give a special thank you 🤗 to the people from the community 
 - Casteleyn, Thomas (a.k.a [@Hipska](https://github.com/Hipska))
 - Bostoen, Jeffrey (a.k.a [@jbostoen](https://github.com/jbostoen))
 - Bie, Dejin (a.k.a [@bdejin](https://www.github.com/bdejin))
+- Dutta, Ritoban (a.ka [@ritoban23](https://www.github.com/ritoban23)) 
