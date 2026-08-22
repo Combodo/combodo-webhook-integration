@@ -124,7 +124,7 @@ Dict::Add('EN GB', 'British English', 'British English', array(
 
 IMPORTANT:
 - \'Content-type\' should be set to \'application/x-www-form-urlencoded\' for iTop, even though we send JSON
-- A \'Basic authorization\' header will be append automatically to request during sending, containing the credentials from the selected connection',
+- A \'Basic authorisation\' header will be append automatically to request during sending, containing the credentials from the selected connection',
 	'Class:ActioniTopWebhook/Attribute:payload' => 'JSON data',
 	'Class:ActioniTopWebhook/Attribute:payload+' => 'The JSON payload, must be a JSON string containing the operation name and parameters, see documentation for detailed information',
 	'Class:ActioniTopWebhook/Attribute:prepare_payload_callback+' => 'PHP method to prepare payload data to be sent during the webhook call. Use this if your payload structure must be dynamically built.
