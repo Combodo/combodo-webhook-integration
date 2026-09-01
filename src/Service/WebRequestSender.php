@@ -124,6 +124,48 @@ class WebRequestSender
 	{
 		try
 		{
+			// ============================
+			//  Inject proxy options
+			// ============================
+			// The proxy applies to every webhook unless the target host is listed in
+			// 'no_proxy'. This allows a webhook reaching the Internet to keep using the
+			// corporate proxy while another one targeting an internal host goes straight
+			// to it: forwarding an internal destination through the proxy typically ends
+			// up as an HTTP 503 returned by the proxy on the CONNECT.
+			$oConfig    = MetaModel::GetConfig();
+			$aProxyConf = $oConfig->GetModuleSetting('combodo-webhook-integration', 'proxy', null);
+
+			$bBypassProxy = false;
+			if (is_array($aProxyConf) && !empty($aProxyConf['no_proxy'])) {
+				$sTargetHost  = parse_url($oRequest->GetURL(), PHP_URL_HOST);
+				$bBypassProxy = self::HostMatchesNoProxy($sTargetHost, $aProxyConf['no_proxy']);
+			}
+
+			if (is_array($aProxyConf) && !empty($aProxyConf['host']) && !$bBypassProxy) {
+				// Retrieve the current options of the request (start from an empty array if none)
+				$aCurlOptions = $oRequest->GetOptions();
+				if (!is_array($aCurlOptions)) {
+					$aCurlOptions = array();
+				}
+
+				// Proxy host:port
+				$aCurlOptions[CURLOPT_PROXY]     = $aProxyConf['host'];
+				$aCurlOptions[CURLOPT_PROXYTYPE] = CURLPROXY_HTTP;
+
+				// Optional authentication, if the proxy requires it
+				if (!empty($aProxyConf['user'])) {
+					$sAuth = $aProxyConf['user'];
+					if (!empty($aProxyConf['password'])) {
+						$sAuth .= ':'.$aProxyConf['password'];
+					}
+					$aCurlOptions[CURLOPT_PROXYUSERPWD] = $sAuth;
+				}
+
+				// Store the options back into the request
+				$oRequest->SetOptions($aCurlOptions);
+			}
+			// ============================
+
 			$aResponseHeaders = array();
 			$sResponse = $this->DoPostRequest($oRequest->GetURL(), array(), null, $aResponseHeaders, $oRequest->GetOptions());
 
@@ -195,6 +237,57 @@ class WebRequestSender
 			'sender_status' => static::ENUM_SEND_STATE_PENDING,
 			'response' => null,
 		);
+	}
+
+	/**
+	 * Tells whether $sHost must bypass the proxy, according to the 'no_proxy' list of
+	 * the module configuration. Same semantics as curl's no_proxy environment variable:
+	 *
+	 *   '*'                  -> everything bypasses the proxy
+	 *   '.example.com'       -> matches the domain and any of its subdomains
+	 *   'host.example.com'   -> exact match
+	 *
+	 * Comparison is case insensitive. When in doubt - empty host or malformed list -
+	 * it returns false, i.e. the proxy IS applied, preserving the previous behaviour.
+	 *
+	 * @param string|null $sHost    Target host of the webhook
+	 * @param mixed       $aNoProxy Exclusion list (array of strings)
+	 *
+	 * @return bool
+	 * @since 1.4.10
+	 */
+	private static function HostMatchesNoProxy($sHost, $aNoProxy)
+	{
+		if (empty($sHost) || !is_array($aNoProxy)) {
+			return false;
+		}
+		$sHost = strtolower(trim($sHost));
+
+		foreach ($aNoProxy as $sEntry) {
+			if (!is_string($sEntry)) {
+				continue;
+			}
+			$sEntry = strtolower(trim($sEntry));
+			if ($sEntry === '') {
+				continue;
+			}
+			if ($sEntry === '*') {
+				return true;
+			}
+			if ($sEntry[0] === '.') {
+				// Suffix: '.example.com' also covers example.com itself
+				$sBare = substr($sEntry, 1);
+				if ($sHost === $sBare || substr($sHost, -strlen($sEntry)) === $sEntry) {
+					return true;
+				}
+				continue;
+			}
+			if ($sHost === $sEntry) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private function DoPostRequest($sUrl, $aData, $sOptionnalHeaders = null, &$aResponseHeaders = null, $aCurlOptions = array())

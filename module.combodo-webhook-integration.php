@@ -46,7 +46,26 @@ SetupWebPage::AddModule(
 
 		// Default settings
 		//
-		'settings' => [],
+		'settings' => [
+			// Proxy used for the webhooks outgoing calls.
+			// Leave 'host' empty (the default) to keep the previous behaviour: no proxy at all.
+			'proxy' => [
+				'host'     => '', // 'IP:PORT' of the proxy, e.g. '10.0.0.1:3128'
+				'user'     => '', // leave empty if the proxy requires no authentication
+				'password' => '',
+				// Destinations that must NOT go through the proxy.
+				// Same semantics as curl's no_proxy environment variable:
+				//   '*'                  -> no webhook uses the proxy
+				//   '.example.com'       -> the domain and all its subdomains
+				//   'host.example.com'   -> exact match
+				// This lets a webhook targeting the Internet keep using the proxy while
+				// another one targeting an internal host goes straight to it.
+				'no_proxy' => [
+					'localhost',
+					'127.0.0.1',
+				],
+			],
+		],
 	]
 );
 
