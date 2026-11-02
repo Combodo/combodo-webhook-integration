@@ -71,16 +71,16 @@ class WebRequestSender
 	 */
 	public static function GetInstance()
 	{
-		if(self::$oInstance === null)
+		if(static::$oInstance === null)
 		{
-			self::$oInstance = new WebRequestSender();
+			static::$oInstance = new static();
 		}
 
-		return self::$oInstance;
+		return static::$oInstance;
 	}
 
 	public static function SetInstance(?WebRequestSender $oInstance) : void {
-		self::$oInstance = $oInstance;
+		static::$oInstance = $oInstance;
 	}
 
 	/**
