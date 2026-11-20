@@ -721,7 +721,7 @@
 		// Get URL
 		if($oRemoteApplicationConnection !== null)
 		{
-			$sURL = MetaModel::ApplyParams($oRemoteApplicationConnection->Get('url').$this->Get('path'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+			$sURL = MetaModel::ApplyParams($oRemoteApplicationConnection->Get('url').$this->Get('path'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null);
 		}
 		elseif($this->IsBeingTested())
 		{
@@ -780,7 +780,7 @@
 	{
 		$aHeaders = [];
 
-		$sHeadersAsText = MetaModel::ApplyParams($this->Get('headers'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sHeadersAsText = MetaModel::ApplyParams($this->Get('headers'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null);
 		$aLines = preg_split('/\r\n|\r|\n/', $sHeadersAsText);
 		foreach ($aLines as $sLine) {
 			$sLine = trim($sLine);
@@ -843,7 +843,7 @@
 					break;
 
 				default:
-					$payload = MetaModel::ApplyParams($this->Get('payload'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+					$payload = MetaModel::ApplyParams($this->Get('payload'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null);
 					break;
 			}
 		}
@@ -927,8 +927,9 @@
 					<code><![CDATA[	protected function ApplyParamsToArray(array $aContextArgs, array $aInputData)
 	{
 		$aPreparedData = [];
+		$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null;
 		foreach ($aInputData as $sKey => $value) {
-			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+			$sPreparedKey = MetaModel::ApplyParams($sKey, $aContextArgs, $sApplySanitizeMode);
 			$aPreparedData[$sPreparedKey] = $this->ApplyParamsToValue($aContextArgs, $value);
 		}
 
@@ -954,7 +955,8 @@
 		// N°5367 - Fix non-string values (boolean, null) converted into empty string
 		// Some APIs explicitly require booleans such as 'false'; or null values.
 		// Do not convert those into a string by calling MetaModel::ApplyParams().
-		$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : (is_string($value) ? MetaModel::ApplyParams($value, $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE) : $value);
+		$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null;
+		$preparedValue = is_array($value) ? $this->ApplyParamsToArray($aContextArgs, $value) : (is_string($value) ? MetaModel::ApplyParams($value, $aContextArgs, $sApplySanitizeMode) : $value);
 		return $preparedValue;
 	}
 ]]>
@@ -1286,7 +1288,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Retrieve basis parameters
 		$aParameters = array(
-			'version' => MetaModel::ApplyParams($oRemoteApplicationConnection->Get('version'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE),
+			'version' => MetaModel::ApplyParams($oRemoteApplicationConnection->Get('version'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null),
 			'json_data' => $this->ApplyParamsToJson($aContextArgs, $this->Get('payload')),  // Apply params to payload recursively
 		);
 
@@ -1498,7 +1500,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		);
 
 		// Prepare basis message
-		$sMessage = static::TransformHTMLToSlackMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE));
+		$sMessage = static::TransformHTMLToSlackMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null));
 		if(!empty($sMessage))
 		{
 			$aSlackBlocks['blocks'][] = array(
@@ -1920,8 +1922,9 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 */]]></comment>
 					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
+		$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null;
 		$aData = array(
-			'text' => static::TransformHTMLToRocketChatMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE)),
+			'text' => static::TransformHTMLToRocketChatMarkup(MetaModel::ApplyParams($this->Get('message'), $aContextArgs, $sApplySanitizeMode)),
 			'attachments' => array(),
 		);
 
@@ -1929,7 +1932,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		$aBotAttCodes = array('bot_alias' => 'alias', 'bot_url_avatar' => 'avatar', 'bot_emoji_avatar' => 'emoji');
 		foreach($aBotAttCodes as $sBotAttCode => $sPropCode)
 		{
-			$sPropValue = MetaModel::ApplyParams($this->Get($sBotAttCode), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+			$sPropValue = MetaModel::ApplyParams($this->Get($sBotAttCode), $aContextArgs, $sApplySanitizeMode);
 			if(empty($sPropValue) === false)
 			{
 				$aData[$sPropCode] = $sPropValue;
@@ -2121,7 +2124,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 					<code><![CDATA[	protected function PreparePayload(array $aContextArgs, \EventNotification &$oLog)
 	{
 		$aData = array(
-			'text' => MetaModel::ApplyParams($this->Get('message'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE),
+			'text' => MetaModel::ApplyParams($this->Get('message'), $aContextArgs, defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null),
 		);
 
 		return json_encode($aData);
@@ -2337,6 +2340,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 */]]></comment>
 					<code><![CDATA[	protected function PreparePayloadMessageCard(array $aContextArgs)
 	{
+		$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null;
 		$aData = array(
 			'@type' => 'MessageCard',
 			'@context' => 'http://schema.org/extensions',
@@ -2348,18 +2352,18 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Prepare theme
 		// - Color
-		$sThemeColor = MetaModel::ApplyParams($this->Get('theme_color'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sThemeColor = MetaModel::ApplyParams($this->Get('theme_color'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sThemeColor) > 0) {
 			$aData['themeColor'] = $sThemeColor;
 		}
 		// - Image
-		$sImageUrl = MetaModel::ApplyParams($this->Get('image_url'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sImageUrl = MetaModel::ApplyParams($this->Get('image_url'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sImageUrl) > 0) {
 			$aSections[0]['activityImage'] = $sImageUrl;
 		}
 
 		// Prepare title
-		$sTitle = MetaModel::ApplyParams($this->Get('title'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sTitle = MetaModel::ApplyParams($this->Get('title'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sTitle) > 0) {
 			// For summary
 			$aData['summary'] = $sTitle;
@@ -2370,7 +2374,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Prepare message
 		// Note: For now we don't convert HTML to Markdown as it is more limited on Teams end (and easier for us 😁)
-		$sMessage = MetaModel::ApplyParams($this->Get('message'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sMessage = MetaModel::ApplyParams($this->Get('message'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sMessage) > 0) {
 			$aSections[0]['activitySubtitle'] = $sMessage;
 		}
@@ -2415,6 +2419,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 	 */]]></comment>
 					<code><![CDATA[	protected function PreparePayloadAdaptiveCard(array $aContextArgs)
 	{
+		$sApplySanitizeMode = defined('MetaModel::APPLY_PARAMS_SANITIZE_NONE') ? MetaModel::APPLY_PARAMS_SANITIZE_NONE : null;
 		$aData = [
 			'type' => 'message',
 		];
@@ -2424,14 +2429,14 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 		// TODO: Not possible with adaptive card, you only could use accents
 		// "default", "emphasis", "good", "attention",	"warning","accent"
 		$sContainerStyle = null;
-		$sThemeColor = MetaModel::ApplyParams($this->Get('theme_color'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sThemeColor = MetaModel::ApplyParams($this->Get('theme_color'), $aContextArgs, $sApplySanitizeMode);
 		if (in_array($sThemeColor, ["default", "emphasis", "good", "attention",	"warning","accent"])) {
 			$sContainerStyle = $sThemeColor;
 		}
 
 		// - Image
 		$aImageBlock = null;
-		$sImageUrl = MetaModel::ApplyParams($this->Get('image_url'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sImageUrl = MetaModel::ApplyParams($this->Get('image_url'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sImageUrl) > 0) {
 			$aImageBlock = [
 				"type" => "Image",
@@ -2443,7 +2448,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Prepare title
 		$aTitleBlock = null;
-		$sTitle = MetaModel::ApplyParams($this->Get('title'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sTitle = MetaModel::ApplyParams($this->Get('title'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sTitle) > 0) {
 			// For summary
 			$aData['summary'] = $sTitle;
@@ -2457,7 +2462,7 @@ protected function ApplyParamsToJson(array $aContextArgs, string $sInputAsJson)
 
 		// Prepare message
 		$aMessageBlock = null;
-		$sMessage = MetaModel::ApplyParams($this->Get('message'), $aContextArgs, MetaModel::APPLY_PARAMS_SANITIZE_NONE);
+		$sMessage = MetaModel::ApplyParams($this->Get('message'), $aContextArgs, $sApplySanitizeMode);
 		if (strlen($sMessage) > 0) {
 			$aMessageBlock = [
 				"type" => "TextBlock",

@@ -352,6 +352,12 @@ HTML,
 	public function ApplyParamsToJsonProvider(): array
 	{
 		return [
+            'HTML and ampersands in JSON keys and values must remain unchanged' => [
+                "payload" => '{"$key$": ["$value$", false, null, 42]}',
+                "context" => ['key' => '<key>&', 'value' => '<b>Text</b> & https://example.com/?a=1&b=2'],
+                'expected' => '{"<key>&": ["<b>Text</b> & https://example.com/?a=1&b=2", false, null, 42]}',
+                'exception' => false
+            ],
             'Simple string should be handled correctly' => [
                 "payload" => '"toto"',
                 "context" => [],
